@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashboard"
+            android:icon="@drawable/dashboard"
+            android:title="@string/dashboard" />
+        <item
+            android:id="@+id/inventory"
+            android:icon="@drawable/inventory"
+            android:title="@string/inventory" />
+        <item
+            android:id="@+id/requisition"
+            android:icon="@drawable/request"
+            android:title="@string/requisition" />
+        <item
+            android:id="@+id/tracking"
+            android:icon="@drawable/tracking"
+            android:title="@string/tracking" />
+        <item
+            android:id="@+id/report"
+            android:icon="@drawable/report"
+            android:title="@string/report" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/profile"
+            android:title="@string/logout" />
+    </group>
+</menu>
