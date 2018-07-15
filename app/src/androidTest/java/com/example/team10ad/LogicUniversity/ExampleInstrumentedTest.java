@@ -1,4 +1,4 @@
-package com.example.chitsushine.logicuniversity;
+package com.example.team10ad.LogicUniversity;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

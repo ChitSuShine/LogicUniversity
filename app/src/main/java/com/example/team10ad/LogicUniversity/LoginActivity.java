@@ -1,11 +1,14 @@
-package com.example.chitsushine.logicuniversity;
+package com.example.team10ad.LogicUniversity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import com.example.team10ad.team10ad.R;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                 startActivity(intent);
             }
         });
