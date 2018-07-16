@@ -1,5 +1,6 @@
 package com.example.team10ad.LogicUniversity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,11 +16,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.team10ad.team10ad.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Report2Fragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Report2Fragment.OnFragmentInteractionListener ,RequisitionList.OnFragmentInteractionListener,RequisitionDetail.OnFragmentInteractionListener
+        ,ReqFilter.OnFragmentInteractionListener{
+    //data for pie chart
+    int qty[]={89,50,45,30};
+    String name[]={"Pen","Pencil","Stapler","Clip"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +44,15 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab =  findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        setupPieChart();
+        //link to requisition list screen
+        LinearLayout req=(LinearLayout)findViewById(R.id.requisitionID);
+        req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                RequisitionList requisitionList=new RequisitionList();
+                FragmentManager fm=getSupportFragmentManager();
+                fm.beginTransaction().replace(R.id.content_frame,requisitionList).commit();
             }
         });
 
@@ -45,6 +64,23 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+    //Set pie chart in dashboard
+    private void setupPieChart() {
+        List<PieEntry> pieEntries=new ArrayList<>();
+        for(int i=0;i<qty.length;i++){
+            pieEntries.add(new PieEntry(qty[i],name[i]));
+        }
+        PieDataSet pieDataSet=new PieDataSet(pieEntries,"");
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        PieData pieData=new PieData();
+        pieData.setDataSet(pieDataSet);
+
+        PieChart pieChart=(PieChart)findViewById(R.id.piechart);
+        pieChart.setData(pieData);
+        pieChart.getDescription().setText("Top 5 frequent ordered items in 2018");
+        pieChart.animateX(1000);
+        pieChart.invalidate();
     }
 
     @Override
@@ -86,14 +122,16 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.dashboard) {
-            setTitle("Dashboard");
-            DashboardFragment dashboardFragment = new DashboardFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame,dashboardFragment).commit();
-
+            finish();
+            Intent i=new Intent(getApplicationContext(),HomeActivity.class);
+            startActivity(i);
         } else if (id == R.id.inventory) {
 
         } else if (id == R.id.requisition) {
+            setTitle("Requistion list");
+            RequisitionList requisitionList = new RequisitionList();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,requisitionList).commit();
 
         } else if (id == R.id.tracking) {
 
@@ -106,7 +144,6 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
