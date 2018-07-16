@@ -42,6 +42,7 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         NavigationView nav = findViewById(R.id.nav_view);
@@ -54,8 +55,18 @@ public class HomeActivity extends AppCompatActivity
         nav.getMenu().clear();
         nav.inflateMenu(R.menu.activity_home_hod);
 
+
         setupPieChart();
         //link to requisition list screen
+        LinearLayout inv=(LinearLayout)findViewById(R.id.inventoryID);
+        inv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InventoryFragement inventoryFragement=new InventoryFragement();
+                FragmentManager invfm=getSupportFragmentManager();
+                invfm.beginTransaction().replace(R.id.content_frame,inventoryFragement).commit();
+            }
+        });
         LinearLayout req=(LinearLayout)findViewById(R.id.requisitionID);
         req.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +147,10 @@ public class HomeActivity extends AppCompatActivity
             Intent i=new Intent(getApplicationContext(),HomeActivity.class);
             startActivity(i);
         } else if (id == R.id.inventory) {
+            setTitle("Inventory");
+            InventoryFragement inventoryFragement=new InventoryFragement();
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,inventoryFragement).commit();
 
         } else if (id == R.id.requisition) {
             setTitle("Requistion list");
