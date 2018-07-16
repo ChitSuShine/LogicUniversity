@@ -44,6 +44,16 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        NavigationView nav = findViewById(R.id.nav_view);
+
+        // Clerk menu
+        //nav.getMenu().clear();
+        //nav.inflateMenu(R.menu.activity_home_drawer);
+
+        // HOD menu
+        nav.getMenu().clear();
+        nav.inflateMenu(R.menu.activity_home_hod);
+
         setupPieChart();
         //link to requisition list screen
         LinearLayout req=(LinearLayout)findViewById(R.id.requisitionID);
