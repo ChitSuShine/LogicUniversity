@@ -42,7 +42,12 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
+
+        /*NavigationView nav = findViewById(R.id.nav_view);
+        nav.getMenu().clear();
+        nav.inflateMenu(R.menu.test_drawer);*/
 
         setupPieChart();
         //link to requisition list screen
