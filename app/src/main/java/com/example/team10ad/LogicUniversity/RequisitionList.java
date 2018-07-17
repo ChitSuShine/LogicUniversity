@@ -12,8 +12,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Model.AccessToken;
+import com.example.team10ad.LogicUniversity.Model.Department;
+import com.example.team10ad.LogicUniversity.Service.DepartmentService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RequisitionList extends Fragment implements RequisitionDetail.OnFragmentInteractionListener{
 
@@ -53,6 +66,70 @@ public class RequisitionList extends Fragment implements RequisitionDetail.OnFra
                              Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.fragment_requisition_list, container, false);
+
+
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        DepartmentService departmentService = ServiceGenerator.createService(DepartmentService.class, token);
+
+        Call<Department> call = departmentService.getDepartmentById(1);
+        call.enqueue(new Callback<Department>() {
+            @Override
+            public void onResponse(Call<Department> call, Response<Department> response) {
+                if (response.isSuccessful()) {
+                    Department d = response.body();
+                    Toast.makeText(MyApp.getInstance(), "Yay..."+response.body().getDeptName(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Department> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /*Call<Department> call = departmentService.getDepartmentById(1);
+        call.enqueue(new Callback<Department>() {
+            @Override
+            public void onResponse(Call<Department> call, Response<Department> response) {
+                if (response.isSuccessful()) {
+                    Department d = response.body();
+                    Toast.makeText(MyApp.getInstance(), "Yay..."+response.body().getDeptName(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Department> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+        /*Call<List<Department>> call = departmentService.getAllDepartments();
+        call.enqueue(new Callback<List<Department>>() {
+            @Override
+            public void onResponse(Call<List<Department>> call, Response<List<Department>> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MyApp.getInstance(), "Yay..."+response.body().size(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Department>> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+        /*TextView deptName = view.findViewById(R.id.cardDeptName);
+        TextView deptDate = view.findViewById(R.id.cardDeptDate);
+        deptName.setText("Tested Name");
+        deptDate.setText("Tested Date");*/
+
+
         LinearLayout filter=(LinearLayout)view.findViewById(R.id.filterID);
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,8 +185,6 @@ public class RequisitionList extends Fragment implements RequisitionDetail.OnFra
     }
 
     public interface OnFragmentInteractionListener {
-
         void onFragmentInteraction(Uri uri);
     }
-
 }

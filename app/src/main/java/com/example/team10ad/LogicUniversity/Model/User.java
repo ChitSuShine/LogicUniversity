@@ -1,11 +1,20 @@
 package com.example.team10ad.LogicUniversity.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
+
+    @SerializedName("Username")
     private String userName;
+    @SerializedName("Email")
     private String email;
+    @SerializedName("Password")
     private String password;
+    @SerializedName("Role")
     private int role;
+    @SerializedName("Fullname")
     private String fullName;
+    @SerializedName("Deptid")
     private int depId;
     private String depName;
 

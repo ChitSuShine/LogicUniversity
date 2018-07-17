@@ -8,7 +8,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
-public interface UserService {
+public interface AccessTokenService {
     @Headers("Accept: application/json")
     @FormUrlEncoded
     @POST("token")
