@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
-//import com.example.team10ad.team10ad.R;
 import com.example.team10ad.team10ad.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -149,20 +148,19 @@ public class HomeActivity extends AppCompatActivity
             finish();
             Intent i=new Intent(getApplicationContext(),HomeActivity.class);
             startActivity(i);
-
-        } else if(id==R.id.assignDeptRep){
-            setTitle("Assign Department Rep");
-            AssignDepRepFragment assignDepRepFragment=new AssignDepRepFragment();
-            FragmentManager fragmentManager=getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame,assignDepRepFragment).commit();
-        }
-        else if (id == R.id.inventory) {
+        } else if (id == R.id.inventory) {
             setTitle("Inventory");
             InventoryFragement inventoryFragement=new InventoryFragement();
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame,inventoryFragement).commit();
 
-        } else if (id == R.id.requisition) {
+        }else if(id==R.id.assignDeptRep){
+            setTitle("Assign Department Rep");
+            AssignDepRepFragment assignDepRepFragment=new AssignDepRepFragment();
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,assignDepRepFragment).commit();
+        }
+        else if (id == R.id.requisition) {
             setTitle("Requistion list");
             RequisitionList requisitionList = new RequisitionList();
             FragmentManager fragmentManager = getSupportFragmentManager();
