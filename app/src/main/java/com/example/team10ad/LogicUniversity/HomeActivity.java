@@ -74,10 +74,10 @@ public class HomeActivity extends AppCompatActivity
         req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //ChangeCollectionPoint changeCollectionPoint=new ChangeCollectionPoint();
-                RequisitionList requisitionList=new RequisitionList();
+                ChangeCollectionPoint changeCollectionPoint=new ChangeCollectionPoint();
+                //RequisitionList requisitionList=new RequisitionList();
                 FragmentManager fm=getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.content_frame,requisitionList).commit();
+                fm.beginTransaction().replace(R.id.content_frame,changeCollectionPoint).commit();
             }
         });
 

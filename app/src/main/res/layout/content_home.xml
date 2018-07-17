@@ -41,7 +41,7 @@
                             android:background="@drawable/cercelbackgroundpink"
                             android:padding="10dp"
                             android:src="@drawable/ic_inventory" />
--->                        <View
+                      <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_margin="10dp"
