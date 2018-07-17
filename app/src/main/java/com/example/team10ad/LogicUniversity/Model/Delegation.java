@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.time.LocalDateTime;
 
 public class Delegation {
+    @SerializedName("delid")
+    private int delId;
+
     @SerializedName("startdate")
     private LocalDateTime startDate;
 
@@ -37,6 +40,14 @@ public class Delegation {
 
     @SerializedName("assignedbydepname")
     private String adeptName;
+
+    public int getDelId() {
+        return delId;
+    }
+
+    public void setDelId(int delId) {
+        this.delId = delId;
+    }
 
     public LocalDateTime getStartDate() {
         return startDate;
