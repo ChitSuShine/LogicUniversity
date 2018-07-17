@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
 import com.example.team10ad.team10ad.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -166,6 +167,12 @@ public class HomeActivity extends AppCompatActivity
             fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame,requisitionList).commit();
 
+        }
+        else if(id==R.id.assignDeptRep){
+            setTitle("Assign Department Rep");
+            AssignDepRepFragment assignDepRepFragment=new AssignDepRepFragment();
+            fragmentManager=getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,assignDepRepFragment).commit();
         }
         //clerk tracking
         else if (id == R.id.tracking) {
