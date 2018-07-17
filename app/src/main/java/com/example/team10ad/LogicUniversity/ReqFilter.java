@@ -58,7 +58,8 @@ public class ReqFilter extends DialogFragment {
         depttext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().remove(ReqFilter.this).commit();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction().remove(ReqFilter.this).commit();
 
             }
         });

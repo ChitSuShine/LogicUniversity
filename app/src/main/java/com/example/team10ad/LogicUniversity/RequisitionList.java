@@ -51,7 +51,7 @@ public class RequisitionList extends Fragment implements RequisitionDetail.OnFra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        String s = getArguments().getString("test");
         View view=inflater.inflate(R.layout.fragment_requisition_list, container, false);
         LinearLayout filter=(LinearLayout)view.findViewById(R.id.filterID);
         filter.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +74,7 @@ public class RequisitionList extends Fragment implements RequisitionDetail.OnFra
             }
         });
         TextView filterText=(TextView)view.findViewById(R.id.filterText);
+        filterText.setText(s);
         filterText.setTypeface(filterText.getTypeface(), Typeface.BOLD);
         return view;
     }
