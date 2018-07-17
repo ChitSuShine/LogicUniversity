@@ -9,5 +9,8 @@
     <color name="materialyellow">#ffb300</color>
     <color name="materialgreen">#00bfa5</color>
     <color name="pinkaccent">#ff4081</color>
+    <color name="selector_red_focused">#22D50000</color>
+    <color name="selector_red_pressed">#44D50000</color>
+    <color name="selector_normal">@android:color/transparent</color>
 
 </resources>

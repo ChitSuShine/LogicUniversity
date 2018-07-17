@@ -9,25 +9,25 @@
             android:icon="@drawable/dashboard"
             android:title="@string/dashboard" />
         <item
-            android:id="@+id/requisitionTracking"
-            android:icon="@drawable/inventory"
-            android:title="Tracking" />
+            android:id="@+id/apprejreq"
+            android:icon="@drawable/approvereject"
+            android:title="Approve/Reject Requisition" />
         <item
             android:id="@+id/assignDeptRep"
-            android:icon="@drawable/request"
+            android:icon="@drawable/assign"
             android:title="Assign Representative" />
         <item
             android:id="@+id/changeCP"
-            android:icon="@drawable/tracking"
+            android:icon="@drawable/collectionpoint"
             android:title="Collection Point" />
         <item
             android:id="@+id/delegateAuthority"
-            android:icon="@drawable/report"
+            android:icon="@drawable/delegate"
             android:title="Delegate Authority" />
         <item
-            android:id="@+id/requisitionListHod"
-            android:icon="@drawable/report"
-            android:title="Requisition List" />
+            android:id="@+id/trackinghod"
+            android:icon="@drawable/tracking"
+            android:title="Tracking Order" />
         <item
             android:id="@+id/reportHod"
             android:icon="@drawable/report"
@@ -38,13 +38,5 @@
             android:title="@string/logout" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-        </menu>
-    </item>
 
 </menu>
