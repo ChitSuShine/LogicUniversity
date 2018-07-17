@@ -3,6 +3,9 @@ package com.example.team10ad.LogicUniversity.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class Category {
+    @SerializedName("catid")
+    private int catId;
+
     @SerializedName("name")
     private String name;
 
@@ -11,6 +14,12 @@ public class Category {
 
     @SerializedName("shelflevel")
     private String shelfLevel;
+
+    public int getCatId() {
+        return catId;
+    }
+
+    public void setCatId(int catId) { this.catId = catId; }
 
     public String getName() {
         return name;
