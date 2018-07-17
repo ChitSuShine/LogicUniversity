@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity
         nav.inflateMenu(R.menu.test_drawer);*/
 
         setupPieChart();
-        //link to requisition list screen
+        //link to inventory screen
         LinearLayout inv=(LinearLayout)findViewById(R.id.inventoryID);
         inv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +60,7 @@ public class HomeActivity extends AppCompatActivity
                 invfm.beginTransaction().replace(R.id.content_frame,inventoryFragement).commit();
             }
         });
+        //link to requisition list screen
         LinearLayout req=(LinearLayout)findViewById(R.id.requisitionID);
         req.setOnClickListener(new View.OnClickListener() {
             @Override
