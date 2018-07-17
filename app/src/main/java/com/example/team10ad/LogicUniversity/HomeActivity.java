@@ -28,13 +28,15 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Report2Fragment.OnFragmentInteractionListener ,RequisitionList.OnFragmentInteractionListener,RequisitionDetail.OnFragmentInteractionListener
-        ,ReqFilter.OnFragmentInteractionListener{
+        ,ReqFilter.OnFragmentInteractionListener,ChangeCollectionPoint.OnFragmentInteractionListener{
     //data for pie chart
     int qty[]={89,50,45,30};
     String name[]={"Pen","Pencil","Stapler","Clip"};
+    FragmentManager fragmentManager;
 
 
     @Override
@@ -72,9 +74,10 @@ public class HomeActivity extends AppCompatActivity
         req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RequisitionList requisitionList=new RequisitionList();
+                ChangeCollectionPoint changeCollectionPoint=new ChangeCollectionPoint();
+                //RequisitionList requisitionList=new RequisitionList();
                 FragmentManager fm=getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.content_frame,requisitionList).commit();
+                fm.beginTransaction().replace(R.id.content_frame,changeCollectionPoint).commit();
             }
         });
 
@@ -142,34 +145,60 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        //Clerk Dashboard
         if (id == R.id.dashboard) {
             finish();
             Intent i=new Intent(getApplicationContext(),HomeActivity.class);
             startActivity(i);
-        } else if (id == R.id.inventory) {
+        }
+        //clerk Inventory
+        else if (id == R.id.inventory) {
             setTitle("Inventory");
             InventoryFragement inventoryFragement=new InventoryFragement();
-            FragmentManager fragmentManager=getSupportFragmentManager();
+            fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame,inventoryFragement).commit();
 
-        } else if (id == R.id.requisition) {
+        }
+        //clerk requisition
+        else if (id == R.id.requisition) {
             setTitle("Requistion list");
             RequisitionList requisitionList = new RequisitionList();
-            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame,requisitionList).commit();
 
-        } else if (id == R.id.tracking) {
-
-        } else if (id == R.id.report) {
-            setTitle("Report");
-            ReportFragment reportFragment = new ReportFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame,reportFragment).commit();
-
-        } else if (id == R.id.nav_share) {
+        }
+        //clerk tracking
+        else if (id == R.id.tracking) {
 
         }
+        //clerk report
+        else if (id == R.id.report) {
+            setTitle("Report");
+            ReportFragment reportFragment = new ReportFragment();
+            fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,reportFragment).commit();
+
+        }
+        //HOD Dashboard
+        else if (id == R.id.dashboardHod) { }
+        //HOD Approve Reject
+        else if (id == R.id.apprejreq) { }
+        //HOD Assign Department
+        else if (id == R.id.assignDeptRep) { }
+        //HOD Change Collection Point
+        else if (id == R.id.changeCP) {
+            setTitle("Change Collection Point");
+            ChangeCollectionPoint changecp=new ChangeCollectionPoint();
+            fragmentManager=getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,changecp).commit();
+        }
+        //HOD Delegate Authority
+        else if (id == R.id.delegateAuthority){ }
+        //HOD Tracking Order
+        else if (id == R.id.trackinghod){ }
+        //HOD Report
+        else if (id == R.id.reportHod){ }
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
