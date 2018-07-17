@@ -6,16 +6,23 @@ public class User {
 
     @SerializedName("Username")
     private String userName;
+
     @SerializedName("Email")
     private String email;
+
     @SerializedName("Password")
     private String password;
+
     @SerializedName("Role")
     private int role;
+
     @SerializedName("Fullname")
     private String fullName;
+
     @SerializedName("Deptid")
     private int depId;
+
+    @SerializedName("Deptname")
     private String depName;
 
     public void setUserName(String userName) {
@@ -46,10 +53,7 @@ public class User {
         this.depName = depName;
     }
 
-    public String getUserName() {
-
-        return userName;
-    }
+    public String getUserName() { return userName; }
 
     public String getEmail() {
         return email;
