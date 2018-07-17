@@ -45,9 +45,16 @@ public class HomeActivity extends AppCompatActivity
 
         setSupportActionBar(toolbar);
 
-        /*NavigationView nav = findViewById(R.id.nav_view);
+        NavigationView nav = findViewById(R.id.nav_view);
+
+        // Clerk menu
+        //nav.getMenu().clear();
+        //nav.inflateMenu(R.menu.activity_home_drawer);
+
+        // HOD menu
         nav.getMenu().clear();
-        nav.inflateMenu(R.menu.test_drawer);*/
+        nav.inflateMenu(R.menu.activity_home_hod);
+
 
         setupPieChart();
         //link to inventory screen
