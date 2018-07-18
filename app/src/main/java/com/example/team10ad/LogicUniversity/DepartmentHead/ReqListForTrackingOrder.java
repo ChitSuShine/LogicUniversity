@@ -106,7 +106,7 @@ public class ReqListForTrackingOrder extends Fragment {
             }
             @Override
             public void onFailure(Call<List<Requisition>> call, Throwable t) {
-                Toast.makeText(MyApp.getInstance(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
             }
         });
 
