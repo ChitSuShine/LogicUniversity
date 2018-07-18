@@ -14,7 +14,8 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -23,7 +24,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@color/background">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -34,7 +36,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:text="Requisition ID:" />
+                            android:text="Requisition ID:"
+                            android:textSize="17dp"/>
 
                         <View
                             android:layout_width="13dp"
@@ -46,8 +49,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="010000001" />
+                            android:text="010000001"
+                            android:textSize="17dp"/>
                     </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -58,7 +63,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:text="Raised by:" />
+                            android:text="Raised by:"
+                            android:textSize="17dp"/>
 
                         <View
                             android:layout_width="13dp"
@@ -69,8 +75,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Aung Myo"/>
+                            android:text="Aung Myo"
+                            android:textSize="17dp"/>
                     </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -81,7 +89,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:text="Date:" />
+                            android:text="Date:"
+                            android:textSize="17dp"/>
 
                         <View
                             android:layout_width="18dp"
@@ -92,8 +101,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="05-06-2018" />
+                            android:text="05-06-2018"
+                            android:textSize="17dp"/>
                     </LinearLayout>
+
 
                     <TextView
                         android:id="@+id/deliveryText"
@@ -109,10 +120,10 @@
         <!-- row 1-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:weightSum="3"
-            android:background="#CC900B">
+            android:background="@color/colorPrimaryDark">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,6 +136,7 @@
                     android:gravity="center"
                     android:text="Item Name"
                     android:textSize="17dp"
+                    android:textStyle="bold"
                     />
             </LinearLayout>
 
@@ -138,7 +150,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="Description"
-                    android:textSize="17dp"/>
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -150,13 +163,14 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="Quantity"
-                    android:textSize="17dp"/>
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
             </LinearLayout>
         </LinearLayout>
         <!-- row 2-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="35dp"
             android:orientation="horizontal"
             android:weightSum="3"
             android:background="#eeeeee">
@@ -203,7 +217,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:orientation="horizontal"
             android:weightSum="3"
             >
