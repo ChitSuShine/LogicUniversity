@@ -14,10 +14,14 @@ public class Constants {
     public static final String INVALID_INFO = "Invalid username and password!";
     public static final String REQ_NO_SUCCESS = "Request is not successful!";
 
-    // Wint Yadana Htet
-
-    // Htet Wai Yan
-
-    // Khaing Myat
-
+    public static final String[] STATUS = {
+            "Pending",
+            "Approved",
+            "Request Pending",
+            "Preparing",
+            "Delivered",
+            "Outstanding",
+            "Complete",
+            "Reject"
+    };
 }

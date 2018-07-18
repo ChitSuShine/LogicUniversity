@@ -2,137 +2,139 @@ package com.example.team10ad.LogicUniversity.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Requisition {
 
     @SerializedName("reqid")
-    private String reqid;
+    private String reqID;
 
     @SerializedName("raisedby")
-    private String raisedby;
+    private String raisedBy;
 
     @SerializedName("rasiedbyname")
-    private String rasiedbyname;
+    private String rasiedByname;
 
     @SerializedName("approvedby")
-    private String approvedby;
+    private String approvedBy;
 
     @SerializedName("approvedbyname")
-    private String approvedbyname;
+    private String approvedByname;
 
     @SerializedName("depid")
-    private String depid;
+    private String depID;
 
     @SerializedName("depname")
-    private String depname;
+    private String depName;
 
     @SerializedName("cpid")
-    private String cpid;
+    private String cpID;
 
     @SerializedName("cpname")
-    private String cpname;
+    private String cpName;
 
     @SerializedName("status")
-    private String status;
+    private String Status;
 
     @SerializedName("reqdate")
-    private String reqdate;
+    private String reqDate;
 
     @SerializedName("requisitiondetails")
-    private String requisitiondetails;
+    private ArrayList<RequisitionDetail> requisitionDetails;
 
-    public String getReqid() {
-        return reqid;
+    public String getReqID() {
+        return reqID;
     }
 
-    public void setReqid(String reqid) {
-        this.reqid = reqid;
+    public void setReqID(String reqID) {
+        this.reqID = reqID;
     }
 
-    public String getRaisedby() {
-        return raisedby;
+    public String getRaisedBy() {
+        return raisedBy;
     }
 
-    public void setRaisedby(String raisedby) {
-        this.raisedby = raisedby;
+    public void setRaisedBy(String raisedBy) {
+        this.raisedBy = raisedBy;
     }
 
-    public String getRasiedbyname() {
-        return rasiedbyname;
+    public String getRasiedByname() {
+        return rasiedByname;
     }
 
-    public void setRasiedbyname(String rasiedbyname) {
-        this.rasiedbyname = rasiedbyname;
+    public void setRasiedByname(String rasiedByname) {
+        this.rasiedByname = rasiedByname;
     }
 
-    public String getApprovedby() {
-        return approvedby;
+    public String getApprovedBy() {
+        return approvedBy;
     }
 
-    public void setApprovedby(String approvedby) {
-        this.approvedby = approvedby;
+    public void setApprovedBy(String approvedBy) {
+        this.approvedBy = approvedBy;
     }
 
-    public String getApprovedbyname() {
-        return approvedbyname;
+    public String getApprovedByname() {
+        return approvedByname;
     }
 
-    public void setApprovedbyname(String approvedbyname) {
-        this.approvedbyname = approvedbyname;
+    public void setApprovedByname(String approvedByname) {
+        this.approvedByname = approvedByname;
     }
 
-    public String getDepid() {
-        return depid;
+    public String getDepID() {
+        return depID;
     }
 
-    public void setDepid(String depid) {
-        this.depid = depid;
+    public void setDepID(String depID) {
+        this.depID = depID;
     }
 
-    public String getDepname() {
-        return depname;
+    public String getDepName() {
+        return depName;
     }
 
-    public void setDepname(String depname) {
-        this.depname = depname;
+    public void setDepName(String depName) {
+        this.depName = depName;
     }
 
-    public String getCpid() {
-        return cpid;
+    public String getCpID() {
+        return cpID;
     }
 
-    public void setCpid(String cpid) {
-        this.cpid = cpid;
+    public void setCpID(String cpID) {
+        this.cpID = cpID;
     }
 
-    public String getCpname() {
-        return cpname;
+    public String getCpName() {
+        return cpName;
     }
 
-    public void setCpname(String cpname) {
-        this.cpname = cpname;
+    public void setCpName(String cpName) {
+        this.cpName = cpName;
     }
 
     public String getStatus() {
-        return status;
+        return Status;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        Status = status;
     }
 
-    public String getReqdate() {
-        return reqdate;
+    public String getReqDate() {
+        return reqDate;
     }
 
-    public void setReqdate(String reqdate) {
-        this.reqdate = reqdate;
+    public void setReqDate(String reqDate) {
+        this.reqDate = reqDate;
     }
 
-    public String getRequisitiondetails() {
-        return requisitiondetails;
+    public ArrayList<RequisitionDetail> getRequisitionDetails() {
+        return requisitionDetails;
     }
 
-    public void setRequisitiondetails(String requisitiondetails) {
-        this.requisitiondetails = requisitiondetails;
+    public void setRequisitionDetails(ArrayList<RequisitionDetail> requisitionDetails) {
+        this.requisitionDetails = requisitionDetails;
     }
 }

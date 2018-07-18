@@ -15,13 +15,16 @@ import android.view.MenuItem;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HODTrackingOrder;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
+import com.example.team10ad.LogicUniversity.DepartmentHead.ReqListForTrackingOrder;
 import com.example.team10ad.team10ad.R;
 
 public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +123,11 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentClass = ChangeCollectionPoint.class;
                 break;
             case R.id.delegateAuthority:
-
+                //HOD tracking order
             case R.id.trackinghod:
+                fragmentClass= ReqListForTrackingOrder.class;
+                //fragmentClass = HODTrackingOrder.class;
+                break;
 
             case R.id.reportHod:
 
