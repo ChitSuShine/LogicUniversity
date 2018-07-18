@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HODTrackingOrder;
 import com.example.team10ad.team10ad.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -33,7 +34,7 @@ import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Report2Fragment.OnFragmentInteractionListener ,RequisitionList.OnFragmentInteractionListener,RequisitionDetail.OnFragmentInteractionListener
-        ,ReqFilter.OnFragmentInteractionListener,ChangeCollectionPoint.OnFragmentInteractionListener{
+        ,ReqFilter.OnFragmentInteractionListener,ChangeCollectionPoint.OnFragmentInteractionListener,HODTrackingOrder.OnFragmentInteractionListener{
     //data for pie chart
     int qty[]={89,50,45,30};
     String name[]={"Pen","Pencil","Stapler","Clip"};
@@ -202,7 +203,12 @@ public class HomeActivity extends AppCompatActivity
         //HOD Delegate Authority
         else if (id == R.id.delegateAuthority){ }
         //HOD Tracking Order
-        else if (id == R.id.trackinghod){ }
+        else if (id == R.id.trackinghod){
+            setTitle("Order Tracking");
+            HODTrackingOrder hodTrackingOrder=new HODTrackingOrder();
+            fragmentManager=getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,hodTrackingOrder).commit();
+        }
         //HOD Report
         else if (id == R.id.reportHod){ }
 
