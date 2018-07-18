@@ -41,9 +41,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 // To get Access Token for each user
                 getAccessToken(userName.getText().toString(), password.getText().toString());
-
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
             }
         });
     }
@@ -63,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
                 if (response.isSuccessful()) {
                     MyApp.getInstance().getPreferenceManager().putString(Constants.KEY_ACCESS_TOKEN, response.body().getAccessToken());
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(LoginActivity.this, Constants.INVALID_INFO, Toast.LENGTH_SHORT).show();
                 }
