@@ -9,56 +9,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/background">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:clipToPadding="false"
-            android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:background="#FFA500">
-                   <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Requisition List"
-                       android:textSize="24dp"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-
-        </LinearLayout>
+        <!-- 2 row-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="4"
+            android:weightSum="3"
             android:background="#EEDD82">
 
-            <!-- col 1 -->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                >
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:text="No" />
-
-
-            </LinearLayout>
-            <!-- col 1 end -->
             <!-- col 2 -->
 
             <LinearLayout
@@ -115,28 +75,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="4"
+            android:weightSum="3"
             android:background="#aaaaaa">
 
-            <!-- col 1 -->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                >
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:text="1" />
-
-
-            </LinearLayout>
-            <!-- col 1 end -->
             <!-- col 2 -->
 
             <LinearLayout
@@ -178,11 +120,16 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:text="" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="3dp"
+                android:translationZ="3dp"
+                android:text="Check"
+                android:id="@+id/checkbtn"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="right"/>
 
             </LinearLayout>
 
