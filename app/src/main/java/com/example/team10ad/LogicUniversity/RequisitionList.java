@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.example.team10ad.team10ad.R;
 
-public class RequisitionList extends Fragment {
+public class RequisitionList extends Fragment implements RequisitionDetail.OnFragmentInteractionListener{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -97,8 +97,14 @@ public class RequisitionList extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void onFragmentInteraction(Uri uri);
     }
+
 }
