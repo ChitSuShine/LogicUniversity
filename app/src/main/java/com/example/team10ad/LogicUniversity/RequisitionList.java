@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.team10ad.team10ad.R;
+
+import java.util.ArrayList;
 
 public class RequisitionList extends Fragment implements RequisitionDetail.OnFragmentInteractionListener{
 
@@ -51,15 +55,15 @@ public class RequisitionList extends Fragment implements RequisitionDetail.OnFra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        String s = getArguments().getString("test");
         View view=inflater.inflate(R.layout.fragment_requisition_list, container, false);
         LinearLayout filter=(LinearLayout)view.findViewById(R.id.filterID);
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReqFilter reqFilter=new ReqFilter();
-                FragmentManager fm=getFragmentManager();
-                fm.beginTransaction().replace(R.id.reqFrame,reqFilter).commit();
+                DialogFragment reqFil = new ReqFilter();
+                reqFil.setTargetFragment(RequisitionList.this, 1);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                reqFil.show(ft, "Filter");
             }
         });
         final LinearLayout test=(LinearLayout)view.findViewById(R.id.testlayout);
@@ -74,7 +78,6 @@ public class RequisitionList extends Fragment implements RequisitionDetail.OnFra
             }
         });
         TextView filterText=(TextView)view.findViewById(R.id.filterText);
-        filterText.setText(s);
         filterText.setTypeface(filterText.getTypeface(), Typeface.BOLD);
         return view;
     }
@@ -107,4 +110,15 @@ public class RequisitionList extends Fragment implements RequisitionDetail.OnFra
         void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ArrayList<String> ss = data.getStringArrayListExtra("param");
+        TextView ft = (TextView) getView().findViewById(R.id.filterText);
+        StringBuilder str = new StringBuilder();
+        for(String sss : ss) {
+            str.append(sss);
+            str.append(" ; ");
+        }
+        ft.setText(str);
+    }
 }

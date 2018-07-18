@@ -40,13 +40,14 @@ public class HomeActivity extends AppCompatActivity {
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         NavigationView nvDrawer = findViewById(R.id.nav_view);
+
         // Clerk menu
-        //nav.getMenu().clear();
-        //nav.inflateMenu(R.menu.activity_home_drawer);
+        nvDrawer.getMenu().clear();
+        nvDrawer.inflateMenu(R.menu.activity_home_drawer);
 
         // HOD menu
-        nvDrawer.getMenu().clear();
-        nvDrawer.inflateMenu(R.menu.activity_home_hod);
+        /*nvDrawer.getMenu().clear();
+        nvDrawer.inflateMenu(R.menu.activity_home_hod);*/
 
         toggle.syncState();
         nvDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
