@@ -199,7 +199,12 @@ public class HomeActivity extends AppCompatActivity
         //HOD Dashboard
         else if (id == R.id.dashboardHod) { }
         //HOD Approve Reject
-        else if (id == R.id.apprejreq) { }
+        else if (id == R.id.apprejreq) {
+            setTitle("Approve/Reject Requisitions");
+            RequisitionList reqlist=new RequisitionList();
+            fragmentManager=getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,reqlist).commit();
+        }
         //HOD Assign Department
         else if (id == R.id.assignDeptRep) { }
         //HOD Change Collection Point
