@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/invFrame"
-    tools:context="com.example.team10ad.LogicUniversity.InventoryFragement">
+    tools:context="com.example.team10ad.LogicUniversity.InventoryFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,34 +11,34 @@
         android:orientation="vertical"
         android:background="@color/background">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:background="#3366ff">
-       <!-- row 1 -->
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Shelf Location:"
-            android:textSize="24dp"
-            android:layout_gravity="left"/>
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="#3366ff">
+            <!-- row 1 -->
 
-        <TextView
-            android:id="@+id/inventoryID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="24dp"
-            android:text="A" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shelf Location:"
+                android:textSize="24dp"
+                android:layout_gravity="left"/>
 
-        <!-- row 1 end -->
+            <TextView
+                android:id="@+id/inventoryID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="24dp"
+                android:text="A" />
 
-        <!-- row 2 -->
-    </LinearLayout>
+            <!-- row 1 end -->
+
+            <!-- row 2 -->
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
