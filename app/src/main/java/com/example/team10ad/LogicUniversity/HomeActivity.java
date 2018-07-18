@@ -23,10 +23,6 @@ public class HomeActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
 
-    // Data for pie chart
-    int qty[]={89,50,45,30};
-    String name[]={"Pen","Pencil","Stapler","Clip"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
