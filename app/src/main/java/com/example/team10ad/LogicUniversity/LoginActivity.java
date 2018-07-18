@@ -1,8 +1,6 @@
 package com.example.team10ad.LogicUniversity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -15,7 +13,6 @@ import com.example.team10ad.LogicUniversity.Model.AccessToken;
 import com.example.team10ad.LogicUniversity.Service.AccessTokenService;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
-import com.example.team10ad.LogicUniversity.Util.MyPreferenceManager;
 import com.example.team10ad.team10ad.R;
 
 import retrofit2.Call;
