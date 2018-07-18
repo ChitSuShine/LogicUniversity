@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
 import com.example.team10ad.team10ad.R;
 
@@ -37,6 +38,14 @@ public class HomeActivity extends AppCompatActivity {
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         NavigationView nvDrawer = findViewById(R.id.nav_view);
+        // Clerk menu
+        //nav.getMenu().clear();
+        //nav.inflateMenu(R.menu.activity_home_drawer);
+
+        // HOD menu
+        nvDrawer.getMenu().clear();
+        nvDrawer.inflateMenu(R.menu.activity_home_hod);
+
         toggle.syncState();
         nvDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -82,6 +91,7 @@ public class HomeActivity extends AppCompatActivity {
         Class fragmentClass;
         int id = menuItem.getItemId();
         switch (id) {
+            // Clerk
             case R.id.dashboard:
                 fragmentClass = DashboardFragment.class;
                 break;
@@ -100,6 +110,22 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.logout:
                 fragmentClass = DashboardFragment.class;
                 break;
+
+            // HOD
+            case R.id.dashboardHod:
+                fragmentClass = DashboardFragment.class;
+            case R.id.apprejreq:
+
+            case R.id.assignDeptRep:
+                fragmentClass = AssignDepRepFragment.class;
+            case R.id.changeCP:
+                fragmentClass = ChangeCollectionPoint.class;
+            case R.id.delegateAuthority:
+
+            case R.id.trackinghod:
+
+            case R.id.reportHod:
+
             default:
                 fragmentClass = DashboardFragment.class;
         }
