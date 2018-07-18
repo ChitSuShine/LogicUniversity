@@ -4,21 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.team10ad.team10ad.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AssignDepRepFragment.OnFragmentInteractionListener} interface
+ * {@link HodRequisitionListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AssignDepRepFragment#newInstance} factory method to
+ * Use the {@link HodRequisitionListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AssignDepRepFragment extends Fragment {
+public class HodRequisitionListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +32,7 @@ public class AssignDepRepFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AssignDepRepFragment() {
+    public HodRequisitionListFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +42,11 @@ public class AssignDepRepFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AssignDepRepFragment.
+     * @return A new instance of fragment HodRequisitionListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AssignDepRepFragment newInstance(String param1, String param2) {
-        AssignDepRepFragment fragment = new AssignDepRepFragment();
+    public static HodRequisitionListFragment newInstance(String param1, String param2) {
+        HodRequisitionListFragment fragment = new HodRequisitionListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,11 +63,27 @@ public class AssignDepRepFragment extends Fragment {
         }
     }
 
+    public void onStart() {
+        super.onStart();
+        // ---Button view---
+        Button btnGetText = (Button) getActivity()
+                .findViewById(R.id.checkbtn);
+        btnGetText.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                HodReqApproveRejectFragment hodReqApproveRejectFragment = new HodReqApproveRejectFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content_frame, hodReqApproveRejectFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_assign_dep_rep, container, false);
+        return inflater.inflate(R.layout.fragment_hod_requisition_list, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

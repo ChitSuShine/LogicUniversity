@@ -12,11 +12,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
 import com.example.team10ad.team10ad.R;
 
 public class HomeActivity extends AppCompatActivity {
@@ -107,25 +106,28 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.report:
                 fragmentClass = ClerkReportFragment.class;
                 break;
-            case R.id.logout:
-                fragmentClass = DashboardFragment.class;
-                break;
-
             // HOD
             case R.id.dashboardHod:
                 fragmentClass = DashboardFragment.class;
+                break;
             case R.id.apprejreq:
-
+                fragmentClass = HodRequisitionListFragment.class;
+                break;
             case R.id.assignDeptRep:
                 fragmentClass = AssignDepRepFragment.class;
+                break;
             case R.id.changeCP:
                 fragmentClass = ChangeCollectionPoint.class;
+                break;
             case R.id.delegateAuthority:
 
             case R.id.trackinghod:
 
             case R.id.reportHod:
 
+            case R.id.logout:
+                fragmentClass = DashboardFragment.class;
+                break;
             default:
                 fragmentClass = DashboardFragment.class;
         }
