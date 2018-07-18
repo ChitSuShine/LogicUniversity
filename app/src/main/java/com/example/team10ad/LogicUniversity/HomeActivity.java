@@ -20,7 +20,7 @@ import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint
 import com.example.team10ad.LogicUniversity.DepartmentHead.DelegateAuthorityFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HODTrackingOrder;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
-import com.example.team10ad.LogicUniversity.DepartmentHead.HodReportFragment;
+//import com.example.team10ad.LogicUniversity.DepartmentHead.HodReportFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ReqListForTrackingOrder;
 import com.example.team10ad.LogicUniversity.Model.User;
@@ -170,8 +170,8 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentClass = ReqListForTrackingOrder.class;
                 break;
             case R.id.reportHod:
-                fragmentClass = HodReportFragment.class;
-                break;
+                //fragmentClass = HodReportFragment.class;
+                //break;
             default:
                 fragmentClass = DashboardFragment.class;
         }
