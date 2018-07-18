@@ -1,5 +1,6 @@
 package com.example.team10ad.LogicUniversity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,13 +13,27 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
+import com.example.team10ad.LogicUniversity.DepartmentHead.DelegateAuthorityFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HODTrackingOrder;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
+//import com.example.team10ad.LogicUniversity.DepartmentHead.HodReportFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ReqListForTrackingOrder;
+import com.example.team10ad.LogicUniversity.Model.User;
+import com.example.team10ad.LogicUniversity.Service.RequisitionService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.UserService;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -30,7 +45,36 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new DashboardFragment(),"dashboardFrag").commit();
+
+        final NavigationView nvDrawer = findViewById(R.id.nav_view);
+        nvDrawer.getMenu().clear();
+
+        // To check user role and set related menu & dashboard
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        UserService userService = ServiceGenerator.createService(UserService.class, token);
+        Call<User> call = userService.getLoginUser();
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    User user = response.body();
+                    if (user.getRole() == Constants.CLERK_ROLE) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new DashboardFragment()).commit();
+                        nvDrawer.inflateMenu(R.menu.activity_home_drawer);
+                    } else if (user.getRole() == Constants.HOD_ROLE) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodDashboardFragment()).commit();
+                        nvDrawer.inflateMenu(R.menu.activity_home_hod);
+                    }
+                } else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -39,15 +83,6 @@ public class HomeActivity extends AppCompatActivity {
         toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
-        NavigationView nvDrawer = findViewById(R.id.nav_view);
-        // Clerk menu
-        //nav.getMenu().clear();
-        //nav.inflateMenu(R.menu.activity_home_drawer);
-
-        // HOD menu
-        nvDrawer.getMenu().clear();
-        nvDrawer.inflateMenu(R.menu.activity_home_hod);
-
         toggle.syncState();
         nvDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -92,6 +127,12 @@ public class HomeActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass;
         int id = menuItem.getItemId();
+        if (id == R.id.logout) {
+            MyApp.getInstance().getPreferenceManager().clearLoginData();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            finish();
+            startActivity(intent);
+        }
         switch (id) {
             // Clerk
             case R.id.dashboard:
@@ -104,14 +145,14 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentClass = RequisitionList.class;
                 break;
             case R.id.tracking:
-                fragmentClass = DashboardFragment.class;
+                fragmentClass = TrackingFragment.class;
                 break;
             case R.id.report:
                 fragmentClass = ClerkReportFragment.class;
                 break;
             // HOD
             case R.id.dashboardHod:
-                fragmentClass = DashboardFragment.class;
+                fragmentClass = HodDashboardFragment.class;
                 break;
             case R.id.apprejreq:
                 fragmentClass = HodRequisitionListFragment.class;
@@ -123,26 +164,20 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentClass = ChangeCollectionPoint.class;
                 break;
             case R.id.delegateAuthority:
-                //HOD tracking order
+                fragmentClass = DelegateAuthorityFragment.class;
+                break;
             case R.id.trackinghod:
-                fragmentClass= ReqListForTrackingOrder.class;
-                //fragmentClass = HODTrackingOrder.class;
+                fragmentClass = ReqListForTrackingOrder.class;
                 break;
-
             case R.id.reportHod:
-
-            case R.id.logout:
-                fragmentClass = DashboardFragment.class;
-                break;
+                //fragmentClass = HodReportFragment.class;
+                //break;
             default:
                 fragmentClass = DashboardFragment.class;
         }
-        try
-        {
+        try {
             fragment = (Fragment) fragmentClass.newInstance();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
