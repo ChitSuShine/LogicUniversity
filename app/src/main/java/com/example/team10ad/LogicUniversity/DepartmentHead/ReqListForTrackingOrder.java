@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,7 +98,12 @@ public class ReqListForTrackingOrder extends Fragment {
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            Toast.makeText(getContext(),"it's working",Toast.LENGTH_LONG).show();
+                            HODTrackingOrder hodTrackingOrder=new HODTrackingOrder();
+                            Bundle b = new Bundle();
+                            b.putString("id", "001");
+                            hodTrackingOrder.setArguments(b);
+                            FragmentManager fragmentManager=getFragmentManager();
+                            fragmentManager.beginTransaction().replace(R.id.content_frame, hodTrackingOrder).commit();
                         }
                     });
                 } else {

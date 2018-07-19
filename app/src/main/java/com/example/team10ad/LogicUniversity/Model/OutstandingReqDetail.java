@@ -16,6 +16,13 @@ public class OutstandingReqDetail {
     @SerializedName("Qty")
     private String Qty;
 
+    @SerializedName("CategoryName")
+    private String CategoryName;
+
+    @SerializedName("UOM")
+    private String UOM;
+
+
     public String getOutReqId() {
         return OutReqId;
     }
@@ -46,5 +53,21 @@ public class OutstandingReqDetail {
 
     public void setQty(String qty) {
         Qty = qty;
+    }
+
+    public String getCategoryName() {
+        return CategoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        CategoryName = categoryName;
+    }
+
+    public String getUOM() {
+        return UOM;
+    }
+
+    public void setUOM(String UOM) {
+        this.UOM = UOM;
     }
 }

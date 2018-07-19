@@ -5,40 +5,40 @@ import com.google.gson.annotations.SerializedName;
 import java.time.LocalDateTime;
 
 public class Delegation {
-    @SerializedName("delid")
+    @SerializedName("Delid")
     private int delId;
 
-    @SerializedName("startdate")
+    @SerializedName("Startdate")
     private LocalDateTime startDate;
 
-    @SerializedName("enddate")
+    @SerializedName("Enddate")
     private LocalDateTime endDate;
 
-    @SerializedName("userid")
+    @SerializedName("Userid")
     private int userId;
 
-    @SerializedName("username")
+    @SerializedName("Username")
     private String username;
 
-    @SerializedName("role")
+    @SerializedName("Role")
     private int role;
 
-    @SerializedName("depname")
+    @SerializedName("Depname")
     private String depName;
 
-    @SerializedName("active")
+    @SerializedName("Active")
     private int active;
 
-    @SerializedName("assignedbyId")
+    @SerializedName("AssignedbyId")
     private int assignedBy;
 
-    @SerializedName("assignedbyusername")
+    @SerializedName("Assignedbyusername")
     private String aUsername;
 
-    @SerializedName("assignedbyrole")
+    @SerializedName("Assignedbyrole")
     private int aRole;
 
-    @SerializedName("assignedbydepname")
+    @SerializedName("Assignedbydepname")
     private String adeptName;
 
     public int getDelId() {

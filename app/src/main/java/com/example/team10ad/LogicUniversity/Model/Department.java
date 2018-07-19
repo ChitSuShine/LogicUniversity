@@ -3,24 +3,28 @@ package com.example.team10ad.LogicUniversity.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class Department {
-    @SerializedName("deptid")
+    @SerializedName("Deptid")
     private int deptId;
 
-    @SerializedName("deptname")
+    @SerializedName("Deptname")
     private String deptName;
 
-    @SerializedName("deptcontactname")
+    @SerializedName("Deptcontactname")
     private String deptContactName;
 
-    @SerializedName("deptphone")
+    @SerializedName("Deptphone")
     private int deptPhone;
 
-    @SerializedName("deptemail")
+    @SerializedName("Deptemail")
     private String deptEmail;
 
-    public int getDeptId() { return deptId; }
+    public int getDeptId() {
+        return deptId;
+    }
 
-    public void setDeptId(int deptId) { this.deptId = deptId; }
+    public void setDeptId(int deptId) {
+        this.deptId = deptId;
+    }
 
     public String getDeptName() {
         return deptName;
@@ -34,7 +38,9 @@ public class Department {
         return deptContactName;
     }
 
-    public void setDeptContactName(String deptContactName) { this.deptContactName = deptContactName; }
+    public void setDeptContactName(String deptContactName) {
+        this.deptContactName = deptContactName;
+    }
 
     public int getDeptPhone() {
         return deptPhone;

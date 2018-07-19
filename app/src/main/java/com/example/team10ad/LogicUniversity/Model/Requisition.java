@@ -6,41 +6,56 @@ import java.util.ArrayList;
 
 public class Requisition {
 
-    @SerializedName("reqid")
+    @SerializedName("Reqid")
     private String reqID;
 
-    @SerializedName("raisedby")
+    @SerializedName("Raisedby")
     private String raisedBy;
 
-    @SerializedName("rasiedbyname")
+    @SerializedName("Rasiedbyname")
     private String rasiedByname;
 
-    @SerializedName("approvedby")
+    @SerializedName("Approvedby")
     private String approvedBy;
 
-    @SerializedName("approvedbyname")
+    @SerializedName("Approvedbyname")
     private String approvedByname;
 
-    @SerializedName("depid")
+    @SerializedName("Depid")
     private String depID;
 
-    @SerializedName("depname")
+    @SerializedName("Depname")
     private String depName;
 
-    @SerializedName("cpid")
+    @SerializedName("Cpid")
     private String cpID;
 
-    @SerializedName("cpname")
+    @SerializedName("Cpname")
     private String cpName;
 
-    @SerializedName("status")
+    @SerializedName("Status")
     private String Status;
 
-    @SerializedName("reqdate")
+    @SerializedName("Reqdate")
     private String reqDate;
 
-    @SerializedName("requisitiondetails")
+    @SerializedName("Requisitiondetails")
     private ArrayList<RequisitionDetail> requisitionDetails;
+
+    public Requisition(){
+        reqID = "";
+        raisedBy = "";
+        rasiedByname = "";
+        approvedBy = "";
+        approvedByname = "";
+        depID = "";
+        depName = "";
+        cpID = "";
+        cpName = "";
+        Status = "";
+        reqDate = "";
+        requisitionDetails = new ArrayList<RequisitionDetail>();
+    }
 
     public String getReqID() {
         return reqID;
