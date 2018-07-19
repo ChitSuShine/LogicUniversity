@@ -145,7 +145,7 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentClass = RequisitionList.class;
                 break;
             case R.id.tracking:
-                fragmentClass = TrackingFragment.class;
+                fragmentClass = ClerkMapDeliveryPoint.class;
                 break;
             case R.id.report:
                 fragmentClass = ClerkReportFragment.class;
