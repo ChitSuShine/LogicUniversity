@@ -4,17 +4,32 @@ import com.google.gson.annotations.SerializedName;
 
 public class RequisitionDetail {
 
-    @SerializedName("reqid")
+    @SerializedName("Reqid")
     private String reqid;
 
-    @SerializedName("itemid")
+    @SerializedName("Itemid")
     private String itemid;
 
-    @SerializedName("qty")
+    @SerializedName("Qty")
     private String qty;
 
-    @SerializedName("itemname")
+    @SerializedName("Itemname")
     private String itemname;
+
+    @SerializedName("CategoryName")
+    private String CategoryName;
+
+    @SerializedName("UOM")
+    private String UOM;
+
+    public RequisitionDetail(){
+        reqid = "";
+        itemid = "";
+        qty = "";
+        itemname = "";
+        CategoryName = "";
+        UOM = "";
+    }
 
     public String getReqid() {
         return reqid;
@@ -46,5 +61,21 @@ public class RequisitionDetail {
 
     public void setItemname(String itemname) {
         this.itemname = itemname;
+    }
+
+    public String getCategoryName() {
+        return CategoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        CategoryName = categoryName;
+    }
+
+    public String getUOM() {
+        return UOM;
+    }
+
+    public void setUOM(String UOM) {
+        this.UOM = UOM;
     }
 }

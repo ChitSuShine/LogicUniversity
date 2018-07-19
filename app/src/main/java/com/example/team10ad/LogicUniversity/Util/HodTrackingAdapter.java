@@ -10,39 +10,39 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.Model.RequisitionDetail;
 import com.example.team10ad.team10ad.R;
 
 import java.util.List;
 
-public class MyAdapter extends ArrayAdapter<Requisition> {
+public class HodTrackingAdapter extends ArrayAdapter<RequisitionDetail>{
 
     int resource;
-    private List<Requisition> items;
+    private List<RequisitionDetail> items;
 
-    public MyAdapter(@NonNull Context context, int resource, @NonNull List<Requisition> items) {
+    public HodTrackingAdapter(@NonNull Context context, int resource, @NonNull List<RequisitionDetail> items) {
         super(context, resource, items);
         this.resource = resource;
         this.items = items;
     }
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(resource, null);
-        TextView req1 = (TextView) v.findViewById(R.id.req1);
-        TextView req2 = (TextView) v.findViewById(R.id.req2);
-        TextView req3 = (TextView) v.findViewById(R.id.req3);
 
-        Requisition r = items.get(position);
+        TextView tracking1 = (TextView) v.findViewById(R.id.tracking1);
+        TextView tracking2 = (TextView) v.findViewById(R.id.tracking2);
+        TextView tracking3 = (TextView) v.findViewById(R.id.tracking3);
+        TextView tracking4 = (TextView) v.findViewById(R.id.tracking4);
 
-        String date = r.getReqDate().substring(0,10);
+        RequisitionDetail requisitionDetail = items.get(position);
+        tracking1.setText(requisitionDetail.getItemname());
+        tracking2.setText(requisitionDetail.getCategoryName());
+        tracking3.setText(requisitionDetail.getQty());
+        tracking4.setText(requisitionDetail.getUOM());
 
-        req1.setText(r.getRasiedByname());
-        req2.setText(date);
-        req3.setText(Constants.STATUS[Integer.parseInt(r.getStatus())]);
         return v;
     }
 

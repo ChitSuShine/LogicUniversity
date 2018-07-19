@@ -3,31 +3,31 @@ package com.example.team10ad.LogicUniversity.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class Disbursement {
-    @SerializedName("disid")
+    @SerializedName("Disid")
     private String disID;
 
-    @SerializedName("reqid")
+    @SerializedName("Reqid")
     private String reqid;
 
-    @SerializedName("status")
+    @SerializedName("Status")
     private String status;
 
-    @SerializedName("ackby")
+    @SerializedName("Ackby")
     private String ackby;
 
-    @SerializedName("username")
+    @SerializedName("Username")
     private String username;
 
     @SerializedName("Departmentname")
     private String Departmentname;
 
-    @SerializedName("cpname")
+    @SerializedName("Cpname")
     private String cpname;
 
-    @SerializedName("reqdate")
+    @SerializedName("Reqdate")
     private String reqdate;
 
-    @SerializedName("disbursementlist")
+    @SerializedName("Disbursementlist")
     private String disbursementlist;
 
     public String getDisID() {

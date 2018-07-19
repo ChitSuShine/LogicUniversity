@@ -7,11 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.Model.Inventory;
+import com.example.team10ad.LogicUniversity.Model.InventoryDetail;
+import com.example.team10ad.LogicUniversity.Service.InventoryDetailService;
 import com.example.team10ad.LogicUniversity.Service.InventoryService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.ClerkInventoryAdapter;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
@@ -30,6 +33,8 @@ public class InventoryFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    List<InventoryDetail> result;
+    ListView inventorylistView;
 
     public InventoryFragment() {
     }
@@ -55,9 +60,28 @@ public class InventoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_retrieval_form, container, false);
+        final View view= inflater.inflate(R.layout.fragment_inventory, container, false);
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        InventoryDetailService inventoryService=ServiceGenerator.createService(InventoryDetailService.class,token);
+        Call<List<InventoryDetail>> call=inventoryService.getAllInventoryDetails();
+        call.enqueue(new Callback<List<InventoryDetail>>() {
+            @Override
+            public void onResponse(Call<List<InventoryDetail>> call, Response<List<InventoryDetail>> response) {
+                if(response.isSuccessful()){
+                    result = response.body();
+                    final ClerkInventoryAdapter adapter = new ClerkInventoryAdapter(getContext(),R.layout.row_clerkinventory,result);
+                    inventorylistView = (ListView) view.findViewById(R.id.inventorylistview);
+                    inventorylistView.setAdapter(adapter);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<InventoryDetail>> call, Throwable t) {
+
+            }
+        });
+
+        return view;
 
     }
 

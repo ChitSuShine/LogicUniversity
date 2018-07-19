@@ -4,17 +4,23 @@ import com.google.gson.annotations.SerializedName;
 
 public class DisbursementDetail {
 
-    @SerializedName("disid")
+    @SerializedName("Disid")
     private String disid;
 
-    @SerializedName("itemid")
+    @SerializedName("Itemid")
     private String itemid;
 
-    @SerializedName("itemname")
+    @SerializedName("Itemname")
     private String itemname;
 
-    @SerializedName("qty")
+    @SerializedName("Qty")
     private String qty;
+
+    @SerializedName("CategoryName")
+    private String CategoryName;
+
+    @SerializedName("UOM")
+    private String UOM;
 
     public String getDisid() {
         return disid;
@@ -46,5 +52,21 @@ public class DisbursementDetail {
 
     public void setQty(String qty) {
         this.qty = qty;
+    }
+
+    public String getCategoryName() {
+        return CategoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        CategoryName = categoryName;
+    }
+
+    public String getUOM() {
+        return UOM;
+    }
+
+    public void setUOM(String UOM) {
+        this.UOM = UOM;
     }
 }
