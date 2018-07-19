@@ -12,11 +12,19 @@ public class CollectionPoint {
     @SerializedName("cplocation")
     private String cpLocation;
 
+    @SerializedName("Latitude")
+    private String latitude;
+
+    @SerializedName("Longitude")
+    private String longitude;
+
     public int getCpId() {
         return cpId;
     }
 
-    public void setCpId(int cpId) { this.cpId = cpId; }
+    public void setCpId(int cpId) {
+        this.cpId = cpId;
+    }
 
     public String getCpName() {
         return cpName;
@@ -32,5 +40,21 @@ public class CollectionPoint {
 
     public void setCpLocation(String cpLocation) {
         this.cpLocation = cpLocation;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }

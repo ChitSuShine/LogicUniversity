@@ -11,11 +11,13 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.team10ad.team10ad.R;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -24,16 +26,23 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Map;
 
+import static android.support.constraint.Constraints.TAG;
+
 public class ClerkMapDeliveryPoint extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private String mParam1;
+    private String mParam2;
+
+    private OnFragmentInteractionListener mListener;
     //map
     private GoogleMap mMap;
     private boolean mLocationPermissionGranted = false;
@@ -41,14 +50,7 @@ public class ClerkMapDeliveryPoint extends Fragment {
     private Marker marker, marker1, marker2;
     private MapView mapFragment;
 
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    public ClerkMapDeliveryPoint() {
-
-    }
+    public ClerkMapDeliveryPoint() { }
 
     public static ClerkMapDeliveryPoint newInstance(String param1, String param2) {
         ClerkMapDeliveryPoint fragment = new ClerkMapDeliveryPoint();
@@ -106,15 +108,6 @@ public class ClerkMapDeliveryPoint extends Fragment {
                 mMap = googleMap;
                 final MarkerOptions myMarker = new MarkerOptions();
 
-                BitmapDrawable bitmapdraw = (BitmapDrawable)getResources()
-                        .getDrawable(R.drawable.marker);
-                Bitmap b = bitmapdraw.getBitmap();
-                Bitmap smallMarker = Bitmap.createScaledBitmap
-                                (b, (int) Math.ceil(b.getWidth()*0.11),
-                                        (int) Math.ceil(b.getHeight()*0.11),
-                                        false);
-
-                myMarker.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
                 LatLng pos = new LatLng(1.3, 103.81);
                 LatLng pos1 = new LatLng(1.3, 103.84);
                 LatLng pos2 = new LatLng(1.3, 103.87);
@@ -125,7 +118,10 @@ public class ClerkMapDeliveryPoint extends Fragment {
                     Marker m = mMap.addMarker(myMarker);
                     m.setTag(s[i]);
                 }
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos1, 11.0f));
+
+                CameraPosition cp = new CameraPosition.Builder().target(pos1).zoom(13).build();
+
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
 
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
@@ -138,11 +134,7 @@ public class ClerkMapDeliveryPoint extends Fragment {
 
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
-                    public void onInfoWindowClick(Marker mark) {
-                /*Intent intent = new Intent(ClerkMapDeliveryPoint.this, Map2Activity.class);
-                intent.putExtra("param", mark.getTag().toString());
-                startActivity(intent);*/
-                    }
+                    public void onInfoWindowClick(Marker mark) { }
                 });
             }
         });
@@ -165,10 +157,8 @@ public class ClerkMapDeliveryPoint extends Fragment {
         mListener = null;
     }
 
-
     public interface OnFragmentInteractionListener {
 
         void onFragmentInteraction(Uri uri);
     }
-
 }
