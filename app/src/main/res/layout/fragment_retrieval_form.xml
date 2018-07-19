@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/invFrame"
-    tools:context="com.example.team10ad.LogicUniversity.InventoryFragment">
+    tools:context="com.example.team10ad.LogicUniversity.Util.RetrievalFormFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:gravity="left"
+            android:gravity="center"
             android:orientation="horizontal"
             android:background="@color/background">
             <!-- row 1 -->
@@ -22,22 +22,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date:"
-                android:textSize="20dp"
+                android:text="Shelf Location:"
+                android:textSize="24dp"
                 android:layout_gravity="left"
-                android:textColor="@color/pinkaccent"
-                android:textStyle="bold"/>
-            <view
-                android:layout_width="20dp"
-                android:layout_height="match_parent"/>
+                android:textColor="@color/pinkaccent"/>
 
             <TextView
                 android:id="@+id/inventoryID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="20dp"
-                android:text="12-05-2017"
+                android:textSize="24dp"
+                android:text="A"
                 android:textColor="@color/pinkaccent"/>
 
             <!-- row 1 end -->

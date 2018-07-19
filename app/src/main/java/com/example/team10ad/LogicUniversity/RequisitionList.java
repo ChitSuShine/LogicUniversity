@@ -12,9 +12,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.team10ad.LogicUniversity.DepartmentHead.HodReqApproveRejectFragment;
+import com.example.team10ad.LogicUniversity.Util.RetrievalFormFragment;
 import com.example.team10ad.team10ad.R;
 
 import java.util.ArrayList;
@@ -43,6 +46,7 @@ public class RequisitionList extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,23 @@ public class RequisitionList extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+    }
+
+    public void onStart() {
+        super.onStart();
+        // ---Button view---
+        Button btnGetText = (Button) getActivity()
+                .findViewById(R.id.submitbtn);
+        btnGetText.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                RetrievalFormFragment retrievalFormFragment = new RetrievalFormFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content_frame, retrievalFormFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     @Override
