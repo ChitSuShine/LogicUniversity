@@ -32,6 +32,7 @@ import com.example.team10ad.LogicUniversity.Service.UserService;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,8 +61,11 @@ public class HomeActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     User user = response.body();
-                    // To retrieve employees of same department for authority delegation
-                    MyApp.getInstance().getPreferenceManager().putString(Constants.DEPARTMENT_ID, Integer.toString(user.getDepId()));
+                    // To store current login user's info
+                    Gson gson = new Gson();
+                    String json = gson.toJson(user);
+                    MyApp.getInstance().getPreferenceManager().putString(Constants.USER_GSON, json);
+
                     if (user.getRole() == Constants.CLERK_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new DashboardFragment()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_drawer);

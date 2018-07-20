@@ -13,7 +13,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FF7F00"
             android:clipToPadding="false"
             android:gravity="center"
             android:orientation="horizontal">
@@ -22,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Employee List"
+                android:text="Please set delegation period"
                 android:textSize="24dp" />
         </LinearLayout>
 
@@ -35,7 +34,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="107dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="From:" />
@@ -48,16 +47,24 @@
                 android:hint="Start Date"
                 android:padding="8dp"
                 android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="134dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="To:" />
 
             <EditText
                 android:id="@+id/endDate"
-                android:layout_width="119dp"
+                android:layout_width="133dp"
                 android:layout_height="wrap_content"
                 android:background="#d4d4d4"
                 android:hint="End Date"
@@ -65,124 +72,18 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
-            <!--Name Label -->
-            <LinearLayout
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_delegate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#aaaaaa"
-                    android:padding="8dp"
-                    android:text="Name:" />
-            </LinearLayout>
-
-            <!-- Position Label -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#aaaaaa"
-                    android:padding="8dp"
-                    android:text="Position:" />
-            </LinearLayout>
-
-            <!-- Delegate Label -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#aaaaaa"
-                    android:padding="8dp"
-                    android:text="Delegate" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textname"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:text="AHtet" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textpostion"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:text="Department Rep" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <info.hoang8f.android.segmented.SegmentedGroup xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/segmented2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal"
-                    segmentedgroup:sc_border_width="2dp"
-                    segmentedgroup:sc_corner_radius="10dp">
-
-                    <RadioButton
-                        android:id="@+id/button21"
-                        style="@style/RadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Yes" />
-
-                    <RadioButton
-                        android:id="@+id/button22"
-                        style="@style/RadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="No" />
-
-                </info.hoang8f.android.segmented.SegmentedGroup>
-            </LinearLayout>
+                android:text="Delegate"/>
         </LinearLayout>
     </LinearLayout>
 

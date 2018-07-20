@@ -3,16 +3,17 @@ package com.example.team10ad.LogicUniversity.Model;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Delegation {
     @SerializedName("Delid")
     private int delId;
 
     @SerializedName("Startdate")
-    private LocalDateTime startDate;
+    private String startDate;
 
     @SerializedName("Enddate")
-    private LocalDateTime endDate;
+    private String endDate;
 
     @SerializedName("Userid")
     private int userId;
@@ -49,19 +50,19 @@ public class Delegation {
         this.delId = delId;
     }
 
-    public LocalDateTime getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

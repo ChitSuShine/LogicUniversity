@@ -1,5 +1,6 @@
 package com.example.team10ad.LogicUniversity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,7 +61,16 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(LoginActivity.this, Constants.INVALID_INFO, Toast.LENGTH_SHORT).show();
+                    new android.support.v7.app.AlertDialog.Builder(LoginActivity.this)
+                            .setTitle(Constants.WARNING_MSG)
+                            .setMessage(Constants.INVALID_INFO)
+                            .setPositiveButton(Constants.OK, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
                 }
             }
 
