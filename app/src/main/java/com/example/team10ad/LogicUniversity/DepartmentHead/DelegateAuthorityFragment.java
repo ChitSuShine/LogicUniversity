@@ -1,34 +1,37 @@
 package com.example.team10ad.LogicUniversity.DepartmentHead;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Model.User;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.UserService;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
+import com.example.team10ad.LogicUniversity.Util.UserAdapter;
 import com.example.team10ad.team10ad.R;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class DelegateAuthorityFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-   private EditText date;
-   DatePickerDialog datePickerDialog;
-
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -38,18 +41,14 @@ public class DelegateAuthorityFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    List<User> resultedUsers;
+    ListView employeeDetailView;
+
     public DelegateAuthorityFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DelegateAuthorityFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static DelegateAuthorityFragment newInstance(String param1, String param2) {
         DelegateAuthorityFragment fragment = new DelegateAuthorityFragment();
@@ -63,83 +62,51 @@ public class DelegateAuthorityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Date= (EditText)getActivity().findViewById(R.id.Date);
-//        Date.setFocusable(false); // disable editing of this field
-//        Date.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(final View v) {
-//                //chooseDate();
-//            }
-//        });
-
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
-
-//    private void chooseDate() {
-//        final Calendar calendar = Calendar.getInstance();
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH);
-//        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        DatePickerDialog datePicker =
-//                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(final DatePicker view, final int year, final int month,
-//                                          final int dayOfMonth) {
-//
-//                        @SuppressLint("SimpleDateFormat")
-//                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//                        calendar.set(year, month, dayOfMonth);
-//                        String dateString = sdf.format(calendar.getTime());
-//
-//                        Date.setText(dateString); // set the date
-//                    }
-//                }, year, month, day); // set date picker to current date
-//
-//        datePicker.show();
-//
-//        datePicker.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//            @Override
-//            public void onCancel(final DialogInterface dialog) {
-//                dialog.dismiss();
-//            }
-//        });
-//    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // return inflater.inflate(R.layout.fragment_delegate_authority, container, false);
-        View v=inflater.inflate(R.layout.fragment_delegate_authority, container, false);
-        date = (EditText)v.findViewById(R.id.date);
-        // perform click event on edit text
-        date.setOnClickListener(new View.OnClickListener() {
+        final View view = inflater.inflate(R.layout.fragment_delegate_authority, container, false);
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        UserService userService = ServiceGenerator.createService(UserService.class, token);
+        Call<List<User>> call = userService.getUsersByDeptId(Integer.parseInt(MyApp.getInstance().getPreferenceManager().getString(Constants.DEPARTMENT_ID)));
+        call.enqueue(new Callback<List<User>>() {
             @Override
-            public void onClick(View v) {
-                // calender class's instance and get current date , month and year from calender
-                final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR); // current year
-                int mMonth = c.get(Calendar.MONTH); // current month
-                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-                // date picker dialog
-                datePickerDialog = new DatePickerDialog(getActivity(),
-                        new DatePickerDialog.OnDateSetListener() {
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful()) {
+                    resultedUsers = response.body();
+                    final UserAdapter adapter = new UserAdapter(getContext(), R.layout.row_usersforhod, resultedUsers);
+                    employeeDetailView = (ListView) view.findViewById(R.id.employeeListView);
+                    employeeDetailView.setAdapter(adapter);
+                    employeeDetailView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            DelegateDetailFragment detailFragment = new DelegateDetailFragment();
+                            /*HODTrackingOrder hodTrackingOrder = new HODTrackingOrder();
+                            Bundle b = new Bundle();
+                            b.putString("id", "001");
+                            hodTrackingOrder.setArguments(b);*/
+                            FragmentManager fragmentManager = getFragmentManager();
+                            fragmentManager.beginTransaction().replace(R.id.content_frame, detailFragment).commit();
+                        }
+                    });
+                } else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
 
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // set day of month , month and year value in the edit text
-                                date.setText(dayOfMonth + "/"
-                                        + (monthOfYear + 1) + "/" + year);
-
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
             }
         });
-
-return v;
-
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -160,16 +127,6 @@ return v;
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

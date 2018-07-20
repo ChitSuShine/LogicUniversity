@@ -60,6 +60,8 @@ public class HomeActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     User user = response.body();
+                    // To retrieve employees of same department for authority delegation
+                    MyApp.getInstance().getPreferenceManager().putString(Constants.DEPARTMENT_ID, Integer.toString(user.getDepId()));
                     if (user.getRole() == Constants.CLERK_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new DashboardFragment()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_drawer);
