@@ -13,6 +13,6 @@ public interface UserService {
     @GET("user")
     Call<User> getLoginUser();
 
-    @GET("user/department/{id}")
+    @GET("user/hod/{id}")
     Call<List<User>> getUsersByDeptId(@Path("id") int id);
 }

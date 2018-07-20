@@ -17,7 +17,6 @@
             android:id="@+id/employeeName"
             android:layout_width="219dp"
             android:layout_height="56dp"
-            android:paddingTop="20dp"
-            android:text="Shine"/>
+            android:paddingTop="20dp"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
