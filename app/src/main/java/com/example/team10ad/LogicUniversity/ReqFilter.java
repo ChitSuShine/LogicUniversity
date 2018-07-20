@@ -77,21 +77,23 @@ public class ReqFilter extends DialogFragment {
             public void onResponse(Call<List<Department>> call, Response<List<Department>> response) {
                 if(response.isSuccessful()){
                     LinearLayout ll = (LinearLayout) view.findViewById(R.id.testlayout);
-                    final CheckBox[] cbs = new CheckBox[6];
+                    List<Department> list = new ArrayList<>();
+                    list = response.body();
+                    final CheckBox[] cbs = new CheckBox[list.size()];
 
-                    final CheckBox selectall = new CheckBox(getContext());
-                    ll.addView(selectall);
+                    final CheckBox selectAll = new CheckBox(getContext());
+                    ll.addView(selectAll);
 
                     for(int i = 0; i < cbs.length; i++) {
 
                         CheckBox cb = new CheckBox(getContext());
-                        cb.setText("");
-                        cb.setTag(i);
+                        cb.setText(list.get(i).getDeptName());
+                        cb.setTag(list.get(i).getDeptId());
                         cbs[i] = cb;
                         ll.addView(cb);
                     }
 
-                    selectall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                             boolean all = true;
@@ -101,7 +103,7 @@ public class ReqFilter extends DialogFragment {
                                     break;
                                 }
                             }
-                            if(!selectall.isChecked()){
+                            if(!selectAll.isChecked()){
                                 for(CheckBox z : cbs)
                                     z.setChecked(false);
                             } else {

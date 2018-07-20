@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,7 @@ public class HodDashboardFragment extends Fragment {
         cardapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HodReqApproveRejectFragment hodapprej=new HodReqApproveRejectFragment();
+                HodRequisitionListFragment hodapprej=new HodRequisitionListFragment();
                 FragmentManager fragmentManager=getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, hodapprej).commit();
             }
@@ -63,8 +64,10 @@ public class HodDashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 DelegateAuthorityFragment hoddelegate=new DelegateAuthorityFragment();
-                FragmentManager fragmentManager=getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, hoddelegate).commit();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content_frame, hoddelegate);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         //assign
@@ -73,8 +76,10 @@ public class HodDashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AssignDepRepFragment hodassign=new AssignDepRepFragment();
-                FragmentManager fragmentManager=getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, hodassign).commit();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content_frame, hodassign);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         //tracking
@@ -83,8 +88,10 @@ public class HodDashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ReqListForTrackingOrder hodtracking=new ReqListForTrackingOrder();
-                FragmentManager fragmentManager=getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, hodtracking).commit();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content_frame, hodtracking);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         //change collection point
@@ -93,8 +100,10 @@ public class HodDashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ChangeCollectionPoint hodcollect=new ChangeCollectionPoint();
-                FragmentManager fragmentManager=getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, hodcollect).commit();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content_frame, hodcollect);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         //report
@@ -103,8 +112,10 @@ public class HodDashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 HODReport hodreport=new HODReport();
-                FragmentManager fragmentManager=getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, hodreport).commit();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content_frame, hodreport);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
