@@ -2,6 +2,7 @@ package com.example.team10ad.LogicUniversity;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -96,7 +97,7 @@ public class Report1Fragment extends Fragment {
         chart.setDrawGridBackground(false);
 
 
-        int groupCount = 6;
+        int groupCount = 3;
 
         ArrayList xVals = new ArrayList();
 
@@ -109,26 +110,29 @@ public class Report1Fragment extends Fragment {
 
         ArrayList yVals1 = new ArrayList();
         ArrayList yVals2 = new ArrayList();
+        ArrayList yVals3 = new ArrayList();
 
         yVals1.add(new BarEntry(1, (float) 1));
         yVals2.add(new BarEntry(1, (float) 2));
-        yVals1.add(new BarEntry(2, (float) 3));
-        yVals2.add(new BarEntry(2, (float) 4));
-        yVals1.add(new BarEntry(3, (float) 5));
-        yVals2.add(new BarEntry(3, (float) 6));
-        yVals1.add(new BarEntry(4, (float) 7));
-        yVals2.add(new BarEntry(4, (float) 8));
-        yVals1.add(new BarEntry(5, (float) 9));
-        yVals2.add(new BarEntry(5, (float) 10));
-        yVals1.add(new BarEntry(6, (float) 11));
-        yVals2.add(new BarEntry(6, (float) 12));
+        yVals3.add(new BarEntry(1, (float) 3));
+        yVals1.add(new BarEntry(2, (float) 4));
+        yVals2.add(new BarEntry(2, (float) 5));
+        yVals3.add(new BarEntry(2, (float) 6));
+        yVals1.add(new BarEntry(3, (float) 7));
+        yVals2.add(new BarEntry(3, (float) 8));
+        yVals3.add(new BarEntry(3, (float) 9));
+        yVals1.add(new BarEntry(4, (float) 10));
+        yVals2.add(new BarEntry(4, (float) 11));
+        yVals3.add(new BarEntry(4, (float) 12));
 
-        BarDataSet set1, set2;
+        BarDataSet set1, set2, set3;
         set1 = new BarDataSet(yVals1, "A");
-        set1.setColor(Color.RED);
+        set1.setColor(Color.BLUE);
         set2 = new BarDataSet(yVals2, "B");
-        set2.setColor(Color.BLUE);
-        BarData data = new BarData(set1, set2);
+        set2.setColor(Color.GRAY);
+        set3 = new BarDataSet(yVals3, "C");
+        set3.setColor(Color.LTGRAY);
+        BarData data = new BarData(set1, set2, set3);
         data.setValueFormatter(new LargeValueFormatter());
         chart.setData(data);
         chart.getBarData().setBarWidth(barWidth);
