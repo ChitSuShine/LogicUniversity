@@ -11,8 +11,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
@@ -105,18 +107,15 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
         }
@@ -127,10 +126,11 @@ public class HomeActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass;
         int id = menuItem.getItemId();
+
+        //logout
         if (id == R.id.logout) {
             MyApp.getInstance().getPreferenceManager().clearLoginData();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            finish();
             startActivity(intent);
         }
         switch (id) {
@@ -150,6 +150,7 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.report:
                 fragmentClass = ClerkReportFragment.class;
                 break;
+
             // HOD
             case R.id.dashboardHod:
                 fragmentClass = HodDashboardFragment.class;
@@ -185,5 +186,9 @@ public class HomeActivity extends AppCompatActivity {
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
+
     }
+
+
+
 }

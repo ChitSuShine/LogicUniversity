@@ -13,6 +13,9 @@ public class RequisitionDetail {
     @SerializedName("Qty")
     private String qty;
 
+    @SerializedName("Stock")
+    private String Stock;
+
     @SerializedName("Itemname")
     private String itemname;
 
@@ -53,6 +56,13 @@ public class RequisitionDetail {
 
     public void setQty(String qty) {
         this.qty = qty;
+    }
+
+    public String getStock() { return Stock;
+    }
+
+    public void setStock(String stock) {
+        Stock = stock;
     }
 
     public String getItemname() {

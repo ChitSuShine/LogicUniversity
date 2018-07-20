@@ -100,7 +100,7 @@ public class ReqListForTrackingOrder extends Fragment {
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             HODTrackingOrder hodTrackingOrder=new HODTrackingOrder();
                             Bundle b = new Bundle();
-                            b.putString("id", "001");
+                            b.putString("id", result.get(i).getReqID());
                             hodTrackingOrder.setArguments(b);
                             FragmentManager fragmentManager=getFragmentManager();
                             fragmentManager.beginTransaction().replace(R.id.content_frame, hodTrackingOrder).commit();
