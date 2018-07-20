@@ -9,8 +9,10 @@ public class Constants {
     public static final String BEARER = "bearer ";
     public static final String KEY_ACCESS_TOKEN = "access_token";
     public static final String AUTHORIZATION = "Authorization";
+    public static final String DEPARTMENT_ID = "dept_id";
     public static final int CLERK_ROLE = 1;
     public static final int HOD_ROLE = 4;
+
     // Constants for Error Messages
     public static final String NETWORK_ERROR_MSG = "Cannot connect the network!";
     public static final String INVALID_INFO = "Invalid username and password!";

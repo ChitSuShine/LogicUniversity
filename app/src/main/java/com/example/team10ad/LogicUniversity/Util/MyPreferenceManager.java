@@ -29,6 +29,7 @@ public class MyPreferenceManager {
     //Method to clear the access token of the application.
     public void clearLoginData() {
         editor.remove(Constants.KEY_ACCESS_TOKEN);
+        editor.remove(Constants.DEPARTMENT_ID);
         editor.apply();
     }
 }
