@@ -60,8 +60,7 @@ public class RequisitionList extends Fragment {
     public void onStart() {
         super.onStart();
         // ---Button view---
-        Button btnGetText = (Button) getActivity()
-                .findViewById(R.id.submitbtn);
+        Button btnGetText = (Button) getActivity().findViewById(R.id.submitbtn);
         btnGetText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 RetrievalFormFragment retrievalFormFragment = new RetrievalFormFragment();

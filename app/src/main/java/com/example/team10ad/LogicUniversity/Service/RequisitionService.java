@@ -6,8 +6,12 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface RequisitionService {
     @GET("requisition")
     Call<List<Requisition>> getAllRequisitions();
+
+    @GET("requisition/reqid/{id}")
+    Call<Requisition> getReqById(@Path("id") String id);
 }
