@@ -22,6 +22,23 @@ public class Inventory {
     @SerializedName("ReorderQty")
     private String ReorderQty;
 
+    @SerializedName("CategoryName")
+    private String CategoryName;
+
+    @SerializedName("UOM")
+    private String UOM;
+
+    public Inventory(){
+        Invid = "";
+        Itemid = "";
+        ItemDescription = "";
+        Stock = "";
+        ReorderLevel = "";
+        ReorderQty = "";
+        CategoryName = "";
+        UOM = "";
+    }
+
     public String getInvid() {
         return Invid;
     }
@@ -68,5 +85,21 @@ public class Inventory {
 
     public void setReorderQty(String reorderQty) {
         ReorderQty = reorderQty;
+    }
+
+    public String getCategoryName() {
+        return CategoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        CategoryName = categoryName;
+    }
+
+    public String getUOM() {
+        return UOM;
+    }
+
+    public void setUOM(String UOM) {
+        this.UOM = UOM;
     }
 }

@@ -1,26 +1,35 @@
 package com.example.team10ad.LogicUniversity.DepartmentHead;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
 
 import com.example.team10ad.team10ad.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DelegateAuthorityFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DelegateAuthorityFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+
 public class DelegateAuthorityFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+   private EditText date;
+   DatePickerDialog datePickerDialog;
+
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -29,7 +38,6 @@ public class DelegateAuthorityFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
     public DelegateAuthorityFragment() {
         // Required empty public constructor
     }
@@ -55,17 +63,83 @@ public class DelegateAuthorityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+//        Date= (EditText)getActivity().findViewById(R.id.Date);
+//        Date.setFocusable(false); // disable editing of this field
+//        Date.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(final View v) {
+//                //chooseDate();
+//            }
+//        });
+
     }
+
+//    private void chooseDate() {
+//        final Calendar calendar = Calendar.getInstance();
+//        int year = calendar.get(Calendar.YEAR);
+//        int month = calendar.get(Calendar.MONTH);
+//        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+//        DatePickerDialog datePicker =
+//                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(final DatePicker view, final int year, final int month,
+//                                          final int dayOfMonth) {
+//
+//                        @SuppressLint("SimpleDateFormat")
+//                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//                        calendar.set(year, month, dayOfMonth);
+//                        String dateString = sdf.format(calendar.getTime());
+//
+//                        Date.setText(dateString); // set the date
+//                    }
+//                }, year, month, day); // set date picker to current date
+//
+//        datePicker.show();
+//
+//        datePicker.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//            @Override
+//            public void onCancel(final DialogInterface dialog) {
+//                dialog.dismiss();
+//            }
+//        });
+//    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_delegate_authority, container, false);
+        // return inflater.inflate(R.layout.fragment_delegate_authority, container, false);
+        View v=inflater.inflate(R.layout.fragment_delegate_authority, container, false);
+        date = (EditText)v.findViewById(R.id.date);
+        // perform click event on edit text
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // calender class's instance and get current date , month and year from calender
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR); // current year
+                int mMonth = c.get(Calendar.MONTH); // current month
+                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                // date picker dialog
+                datePickerDialog = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                date.setText(dayOfMonth + "/"
+                                        + (monthOfYear + 1) + "/" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
+
+return v;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -101,3 +175,4 @@ public class DelegateAuthorityFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 }
+

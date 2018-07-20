@@ -3,13 +3,13 @@ package com.example.team10ad.LogicUniversity.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class CollectionPoint {
-    @SerializedName("cpid")
+    @SerializedName("Cpid")
     private int cpId;
 
-    @SerializedName("cpname")
+    @SerializedName("Cpname")
     private String cpName;
 
-    @SerializedName("cplocation")
+    @SerializedName("Cplocation")
     private String cpLocation;
 
     @SerializedName("Latitude")

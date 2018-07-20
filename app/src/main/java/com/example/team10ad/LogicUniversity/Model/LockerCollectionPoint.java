@@ -4,22 +4,22 @@ import com.google.gson.annotations.SerializedName;
 
 public class LockerCollectionPoint {
 
-    @SerializedName("lockerid")
+    @SerializedName("Lockerid")
     private String lockerid;
 
-    @SerializedName("lockername")
+    @SerializedName("Lockername")
     private String lockername;
 
-    @SerializedName("lockersize")
+    @SerializedName("Lockersize")
     private String lockersize;
 
-    @SerializedName("cpid")
+    @SerializedName("Cpid")
     private String cpid;
 
-    @SerializedName("status")
+    @SerializedName("Status")
     private String status;
 
-    @SerializedName("cpname")
+    @SerializedName("Cpname")
     private String cpname;
 
     public String getLockerid() {
