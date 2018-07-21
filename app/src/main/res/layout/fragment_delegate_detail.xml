@@ -34,19 +34,36 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="107dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="From:" />
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/startDate"
-                android:layout_width="108dp"
-                android:layout_height="wrap_content"
-                android:background="#d4d4d4"
-                android:hint="Start Date"
-                android:padding="8dp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/startdate"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundedborderedit"
+                    android:hint="Start Date"
+                    android:padding="8dp"
+
+                    />
+                <ImageButton
+                    android:id="@+id/startdatebtn"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:src="@drawable/calendar"
+                    android:layout_alignRight="@id/startdate"
+
+
+                    />
+            </RelativeLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -57,19 +74,37 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="134dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="To:" />
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/endDate"
-                android:layout_width="133dp"
-                android:layout_height="wrap_content"
-                android:background="#d4d4d4"
-                android:hint="End Date"
-                android:padding="8dp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/enddate"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundedborderedit"
+                    android:hint="End Date"
+                    android:padding="8dp"
+
+                    />
+                <ImageButton
+                    android:id="@+id/enddatebtn"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:src="@drawable/calendar"
+                    android:layout_alignRight="@id/enddate"
+
+
+                    />
+            </RelativeLayout>
+
+
         </LinearLayout>
 
         <LinearLayout
