@@ -42,6 +42,7 @@ public class HodReqApproveRejectFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     Requisition result;
     ListView reqDetaillistview;
+    private String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
 
     public HodReqApproveRejectFragment() {
@@ -75,7 +76,7 @@ public class HodReqApproveRejectFragment extends Fragment {
         String json=MyApp.getInstance().getPreferenceManager().getString(REJECT_GSON);
         final Requisition requisition=gson.fromJson(json,Requisition.class);
 
-        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        //String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         final RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
         Call<Requisition> call = requisitionService.getReqById(id);
         call.enqueue(new Callback<Requisition>() {
@@ -108,6 +109,7 @@ public class HodReqApproveRejectFragment extends Fragment {
         rejectreq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
                 Call<Requisition> rejcall = requisitionService.rejectRequisition(result);
                 rejcall.enqueue(new Callback<Requisition>() {
                     @Override
@@ -116,7 +118,7 @@ public class HodReqApproveRejectFragment extends Fragment {
                             result=response.body();
                             TextView status=view.findViewById(R.id.hodstatus);
                             if(result.getStatus().equals(0)){
-                               // status.setText();
+                               //status.setText("1");
                             }
                             Toast.makeText(getContext(),"rejected",Toast.LENGTH_LONG).show();
                         }
