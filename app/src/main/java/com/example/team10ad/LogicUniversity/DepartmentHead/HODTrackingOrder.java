@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.LogicUniversity.Model.RequisitionDetail;
@@ -37,7 +38,7 @@ public class HODTrackingOrder extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private static final String[] STATE = {"ONE", "TWO", "THREE", "FOUR"};
+    private static final String[] STATE = {"ONE", "ONE", "ONE", "TWO", "THREE", "FOUR", "FOUR"};
 
     private OnFragmentInteractionListener mListener;
     Requisition result;
@@ -72,17 +73,39 @@ public class HODTrackingOrder extends Fragment {
         Bundle b = this.getArguments();
         String id = b.getString("id");
         final View view= inflater.inflate(R.layout.fragment_hodtracking_order, container, false);
+
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
         Call<Requisition> call = requisitionService.getReqById(id);
+
         call.enqueue(new Callback<Requisition>() {
             @Override
             public void onResponse(Call<Requisition> call, Response<Requisition> response) {
-                result = response.body();
-                List<RequisitionDetail> details = result.getRequisitionDetails();
-                final HodTrackingAdapter adapter = new HodTrackingAdapter(getContext(),R.layout.row_hodtracking,details);
-                reqDetaillistview = (ListView) view.findViewById(R.id.hodtrackinglistview);
-                reqDetaillistview.setAdapter(adapter);
+                if(response.isSuccessful()){
+                    result = response.body();
+                    TextView tv1 = (TextView) view.findViewById(R.id.raisedBy);
+                    TextView tv2 = (TextView) view.findViewById(R.id.raisedbydate);
+                    TextView tv3 = (TextView) view.findViewById(R.id.collectionpoint);
+                    TextView tv4 = (TextView) view.findViewById(R.id.apprBy);
+                    tv1.setText(result.getRasiedByname());
+                    tv2.setText(result.getReqDate());
+                    tv3.setText(result.getCpName());
+                    tv4.setText(result.getApprovedByname());
+
+                    StateProgressBar stateProgressBar =
+                            (StateProgressBar) view.findViewById(R.id.your_state_progress_bar_id);
+                    stateProgressBar.setStateDescriptionData(descriptionData);
+                    stateProgressBar.setCurrentStateNumber(StateProgressBar
+                            .StateNumber.valueOf(STATE[Integer.parseInt(result.getStatus())]));
+
+                    List<RequisitionDetail> details = result.getRequisitionDetails();
+                    final HodTrackingAdapter adapter = new HodTrackingAdapter(getContext(),R.layout.row_hodtracking,details);
+                    reqDetaillistview = (ListView) view.findViewById(R.id.hodtrackinglistview);
+                    reqDetaillistview.setAdapter(adapter);
+                }
+                else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -92,9 +115,7 @@ public class HODTrackingOrder extends Fragment {
         });
         StateProgressBar stateProgressBar = (StateProgressBar) view.findViewById(R.id.your_state_progress_bar_id);
         stateProgressBar.setStateDescriptionData(descriptionData);
-        stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.valueOf(STATE[0]));
-        TextView v = (TextView) view.findViewById(R.id.reqdetailid);
-        v.setText(id);
+        stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.valueOf(STATE[6-3]));
         return  view;
     }
 

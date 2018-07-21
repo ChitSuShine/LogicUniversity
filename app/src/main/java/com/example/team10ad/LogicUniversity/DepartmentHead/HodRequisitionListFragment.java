@@ -58,26 +58,12 @@ public class HodRequisitionListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
-   /* public void onStart() {
-        super.onStart();
-        // ---Button view---
-        Button btnGetText = (Button) getActivity().findViewById(R.id.hodreqcheck);
-        btnGetText.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                HodReqApproveRejectFragment hodReqApproveRejectFragment = new HodReqApproveRejectFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content_frame, hodReqApproveRejectFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-    }*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_hod_requisition_list, container, false);
+
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
         Call<List<Requisition>> call = requisitionService.getAllRequisitions();
@@ -86,21 +72,9 @@ public class HodRequisitionListFragment extends Fragment {
             public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
                 if(response.isSuccessful()){
                     result=response.body();
-                    Toast.makeText(getActivity(),"It's working",Toast.LENGTH_LONG).show();
                     final HodReqListAdapter adapter = new HodReqListAdapter(getContext(),R.layout.row_hodreqlist,result);
                     listView = (ListView) view.findViewById(R.id.hodtrackinglistview);
                     listView.setAdapter(adapter);
-                    /*Button btnGetText = (Button) view.findViewById(R.id.hodreqcheck);
-                    btnGetText.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            HodReqApproveRejectFragment hodReqApproveRejectFragment = new HodReqApproveRejectFragment();
-                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction.replace(R.id.content_frame, hodReqApproveRejectFragment);
-                            fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
-                        }
-                    });*/
                 }
                 else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();

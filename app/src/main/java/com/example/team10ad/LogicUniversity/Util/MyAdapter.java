@@ -38,7 +38,7 @@ public class MyAdapter extends ArrayAdapter<Requisition> {
 
         Requisition r = items.get(position);
 
-        String date = r.getReqDate().substring(0,10);
+        String date = r.getReqDate();
 
         req1.setText(r.getRasiedByname());
         req2.setText(date);
