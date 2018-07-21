@@ -8,6 +8,7 @@ public class Constants {
     public static final String KEY_ACCESS_TOKEN = "access_token";
     public static final String AUTHORIZATION = "Authorization";
     public static final String USER_GSON = "user";
+    public static final String REJECT_GSON = "reject";
     public static final String OK = "OK";
 
     // Constants for user roles
