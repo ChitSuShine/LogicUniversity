@@ -17,10 +17,56 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/currentEmployeeName"
+                android:id="@+id/label_currentEmployeeName"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:text="Current Staff: " />
+                android:text="Current Employee Name: " />
+
+            <TextView
+                android:id="@+id/currentEmployeeName"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"/>
+
+            <TextView
+                android:id="@+id/label_delegateStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="Start Date: " />
+
+            <TextView
+                android:id="@+id/delegateStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"/>
+
+            <TextView
+                android:id="@+id/delegateEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="End Date: " />
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/dateLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/selectedEndDate"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundedborderedit"
+                    android:padding="8dp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_endDate"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@id/selectedEndDate"
+                    android:padding="5dp"
+                    android:src="@drawable/calendar"
+                    />
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/btn_delegateUpdate"

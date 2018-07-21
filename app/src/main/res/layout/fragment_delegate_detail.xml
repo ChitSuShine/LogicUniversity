@@ -25,6 +25,27 @@
                 android:textSize="24dp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Name: " />
+
+            <TextView
+                android:id="@+id/delegatedUserName"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
         <!-- Date Picker -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,27 +59,28 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="From:" />
+
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/startdate"
+                    android:id="@+id/startDate"
                     android:layout_width="125dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/roundedborderedit"
-                    android:hint="Start Date"
                     android:padding="8dp"
 
                     />
+
                 <ImageButton
-                    android:id="@+id/startdatebtn"
+                    android:id="@+id/btn_startDate"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
+                    android:layout_alignRight="@id/startDate"
                     android:padding="5dp"
                     android:src="@drawable/calendar"
-                    android:layout_alignRight="@id/startdate"
 
 
                     />
@@ -78,33 +100,27 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="To:" />
+
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/enddate"
+                    android:id="@+id/endDate"
                     android:layout_width="125dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/roundedborderedit"
-                    android:hint="End Date"
-                    android:padding="8dp"
+                    android:padding="8dp"/>
 
-                    />
                 <ImageButton
-                    android:id="@+id/enddatebtn"
+                    android:id="@+id/btn_endDate"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
+                    android:layout_alignRight="@id/endDate"
                     android:padding="5dp"
-                    android:src="@drawable/calendar"
-                    android:layout_alignRight="@id/enddate"
-
-
-                    />
+                    android:src="@drawable/calendar"/>
             </RelativeLayout>
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -118,7 +134,7 @@
                 android:id="@+id/btn_delegate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Delegate"/>
+                android:text="Delegate" />
         </LinearLayout>
     </LinearLayout>
 

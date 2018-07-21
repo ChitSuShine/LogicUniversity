@@ -12,6 +12,12 @@ public interface DelegationService {
     @GET("delegation/search/{id}")
     Call<Delegation> getAuthorityUser(@Path("id") int id);
 
+    @POST("delegation/create")
+    Call<Delegation> createDelegation(@Body Delegation delegation);
+
+    @POST("delegation/update")
+    Call<Delegation> updateDelegation(@Body Delegation delegation);
+
     @POST("delegation/cancel")
     Call<Delegation> cancelDelegation(@Body Delegation delegation);
 }
