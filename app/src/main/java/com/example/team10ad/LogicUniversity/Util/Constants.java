@@ -23,6 +23,10 @@ public class Constants {
     // Constants for LoginActivity
     public static final String WARNING_MSG = "Warning Message";
 
+    // Constants for AssignDepRepFragment
+    public static final String ASSIGN_DEP_REP = "Assign Department Representative";
+    public static final String ASSIGN_CONFIRM_MSG = "Are you sure to assign authority?";
+
     // Constants for DelegateAuthorityFragment
     public static final String DELEGATE_AUTHORITY = "Delegate Authority";
     public static final String DELEGATE_CONFIRM_MSG = "Are you sure to remove authority?";
