@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,6 +85,31 @@ public class DelegateAuthorityFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_delegate_authority, container, false);
 
+        final TextView selectedEndDate = view.findViewById(R.id.selectedEndDate);
+        ImageButton endDateButton=view.findViewById(R.id.btn_endDate);
+        endDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR); // current year
+                int mMonth = c.get(Calendar.MONTH); // current month
+                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                // startDate picker dialog
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                selectedEndDate.setText(year + "-"
+                                        + (monthOfYear + 1) + "-" + dayOfMonth);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
+
         // Getting current user's info & store in shared preferences
         Gson gson = new Gson();
         String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
@@ -105,10 +131,12 @@ public class DelegateAuthorityFragment extends Fragment {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             DelegateDetailFragment detailFragment = new DelegateDetailFragment();
-                            /*HODTrackingOrder hodTrackingOrder = new HODTrackingOrder();
+                            User delegatedUser = resultedUsers.get(i);
+                            Gson gson = new Gson();
+                            String json = gson.toJson(delegatedUser);
                             Bundle b = new Bundle();
-                            b.putString("id", "001");
-                            hodTrackingOrder.setArguments(b);*/
+                            b.putString(Constants.DELEGATED_USER, json);
+                            detailFragment.setArguments(b);
                             FragmentManager fragmentManager = getFragmentManager();
                             fragmentManager.beginTransaction().replace(R.id.content_frame, detailFragment).commit();
                         }
@@ -128,8 +156,25 @@ public class DelegateAuthorityFragment extends Fragment {
         Button updateDelegation = view.findViewById(R.id.btn_delegateUpdate);
         updateDelegation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View viewClick) {
+                DelegationService delegationService = ServiceGenerator.createService(DelegationService.class, token);
+                delegation.setEndDate(selectedEndDate.getText().toString());
+                Call<Delegation> dCall = delegationService.updateDelegation(delegation);
+                dCall.enqueue(new Callback<Delegation>() {
+                    @Override
+                    public void onResponse(Call<Delegation> call, Response<Delegation> response) {
+                        if (response.isSuccessful()) {
+                            getPreviousAuthority(user, view);
+                        } else {
+                            Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<Delegation> call, Throwable t) {
+                        Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -202,11 +247,20 @@ public class DelegateAuthorityFragment extends Fragment {
                 if (response.isSuccessful()) {
                     delegation = response.body();
                     TextView currentEmployeeName = view.findViewById(R.id.currentEmployeeName);
+                    TextView startDate = view.findViewById(R.id.delegateStartDate);
+                    TextView selectedEndDate = view.findViewById(R.id.selectedEndDate);
                     if (delegation.getActive()==0) {
                         currentEmployeeName.setText(Constants.NO_DELEGATION);
+                        startDate.setVisibility(View.INVISIBLE);
+                        selectedEndDate.setVisibility(View.INVISIBLE);
+                        view.findViewById(R.id.delegateEndDate).setVisibility(View.INVISIBLE);
+                        view.findViewById(R.id.dateLayout).setVisibility(View.INVISIBLE);
+                        view.findViewById(R.id.label_delegateStartDate).setVisibility(View.INVISIBLE);
+                        view.findViewById(R.id.label_currentEmployeeName).setVisibility(View.INVISIBLE);
                     } else {
-                        String name = currentEmployeeName.getText() + " " + delegation.getUsername();
-                        currentEmployeeName.setText(name);
+                        currentEmployeeName.setText(delegation.getUsername());
+                        startDate.setText(delegation.getStartDate());
+                        selectedEndDate.setText(delegation.getEndDate());
                     }
                 } else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();

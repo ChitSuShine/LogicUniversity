@@ -1,5 +1,8 @@
 package com.example.team10ad.LogicUniversity.Model;
 
+import android.widget.TextView;
+
+import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDateTime;
@@ -51,7 +54,7 @@ public class Delegation {
     }
 
     public String getStartDate() {
-        return startDate;
+        return startDate.substring(0, Constants.TEN);
     }
 
     public void setStartDate(String startDate) {
@@ -59,7 +62,7 @@ public class Delegation {
     }
 
     public String getEndDate() {
-        return endDate;
+        return endDate.substring(0,Constants.TEN);
     }
 
     public void setEndDate(String endDate) {

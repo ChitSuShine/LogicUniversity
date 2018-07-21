@@ -10,6 +10,7 @@ public class Constants {
     public static final String USER_GSON = "user";
     public static final String REJECT_GSON = "reject";
     public static final String OK = "OK";
+    public static final int TEN = 10;
 
     // Constants for user roles
     public static final int CLERK_ROLE = 1;
@@ -28,6 +29,7 @@ public class Constants {
     public static final String DELEGATE_CONFIRM_MSG = "Are you sure to remove authority?";
     public static final String DELEGATE_WARNING_MSG = "There is no employee to cancel authority.";
     public static final String NO_DELEGATION = "There is no previous delegation.";
+    public static final String DELEGATED_USER ="delegatedUser";
 
     public static final String[] STATUS = {
             "Pending",
