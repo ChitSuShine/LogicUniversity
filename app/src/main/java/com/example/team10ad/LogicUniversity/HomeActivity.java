@@ -11,22 +11,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
 import com.example.team10ad.LogicUniversity.DepartmentHead.DelegateAuthorityFragment;
-import com.example.team10ad.LogicUniversity.DepartmentHead.HODTrackingOrder;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
 //import com.example.team10ad.LogicUniversity.DepartmentHead.HodReportFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ReqListForTrackingOrder;
+import com.example.team10ad.LogicUniversity.DepartmentRep.RepScanQRFragment;
 import com.example.team10ad.LogicUniversity.Model.User;
-import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Service.UserService;
 import com.example.team10ad.LogicUniversity.Util.Constants;
@@ -72,6 +69,11 @@ public class HomeActivity extends AppCompatActivity {
                     } else if (user.getRole() == Constants.HOD_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodDashboardFragment()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_hod);
+                    }
+                    else if (user.getRole() == Constants.DEP_REP_ROLE)
+                    {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new RepScanQRFragment()).commit();
+                        nvDrawer.inflateMenu(R.menu.activity_home_rep);
                     }
                 } else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
@@ -155,6 +157,11 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.report:
                 fragmentClass = ClerkReportFragment.class;
+                break;
+
+            // Dep Rep
+            case R.id.scanRep:
+                fragmentClass = RepScanQRFragment.class;
                 break;
 
             // HOD
