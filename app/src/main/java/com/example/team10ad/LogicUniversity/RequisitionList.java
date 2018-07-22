@@ -14,13 +14,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodReqApproveRejectFragment;
+import com.example.team10ad.LogicUniversity.Model.Disbursement;
+import com.example.team10ad.LogicUniversity.Service.DisbursementService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.DisbAdapter;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.LogicUniversity.Util.RetrievalFormFragment;
 import com.example.team10ad.team10ad.R;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RequisitionList extends Fragment {
 
@@ -32,6 +45,9 @@ public class RequisitionList extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    ListView disblistview;
+    List<Disbursement> result=new ArrayList<Disbursement>();
 
     public RequisitionList() {
 
@@ -57,25 +73,12 @@ public class RequisitionList extends Fragment {
 
     }
 
-    public void onStart() {
-        super.onStart();
-        // ---Button view---
-        Button btnGetText = (Button) getActivity().findViewById(R.id.submitbtn);
-        btnGetText.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                RetrievalFormFragment retrievalFormFragment = new RetrievalFormFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content_frame, retrievalFormFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_requisition_list, container, false);
+        final View view=inflater.inflate(R.layout.fragment_requisition_list, container, false);
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+
         LinearLayout filter=(LinearLayout)view.findViewById(R.id.filterID);
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +89,8 @@ public class RequisitionList extends Fragment {
                 reqFil.show(ft, "Filter");
             }
         });
-        final LinearLayout test=(LinearLayout)view.findViewById(R.id.testlayout);
+
+        /*final LinearLayout test=(LinearLayout)view.findViewById(R.id.testlayout);
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,9 +100,31 @@ public class RequisitionList extends Fragment {
 
 
             }
+        });*/
+       /* TextView filterText=(TextView)view.findViewById(R.id.filterText);
+        filterText.setTypeface(filterText.getTypeface(), Typeface.BOLD);*/
+
+        DisbursementService disbService= ServiceGenerator.createService(DisbursementService.class,token);
+        Call<List<Disbursement>> call=disbService.getAllDisbursements();
+        call.enqueue(new Callback<List<Disbursement>>() {
+            @Override
+            public void onResponse(Call<List<Disbursement>> call, Response<List<Disbursement>> response) {
+                if(response.isSuccessful()){
+                    result=response.body();
+                    final DisbAdapter disbAdapter=new DisbAdapter(getContext(),R.layout.row_disblist,result);
+                    disblistview=(ListView) view.findViewById(R.id.disblistview);
+                    disblistview.setAdapter(disbAdapter);
+                }
+                else{
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Disbursement>> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
         });
-        TextView filterText=(TextView)view.findViewById(R.id.filterText);
-        filterText.setTypeface(filterText.getTypeface(), Typeface.BOLD);
         return view;
     }
 

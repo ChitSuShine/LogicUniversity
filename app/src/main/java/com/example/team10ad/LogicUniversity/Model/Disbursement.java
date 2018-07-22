@@ -2,103 +2,161 @@ package com.example.team10ad.LogicUniversity.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Disbursement {
-    @SerializedName("Disid")
-    private String disID;
 
     @SerializedName("Reqid")
-    private String reqid;
+    private String reqID;
 
-    @SerializedName("Status")
-    private String status;
+    @SerializedName("Raisedby")
+    private String raisedBy;
 
-    @SerializedName("Ackby")
-    private String ackby;
+    @SerializedName("Rasiedbyname")
+    private String rasiedByname;
 
-    @SerializedName("Username")
-    private String username;
+    @SerializedName("Approvedby")
+    private String approvedBy;
 
-    @SerializedName("Departmentname")
-    private String Departmentname;
+    @SerializedName("Approvedbyname")
+    private String approvedByname;
+
+    @SerializedName("Depid")
+    private String depID;
+
+    @SerializedName("Depname")
+    private String depName;
+
+    @SerializedName("Cpid")
+    private String cpID;
 
     @SerializedName("Cpname")
-    private String cpname;
+    private String cpName;
+
+    @SerializedName("Status")
+    private String Status;
 
     @SerializedName("Reqdate")
-    private String reqdate;
+    private String reqDate;
 
-    @SerializedName("Disbursementlist")
-    private String disbursementlist;
+    @SerializedName("LockerID")
+    private String LockerID;
 
-    public String getDisID() {
-        return disID;
+    @SerializedName("LockerName")
+    private String LockerName;
+
+    @SerializedName("Requisitiondetails")
+    private ArrayList<RequisitionDetail> requisitionDetails;
+
+    public String getReqID() {
+        return reqID;
     }
 
-    public void setDisID(String disID) {
-        this.disID = disID;
+    public void setReqID(String reqID) {
+        this.reqID = reqID;
     }
 
-    public String getReqid() {
-        return reqid;
+    public String getRaisedBy() {
+        return raisedBy;
     }
 
-    public void setReqid(String reqid) {
-        this.reqid = reqid;
+    public void setRaisedBy(String raisedBy) {
+        this.raisedBy = raisedBy;
+    }
+
+    public String getRasiedByname() {
+        return rasiedByname;
+    }
+
+    public void setRasiedByname(String rasiedByname) {
+        this.rasiedByname = rasiedByname;
+    }
+
+    public String getApprovedBy() {
+        return approvedBy;
+    }
+
+    public void setApprovedBy(String approvedBy) {
+        this.approvedBy = approvedBy;
+    }
+
+    public String getApprovedByname() {
+        return approvedByname;
+    }
+
+    public void setApprovedByname(String approvedByname) {
+        this.approvedByname = approvedByname;
+    }
+
+    public String getDepID() {
+        return depID;
+    }
+
+    public void setDepID(String depID) {
+        this.depID = depID;
+    }
+
+    public String getDepName() {
+        return depName;
+    }
+
+    public void setDepName(String depName) {
+        this.depName = depName;
+    }
+
+    public String getCpID() {
+        return cpID;
+    }
+
+    public void setCpID(String cpID) {
+        this.cpID = cpID;
+    }
+
+    public String getCpName() {
+        return cpName;
+    }
+
+    public void setCpName(String cpName) {
+        this.cpName = cpName;
     }
 
     public String getStatus() {
-        return status;
+        return Status;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        Status = status;
     }
 
-    public String getAckby() {
-        return ackby;
+    public String getReqDate() {
+        return reqDate;
     }
 
-    public void setAckby(String ackby) {
-        this.ackby = ackby;
+    public void setReqDate(String reqDate) {
+        this.reqDate = reqDate;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLockerID() {
+        return LockerID;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLockerID(String lockerID) {
+        LockerID = lockerID;
     }
 
-    public String getDepartmentname() {
-        return Departmentname;
+    public String getLockerName() {
+        return LockerName;
     }
 
-    public void setDepartmentname(String departmentname) {
-        Departmentname = departmentname;
+    public void setLockerName(String lockerName) {
+        LockerName = lockerName;
     }
 
-    public String getCpname() {
-        return cpname;
+    public ArrayList<RequisitionDetail> getRequisitionDetails() {
+        return requisitionDetails;
     }
 
-    public void setCpname(String cpname) {
-        this.cpname = cpname;
-    }
-
-    public String getReqdate() {
-        return reqdate;
-    }
-
-    public void setReqdate(String reqdate) {
-        this.reqdate = reqdate;
-    }
-
-    public String getDisbursementlist() {
-        return disbursementlist;
-    }
-
-    public void setDisbursementlist(String disbursementlist) {
-        this.disbursementlist = disbursementlist;
+    public void setRequisitionDetails(ArrayList<RequisitionDetail> requisitionDetails) {
+        this.requisitionDetails = requisitionDetails;
     }
 }

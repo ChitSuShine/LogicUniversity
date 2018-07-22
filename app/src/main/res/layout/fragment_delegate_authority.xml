@@ -9,6 +9,11 @@
         android:layout_height="match_parent"
         android:background="@color/background"
         android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:weightSum="2" >
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -18,31 +23,81 @@
 
             <TextView
                 android:id="@+id/label_currentEmployeeName"
-                android:layout_width="wrap_content"
+                android:layout_width="175dp"
                 android:layout_height="32dp"
-                android:text="Current Employee Name: " />
+                android:text="Current Employee Name: "
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/currentEmployeeName"
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"/>
+                android:layout_height="32dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/label_delegateStartDate"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="32dp"
-                android:text="Start Date: " />
+                android:text="Start Date: "
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/delegateStartDate"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/delegateEndDate"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="32dp"
-                android:text="End Date: " />
+                android:text="End Date: "
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left">
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
@@ -67,31 +122,73 @@
                     android:src="@drawable/calendar"
                     />
             </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
 
             <Button
                 android:id="@+id/btn_delegateUpdate"
                 android:text="Add Extension"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                android:background="#9E9E9E"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
 
             <Button
                 android:id="@+id/btn_delegateCancel"
                 android:text="Cancel Delegation"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                android:background="#9E9E9E"/>
         </LinearLayout>
+    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#F5F5F5"
+
+            >
 
             <TextView
                 android:id="@+id/employeeName"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:text="Please select one person to delegate authority" />
+                android:text="Please select one person to delegate authority"
+                android:textStyle="bold"
+                android:textSize="15dp"/>
 
             <ListView
                 android:id="@+id/employeeListView"

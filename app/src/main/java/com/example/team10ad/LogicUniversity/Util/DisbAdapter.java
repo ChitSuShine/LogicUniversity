@@ -10,17 +10,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Model.RequisitionDetail;
-import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.team10ad.R;
 
 import java.util.List;
 
-public class UserAdapter extends ArrayAdapter<User> {
-    int resource;
-    private List<User> items;
+public class DisbAdapter extends ArrayAdapter<Disbursement> {
 
-    public UserAdapter(@NonNull Context context, int resource, @NonNull List<User> items) {
+    int resource;
+    private List<Disbursement> items;
+
+    public DisbAdapter(@NonNull Context context, int resource, @NonNull List<Disbursement> items) {
         super(context, resource, items);
         this.resource = resource;
         this.items = items;
@@ -30,17 +31,21 @@ public class UserAdapter extends ArrayAdapter<User> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(resource, null);
+        View v = inflater.inflate(resource, null);
 
-        TextView employeeName = (TextView) view.findViewById(R.id.employeeName);
-        User user = items.get(position);
-        employeeName.setText(user.getFullName());
+        TextView disb1 = (TextView) v.findViewById(R.id.disb1);
+        TextView disb2 = (TextView) v.findViewById(R.id.disb2);
+        TextView disb3 = (TextView) v.findViewById(R.id.disb3);
 
-        if(user.getRole()==Constants.DEP_REP_ROLE)
-        {
-            view.findViewById(R.id.employeeRole).setVisibility(View.VISIBLE);
-        }
+        Disbursement disb=items.get(position);
 
-        return view;
+        disb1.setText(disb.getDepName());//Department Name
+
+        String date = disb.getReqDate();//Requisition Date
+        disb2.setText(date);
+
+        disb3.setText(disb.getCpName());//Collection Point Name
+
+        return v;
     }
 }

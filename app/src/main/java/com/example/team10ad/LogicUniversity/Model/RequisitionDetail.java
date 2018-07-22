@@ -25,6 +25,8 @@ public class RequisitionDetail {
     @SerializedName("UOM")
     private String UOM;
 
+
+
     public RequisitionDetail(){
         reqid = "";
         itemid = "";
@@ -88,4 +90,5 @@ public class RequisitionDetail {
     public void setUOM(String UOM) {
         this.UOM = UOM;
     }
+
 }

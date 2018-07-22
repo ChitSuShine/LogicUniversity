@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
+import com.example.team10ad.LogicUniversity.Util.RetrievalFormFragment;
 import com.example.team10ad.team10ad.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -72,11 +73,9 @@ public class DashboardFragment extends Fragment {
         inv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InventoryFragment inventoryFragement=new InventoryFragment();
-                FragmentTransaction invfm = getActivity().getSupportFragmentManager().beginTransaction();
-                invfm.replace(R.id.content_frame,inventoryFragement);
-                invfm.addToBackStack(null);
-                invfm.commit();
+                RetrievalFormFragment retrieval=new RetrievalFormFragment();
+                FragmentTransaction reqFragment=getActivity().getSupportFragmentManager().beginTransaction();
+                reqFragment.replace(R.id.content_frame,retrieval).commit();
             }
         });
         // Link to requisition list screen
