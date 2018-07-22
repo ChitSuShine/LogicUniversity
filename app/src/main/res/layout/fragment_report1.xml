@@ -1,22 +1,23 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/holo_blue_bright"
+    android:orientation="vertical"
+    android:weightSum="10"
     tools:context="com.example.team10ad.LogicUniversity.Report1Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Spinner
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Report1" />
+        android:layout_height="wrap_content"
+        android:layout_weight="2"></Spinner>
 
     <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/barChart">
+        android:layout_height="wrap_content"
+        android:layout_weight="6">
 
     </com.github.mikephil.charting.charts.BarChart>
 
-</FrameLayout>
+</LinearLayout>

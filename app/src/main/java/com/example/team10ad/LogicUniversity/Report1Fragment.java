@@ -9,19 +9,28 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.example.team10ad.team10ad.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +40,7 @@ import java.util.ArrayList;
  * Use the {@link Report1Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Report1Fragment extends Fragment {
+public class Report1Fragment extends Fragment implements OnChartValueSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,12 +50,13 @@ public class Report1Fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private BarChart mChart;
+
     private OnFragmentInteractionListener mListener;
 
-    private BarChart chart, layout;
-    float barWidth;
-    float barSpace;
-    float groupSpace;
+    float groupSpace = 0.1f;
+    float barSpace = 0.05f; // x4 DataSet
+    float barWidth = 0.25f; // x4 DataSet
 
     public Report1Fragment() {
         // Required empty public constructor
@@ -83,89 +93,74 @@ public class Report1Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        barWidth = 0.3f;
-        barSpace = 0f;
-        groupSpace = 0.4f;
 
         View view= inflater.inflate(R.layout.fragment_report1, container, false);
 
-        chart = (BarChart) view.findViewById(R.id.barChart);
-        chart.setDescription(null);
-        chart.setPinchZoom(false);
-        chart.setScaleEnabled(false);
-        chart.setDrawBarShadow(false);
-        chart.setDrawGridBackground(false);
+        mChart = view.findViewById(R.id.barChart);
+        mChart.setOnChartValueSelectedListener(this);
+        mChart.getDescription().setEnabled(false);
+        mChart.setPinchZoom(false);
+        mChart.setDrawBarShadow(false);
+        mChart.setDrawGridBackground(false);
 
+        ArrayList<BarEntry> xVals1 = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> xVals2 = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> xVals3 = new ArrayList<BarEntry>();
 
-        int groupCount = 3;
-
-        ArrayList xVals = new ArrayList();
-
-        xVals.add("Jan");
-        xVals.add("Feb");
-        xVals.add("Mar");
-        xVals.add("Apr");
-        xVals.add("May");
-        xVals.add("Jun");
-
-        ArrayList yVals1 = new ArrayList();
-        ArrayList yVals2 = new ArrayList();
-        ArrayList yVals3 = new ArrayList();
-
-        yVals1.add(new BarEntry(1, (float) 1));
-        yVals2.add(new BarEntry(1, (float) 2));
-        yVals3.add(new BarEntry(1, (float) 3));
-        yVals1.add(new BarEntry(2, (float) 4));
-        yVals2.add(new BarEntry(2, (float) 5));
-        yVals3.add(new BarEntry(2, (float) 6));
-        yVals1.add(new BarEntry(3, (float) 7));
-        yVals2.add(new BarEntry(3, (float) 8));
-        yVals3.add(new BarEntry(3, (float) 9));
-        yVals1.add(new BarEntry(4, (float) 10));
-        yVals2.add(new BarEntry(4, (float) 11));
-        yVals3.add(new BarEntry(4, (float) 12));
+        for(int i=0; i<3; i++){
+            xVals1.add(new BarEntry(i, i+2));
+            xVals2.add(new BarEntry(i, i+1));
+            xVals3.add(new BarEntry(i, i+0));
+        }
 
         BarDataSet set1, set2, set3;
-        set1 = new BarDataSet(yVals1, "A");
-        set1.setColor(Color.BLUE);
-        set2 = new BarDataSet(yVals2, "B");
-        set2.setColor(Color.GRAY);
-        set3 = new BarDataSet(yVals3, "C");
-        set3.setColor(Color.LTGRAY);
+
+        set1 = new BarDataSet(xVals1, "Company A");
+        set1.setColor(Color.rgb(104, 241, 175));
+        set2 = new BarDataSet(xVals2, "Company B");
+        set2.setColor(Color.rgb(164, 228, 251));
+        set3 = new BarDataSet(xVals3, "Company C");
+        set3.setColor(Color.rgb(242, 247, 158));
+
         BarData data = new BarData(set1, set2, set3);
         data.setValueFormatter(new LargeValueFormatter());
-        chart.setData(data);
-        chart.getBarData().setBarWidth(barWidth);
-        chart.getXAxis().setAxisMinimum(0);
-        chart.getXAxis().setAxisMaximum(0 + chart.getBarData().getGroupWidth(groupSpace, barSpace) * groupCount);
-        chart.groupBars(0, groupSpace, barSpace);
 
-        Legend l = chart.getLegend();
+        mChart.setData(data);
+        mChart.animateY(1000);
+
+        Legend l = mChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(true);
-        l.setYOffset(20f);
-        l.setXOffset(0f);
+        l.setYOffset(0f);
+        l.setXOffset(10f);
         l.setYEntrySpace(0f);
-        l.setTextSize(8f);
+        l.setTextSize(12f);
 
-        //X-axis
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setGranularity(1f);
-        xAxis.setGranularityEnabled(true);
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setDrawGridLines(false);
-        xAxis.setAxisMaximum(6);
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+
+        XAxis xAxis = mChart.getXAxis();
+        mChart.getAxisLeft().setAxisMinimum(0);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[] {"ONE", "TWO", "THREE"}));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(xVals));
-        //Y-axis
-        chart.getAxisRight().setEnabled(false);
-        YAxis leftAxis = chart.getAxisLeft();
-        leftAxis.setValueFormatter(new LargeValueFormatter());
-        leftAxis.setDrawGridLines(true);
-        leftAxis.setSpaceTop(35f);
-        leftAxis.setAxisMinimum(0f);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setGranularityEnabled(true);
+
+        mChart.getAxisRight().setEnabled(false);
+
+        mChart.getBarData().setBarWidth(barWidth);
+
+        // restrict the x-axis range
+        mChart.getXAxis().setAxisMinimum(0);
+
+        // barData.getGroupWith(...) is a helper that calculates the width each group needs based on the provided parameters
+        mChart.getXAxis().setAxisMaximum(0 + mChart.getBarData().getGroupWidth(groupSpace, barSpace) * 3);
+        mChart.groupBars(0, groupSpace, barSpace);
+        mChart.invalidate();
+
         return view;
     }
 
@@ -185,6 +180,16 @@ public class Report1Fragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+
+    }
+
+    @Override
+    public void onNothingSelected() {
+
     }
 
     /**
