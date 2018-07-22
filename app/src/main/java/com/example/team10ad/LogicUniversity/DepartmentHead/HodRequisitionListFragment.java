@@ -9,42 +9,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.Service.RequisitionService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.HodReqListAdapter;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HodRequisitionListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HodRequisitionListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class HodRequisitionListFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    ListView listView;
+    List<Requisition> result=new ArrayList<Requisition>();
 
     public HodRequisitionListFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HodRequisitionListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HodRequisitionListFragment newInstance(String param1, String param2) {
         HodRequisitionListFragment fragment = new HodRequisitionListFragment();
         Bundle args = new Bundle();
@@ -62,28 +58,35 @@ public class HodRequisitionListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
-    public void onStart() {
-        super.onStart();
-        // ---Button view---
-        Button btnGetText = (Button) getActivity()
-                .findViewById(R.id.checkbtn);
-        btnGetText.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                HodReqApproveRejectFragment hodReqApproveRejectFragment = new HodReqApproveRejectFragment();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content_frame, hodReqApproveRejectFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hod_requisition_list, container, false);
+        final View view= inflater.inflate(R.layout.fragment_hod_requisition_list, container, false);
+
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
+        Call<List<Requisition>> call = requisitionService.getAllRequisitions();
+        call.enqueue(new Callback<List<Requisition>>() {
+            @Override
+            public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
+                if(response.isSuccessful()){
+                    result=response.body();
+                    final HodReqListAdapter adapter = new HodReqListAdapter(getContext(),R.layout.row_hodreqlist,result);
+                    listView = (ListView) view.findViewById(R.id.hodtrackinglistview);
+                    listView.setAdapter(adapter);
+                }
+                else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Requisition>> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,16 +107,6 @@ public class HodRequisitionListFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

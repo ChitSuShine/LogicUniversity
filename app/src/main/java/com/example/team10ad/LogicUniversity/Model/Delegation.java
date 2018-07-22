@@ -1,18 +1,22 @@
 package com.example.team10ad.LogicUniversity.Model;
 
+import android.widget.TextView;
+
+import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Delegation {
     @SerializedName("Delid")
     private int delId;
 
     @SerializedName("Startdate")
-    private LocalDateTime startDate;
+    private String startDate;
 
     @SerializedName("Enddate")
-    private LocalDateTime endDate;
+    private String endDate;
 
     @SerializedName("Userid")
     private int userId;
@@ -49,19 +53,19 @@ public class Delegation {
         this.delId = delId;
     }
 
-    public LocalDateTime getStartDate() {
-        return startDate;
+    public String getStartDate() {
+        return startDate.substring(0, Constants.TEN);
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
-        return endDate;
+    public String getEndDate() {
+        return endDate.substring(0,Constants.TEN);
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

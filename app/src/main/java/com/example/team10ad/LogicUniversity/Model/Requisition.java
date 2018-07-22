@@ -138,7 +138,7 @@ public class Requisition {
     }
 
     public String getReqDate() {
-        return reqDate;
+        return reqDate.substring(0,10);
     }
 
     public void setReqDate(String reqDate) {

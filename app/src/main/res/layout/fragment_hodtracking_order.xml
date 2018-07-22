@@ -45,7 +45,7 @@
                             android:padding="1dp"></View>
 
                         <TextView
-                            android:id="@+id/reqdetailid"
+                            android:id="@+id/raisedBy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center" />
@@ -68,6 +68,7 @@
                             android:padding="1dp"></View>
 
                         <TextView
+                            android:id="@+id/raisedbydate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center" />
@@ -90,6 +91,7 @@
                             android:padding="25dp"></View>
 
                         <TextView
+                            android:id="@+id/collectionpoint"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -112,6 +114,7 @@
                             android:padding="25dp"></View>
 
                         <TextView
+                            android:id="@+id/apprBy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center" />
@@ -150,13 +153,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="5">
         </ListView>
-            <Button
-                android:id="@+id/trackingback"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Back"
-                android:layout_below="@id/hodtrackinglistview"
-                android:layout_weight="1"/>
         </LinearLayout>
 
     </LinearLayout>
