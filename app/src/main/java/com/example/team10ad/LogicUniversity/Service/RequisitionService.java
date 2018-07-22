@@ -20,4 +20,6 @@ public interface RequisitionService {
     @POST("requisition/update")
     Call<Requisition> rejectRequisition(@Body Requisition requisition);
 
+    @GET("requisitionwithdisbursement/{id}")
+    Call<Requisition> getScannedReqId(@Path("id") String id);
 }
