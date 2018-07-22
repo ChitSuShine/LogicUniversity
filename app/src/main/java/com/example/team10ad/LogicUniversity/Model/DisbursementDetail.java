@@ -4,17 +4,20 @@ import com.google.gson.annotations.SerializedName;
 
 public class DisbursementDetail {
 
-    @SerializedName("Disid")
-    private String disid;
+    @SerializedName("Reqid")
+    private String reqID;
 
     @SerializedName("Itemid")
-    private String itemid;
+    private String Itemid;
+
+    @SerializedName("RequestQty")
+    private String RequestQty;
+
+    @SerializedName("ApprovedQty")
+    private String ApprovedQty;
 
     @SerializedName("Itemname")
-    private String itemname;
-
-    @SerializedName("Qty")
-    private String qty;
+    private String Itemname;
 
     @SerializedName("CategoryName")
     private String CategoryName;
@@ -22,36 +25,44 @@ public class DisbursementDetail {
     @SerializedName("UOM")
     private String UOM;
 
-    public String getDisid() {
-        return disid;
+    public String getReqID() {
+        return reqID;
     }
 
-    public void setDisid(String disid) {
-        this.disid = disid;
+    public void setReqID(String reqID) {
+        this.reqID = reqID;
     }
 
     public String getItemid() {
-        return itemid;
+        return Itemid;
     }
 
     public void setItemid(String itemid) {
-        this.itemid = itemid;
+        Itemid = itemid;
+    }
+
+    public String getRequestQty() {
+        return RequestQty;
+    }
+
+    public void setRequestQty(String requestQty) {
+        RequestQty = requestQty;
+    }
+
+    public String getApprovedQty() {
+        return ApprovedQty;
+    }
+
+    public void setApprovedQty(String approvedQty) {
+        ApprovedQty = approvedQty;
     }
 
     public String getItemname() {
-        return itemname;
+        return Itemname;
     }
 
     public void setItemname(String itemname) {
-        this.itemname = itemname;
-    }
-
-    public String getQty() {
-        return qty;
-    }
-
-    public void setQty(String qty) {
-        this.qty = qty;
+        Itemname = itemname;
     }
 
     public String getCategoryName() {
