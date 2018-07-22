@@ -199,9 +199,5 @@ public class HomeActivity extends AppCompatActivity {
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
-
     }
-
-
-
 }
