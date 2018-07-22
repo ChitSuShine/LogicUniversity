@@ -1,8 +1,10 @@
 package com.example.team10ad.LogicUniversity.DepartmentHead;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -72,7 +74,12 @@ public class HodRequisitionListFragment extends Fragment {
             public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
                 if(response.isSuccessful()){
                     result=response.body();
-                    final HodReqListAdapter adapter = new HodReqListAdapter(getContext(),R.layout.row_hodreqlist,result);
+                    List<Requisition> filtered = new ArrayList<Requisition>();
+                    for(Requisition rq: result){
+                        if(rq.getStatus().equals("0"))
+                            filtered.add(rq);
+                    }
+                    final HodReqListAdapter adapter = new HodReqListAdapter(getContext(),R.layout.row_hodreqlist,filtered);
                     listView = (ListView) view.findViewById(R.id.hodtrackinglistview);
                     listView.setAdapter(adapter);
                 }

@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -20,7 +18,6 @@ import com.example.team10ad.team10ad.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,7 +32,7 @@ import java.util.Map;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class ClerkMapDeliveryPoint extends Fragment {
+public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallback{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -77,12 +74,13 @@ public class ClerkMapDeliveryPoint extends Fragment {
         mapFragment = (MapView) view.findViewById(R.id.map);
         mapFragment.onCreate(savedInstanceState);
         mapFragment.onResume();
+        getLocationPermission();
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
+            mapFragment.getMapAsync(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getLocationPermission();
         return view;
     }
 
@@ -93,51 +91,10 @@ public class ClerkMapDeliveryPoint extends Fragment {
             if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) ==
                     PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true;
-                initMap();
             } else {
                 ActivityCompat.requestPermissions(getActivity(), permission, LOCATION_PERMISSION_REQUEST_CODE);
             }
         }
-    }
-
-    private void initMap() {
-
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                mMap = googleMap;
-                final MarkerOptions myMarker = new MarkerOptions();
-
-                LatLng pos = new LatLng(1.3, 103.81);
-                LatLng pos1 = new LatLng(1.3, 103.84);
-                LatLng pos2 = new LatLng(1.3, 103.87);
-                LatLng[] poss = new LatLng[] {pos, pos1, pos2};
-                String[] s = new String[] {"s1", "s2", "s3"};
-                for(int i=0; i<3; i++){
-                    myMarker.position(poss[i]);
-                    Marker m = mMap.addMarker(myMarker);
-                    m.setTag(s[i]);
-                }
-
-                CameraPosition cp = new CameraPosition.Builder().target(pos1).zoom(13).build();
-
-                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
-
-                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker mark) {
-                        mark.setTitle(mark.getTag().toString());
-                        mark.showInfoWindow();
-                        return false;
-                    }
-                });
-
-                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                    @Override
-                    public void onInfoWindowClick(Marker mark) { }
-                });
-            }
-        });
     }
 
     public void onButtonPressed(Uri uri) {
@@ -155,6 +112,41 @@ public class ClerkMapDeliveryPoint extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        final MarkerOptions myMarker = new MarkerOptions();
+
+        LatLng pos = new LatLng(1.3, 103.81);
+        LatLng pos1 = new LatLng(1.3, 103.84);
+        LatLng pos2 = new LatLng(1.3, 103.87);
+        LatLng[] poss = new LatLng[] {pos, pos1, pos2};
+        String[] s = new String[] {"s1", "s2", "s3"};
+        for(int i=0; i<3; i++){
+            myMarker.position(poss[i]);
+            Marker m = mMap.addMarker(myMarker);
+            m.setTag(s[i]);
+        }
+
+        CameraPosition cp = new CameraPosition.Builder().target(pos1).zoom(13).build();
+
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker mark) {
+                mark.setTitle(mark.getTag().toString());
+                mark.showInfoWindow();
+                return false;
+            }
+        });
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker mark) { }
+        });
     }
 
     public interface OnFragmentInteractionListener {
