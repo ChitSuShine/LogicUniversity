@@ -15,8 +15,18 @@
 
         <TextView
             android:id="@+id/employeeName"
-            android:layout_width="219dp"
+            android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:paddingTop="20dp"/>
+
+        <TextView
+            android:id="@+id/employeeRole"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:paddingTop="20dp"
+            android:visibility="invisible"
+            android:text="Representative"
+            android:textColor="@android:color/holo_orange_dark" />
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

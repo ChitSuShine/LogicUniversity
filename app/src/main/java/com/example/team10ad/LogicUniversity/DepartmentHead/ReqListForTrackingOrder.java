@@ -20,6 +20,7 @@ import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,11 @@ public class ReqListForTrackingOrder extends Fragment {
                              Bundle savedInstanceState) {
 
         final View view= inflater.inflate(R.layout.fragment_req_list_for_tracking_order, container, false);
+
+        Gson gson = new Gson();
+        String json = MyApp.getInstance().getPreferenceManager().getString(Constants.REJECT_GSON);
+        final Requisition Requisition = gson.fromJson(json, Requisition.class);
+
 
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);

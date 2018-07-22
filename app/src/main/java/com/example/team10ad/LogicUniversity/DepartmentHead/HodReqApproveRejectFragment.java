@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.Requisition;
@@ -16,8 +18,10 @@ import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.HodReqListAdapter;
+import com.example.team10ad.LogicUniversity.Util.HodTrackingAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.team10ad.LogicUniversity.Util.Constants.REJECT_GSON;
 
 public class HodReqApproveRejectFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -34,6 +40,10 @@ public class HodReqApproveRejectFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    Requisition result;
+    ListView reqDetaillistview;
+    private String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+
 
     public HodReqApproveRejectFragment() {
     }
@@ -59,10 +69,72 @@ public class HodReqApproveRejectFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Bundle b = getArguments();
+        String id = b.getString("id");
         final View view= inflater.inflate(R.layout.fragment_hod_req_approve_reject, container, false);
-        Toast.makeText(getContext(),
-                getArguments().getString("id"),
-                Toast.LENGTH_LONG).show();
+        Gson gson = new Gson();
+        String json=MyApp.getInstance().getPreferenceManager().getString(REJECT_GSON);
+        final Requisition requisition=gson.fromJson(json,Requisition.class);
+
+        //String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        final RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
+        Call<Requisition> call = requisitionService.getReqById(id);
+        call.enqueue(new Callback<Requisition>() {
+            @Override
+            public void onResponse(Call<Requisition> call, Response<Requisition> response) {
+                if(response.isSuccessful()){
+                    result = response.body();
+                    TextView tv1 = (TextView) view.findViewById(R.id.hodrasiedby);
+                    TextView tv2 = (TextView) view.findViewById(R.id.hodraisedate);
+                    tv1.setText(result.getRasiedByname());
+                    tv2.setText(result.getReqDate());
+                    TextView status=view.findViewById(R.id.hodstatus);
+                    status.setText(result.getStatus());
+                    List<RequisitionDetail> details = result.getRequisitionDetails();
+                    final HodTrackingAdapter adapter = new HodTrackingAdapter(getContext(),R.layout.row_hodtracking,details);
+                    reqDetaillistview = (ListView) view.findViewById(R.id.hodreqlistdetaillist);
+                    reqDetaillistview.setAdapter(adapter);
+                }
+                else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Requisition> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button rejectreq=view.findViewById(R.id.rejectbtn);
+        rejectreq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
+                Call<Requisition> rejcall = requisitionService.rejectRequisition(result);
+                rejcall.enqueue(new Callback<Requisition>() {
+                    @Override
+                    public void onResponse(Call<Requisition> call, Response<Requisition> response) {
+                        if (response.isSuccessful()) {
+                            result=response.body();
+                            TextView status=view.findViewById(R.id.hodstatus);
+                            if(result.getStatus().equals(0)){
+                               //status.setText("1");
+                            }
+                            Toast.makeText(getContext(),"rejected",Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Requisition> call, Throwable t) {
+                        Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
         return view;
     }
 

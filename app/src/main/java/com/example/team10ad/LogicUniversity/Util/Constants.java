@@ -8,12 +8,14 @@ public class Constants {
     public static final String KEY_ACCESS_TOKEN = "access_token";
     public static final String AUTHORIZATION = "Authorization";
     public static final String USER_GSON = "user";
+    public static final String REJECT_GSON = "reject";
     public static final String OK = "OK";
     public static final int TEN = 10;
 
     // Constants for user roles
     public static final int CLERK_ROLE = 1;
     public static final int HOD_ROLE = 4;
+    public static final int DEP_REP_ROLE = 6;
 
     // Constants for Error Messages
     public static final String INVALID_INFO = "Invalid username and password!";
@@ -23,10 +25,17 @@ public class Constants {
     // Constants for LoginActivity
     public static final String WARNING_MSG = "Warning Message";
 
+    // Constants for AssignDepRepFragment
+    public static final String ASSIGN_DEP_REP = "Assign Department Representative";
+    public static final String ASSIGN_WARNING_MSG = "This is current representative and you cannot assign.";
+    public static final String ASSIGN_CONFIRM_MSG = "Are you sure to assign authority?";
+    public static final String ASSIGN_SUCCESS_MSG = "Your assign is successful.";
+
     // Constants for DelegateAuthorityFragment
     public static final String DELEGATE_AUTHORITY = "Delegate Authority";
     public static final String DELEGATE_CONFIRM_MSG = "Are you sure to remove authority?";
     public static final String DELEGATE_WARNING_MSG = "There is no employee to cancel authority.";
+    public static final String DELEGATE_SUCCESS_MSG = "Your delegation is successful.";
     public static final String NO_DELEGATION = "There is no previous delegation.";
     public static final String DELEGATED_USER ="delegatedUser";
 
