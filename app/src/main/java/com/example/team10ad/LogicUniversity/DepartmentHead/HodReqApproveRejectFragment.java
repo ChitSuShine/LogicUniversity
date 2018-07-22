@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,18 +110,19 @@ public class HodReqApproveRejectFragment extends Fragment {
         rejectreq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                result.setStatus("7");
                 RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
-                Call<Requisition> rejcall = requisitionService.rejectRequisition(result);
+                Call<Requisition> rejcall = requisitionService.updateRequisition(result);
                 rejcall.enqueue(new Callback<Requisition>() {
                     @Override
                     public void onResponse(Call<Requisition> call, Response<Requisition> response) {
                         if (response.isSuccessful()) {
                             result=response.body();
-                            TextView status=view.findViewById(R.id.hodstatus);
-                            if(result.getStatus().equals(0)){
-                               //status.setText("1");
-                            }
-                            Toast.makeText(getContext(),"rejected",Toast.LENGTH_LONG).show();
+                            HodRequisitionListFragment hodRequisitionListFragment = new HodRequisitionListFragment();
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            ft.detach(HodReqApproveRejectFragment.this);
+                            ft.add(R.id.content_frame, new HodRequisitionListFragment());
+                            ft.commit();
                         }
                         else {
                             Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
@@ -152,7 +154,6 @@ public class HodReqApproveRejectFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     public interface OnFragmentInteractionListener {

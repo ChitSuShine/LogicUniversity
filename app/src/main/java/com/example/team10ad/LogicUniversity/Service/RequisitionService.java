@@ -18,6 +18,6 @@ public interface RequisitionService {
     Call<Requisition> getReqById(@Path("id") String id);
 
     @POST("requisition/update")
-    Call<Requisition> rejectRequisition(@Body Requisition requisition);
+    Call<Requisition> updateRequisition(@Body Requisition requisition);
 
 }

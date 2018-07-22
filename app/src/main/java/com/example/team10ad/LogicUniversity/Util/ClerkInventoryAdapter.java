@@ -38,14 +38,12 @@ public class ClerkInventoryAdapter extends ArrayAdapter<InventoryDetail>{
         TextView inv3 = (TextView) v.findViewById(R.id.inv3);
         TextView inv4 = (TextView) v.findViewById(R.id.inv4);
         TextView inv5 = (TextView) v.findViewById(R.id.inv5);
-        TextView inv6 = (TextView) v.findViewById(R.id.inv6);
         InventoryDetail inventoryDetail = items.get(position);
         inv1.setText(inventoryDetail.getItemDescription());
         inv2.setText(inventoryDetail.getCatName());
         inv3.setText(inventoryDetail.getStock());
         inv4.setText(inventoryDetail.getUom());
-        inv5.setText(inventoryDetail.getStock());
-        inv6.setText(inventoryDetail.getShelfLocation()+inventoryDetail.getShelfLevel());
+        inv5.setText(inventoryDetail.getShelfLocation()+inventoryDetail.getShelfLevel());
 
         return v;
     }
