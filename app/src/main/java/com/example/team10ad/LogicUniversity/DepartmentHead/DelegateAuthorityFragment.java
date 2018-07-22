@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,16 +44,12 @@ public class DelegateAuthorityFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    List<User> resultedUsers;
+    ListView employeeDetailView;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
-
-    List<User> resultedUsers;
-    ListView employeeDetailView;
-
     private Delegation delegation;
     private String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
@@ -86,7 +83,7 @@ public class DelegateAuthorityFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_delegate_authority, container, false);
 
         final TextView selectedEndDate = view.findViewById(R.id.selectedEndDate);
-        ImageButton endDateButton=view.findViewById(R.id.btn_endDate);
+        ImageButton endDateButton = view.findViewById(R.id.btn_endDate);
         endDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +112,7 @@ public class DelegateAuthorityFragment extends Fragment {
         String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
         final User user = gson.fromJson(json, User.class);
 
-        getPreviousAuthority(user,view);
+        getPreviousAuthority(user, view);
         // Calling Web API for services
         UserService userService = ServiceGenerator.createService(UserService.class, token);
         Call<List<User>> call = userService.getUsersByDeptId(user.getDepId());
@@ -165,6 +162,7 @@ public class DelegateAuthorityFragment extends Fragment {
                     public void onResponse(Call<Delegation> call, Response<Delegation> response) {
                         if (response.isSuccessful()) {
                             getPreviousAuthority(user, view);
+                            Toast.makeText(MyApp.getInstance(), Constants.DELEGATE_SUCCESS_MSG, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                         }
@@ -183,8 +181,7 @@ public class DelegateAuthorityFragment extends Fragment {
         deleteDelegation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewClick) {
-                if(delegation.getActive()!=0)
-                {
+                if (delegation.getActive() != 0) {
                     new AlertDialog.Builder(getActivity())
                             .setTitle(Constants.DELEGATE_AUTHORITY)
                             .setMessage(Constants.DELEGATE_CONFIRM_MSG)
@@ -193,21 +190,21 @@ public class DelegateAuthorityFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     DelegationService delegationService = ServiceGenerator.createService(DelegationService.class, token);
                                     Call<Delegation> dCall = delegationService.cancelDelegation(delegation);
-                                        dCall.enqueue(new Callback<Delegation>() {
-                                            @Override
-                                            public void onResponse(Call<Delegation> call, Response<Delegation> response) {
-                                                if (response.isSuccessful()) {
-                                                    getPreviousAuthority(user, view);
-                                                } else {
-                                                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
-                                                }
+                                    dCall.enqueue(new Callback<Delegation>() {
+                                        @Override
+                                        public void onResponse(Call<Delegation> call, Response<Delegation> response) {
+                                            if (response.isSuccessful()) {
+                                                getPreviousAuthority(user, view);
+                                            } else {
+                                                Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                                             }
+                                        }
 
-                                            @Override
-                                            public void onFailure(Call<Delegation> call, Throwable t) {
-                                                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                        @Override
+                                        public void onFailure(Call<Delegation> call, Throwable t) {
+                                            Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                             })
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -217,9 +214,7 @@ public class DelegateAuthorityFragment extends Fragment {
                             })
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
-                }
-                else
-                {
+                } else {
                     new android.support.v7.app.AlertDialog.Builder(getContext())
                             .setTitle(Constants.DELEGATE_AUTHORITY)
                             .setMessage(Constants.DELEGATE_WARNING_MSG)
@@ -237,8 +232,7 @@ public class DelegateAuthorityFragment extends Fragment {
         return view;
     }
 
-    public void getPreviousAuthority(User user, final View view)
-    {
+    public void getPreviousAuthority(User user, final View view) {
         final DelegationService delegationService = ServiceGenerator.createService(DelegationService.class, token);
         Call<Delegation> dCall = delegationService.getAuthorityUser(user.getDepId());
         dCall.enqueue(new Callback<Delegation>() {
@@ -249,7 +243,7 @@ public class DelegateAuthorityFragment extends Fragment {
                     TextView currentEmployeeName = view.findViewById(R.id.currentEmployeeName);
                     TextView startDate = view.findViewById(R.id.delegateStartDate);
                     TextView selectedEndDate = view.findViewById(R.id.selectedEndDate);
-                    if (delegation.getActive()==0) {
+                    if (delegation.getActive() == 0) {
                         currentEmployeeName.setText(Constants.NO_DELEGATION);
                         startDate.setVisibility(View.INVISIBLE);
                         selectedEndDate.setVisibility(View.INVISIBLE);
@@ -297,4 +291,3 @@ public class DelegateAuthorityFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 }
-

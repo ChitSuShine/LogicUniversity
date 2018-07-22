@@ -35,6 +35,12 @@ public class UserAdapter extends ArrayAdapter<User> {
         TextView employeeName = (TextView) view.findViewById(R.id.employeeName);
         User user = items.get(position);
         employeeName.setText(user.getFullName());
+
+        if(user.getRole()==Constants.DEP_REP_ROLE)
+        {
+            view.findViewById(R.id.employeeRole).setVisibility(View.VISIBLE);
+        }
+
         return view;
     }
 }
