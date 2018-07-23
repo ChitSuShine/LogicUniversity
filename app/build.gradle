@@ -19,6 +19,9 @@ android {
 }
 
 dependencies {
+    repositories {
+        mavenCentral()
+    }
     implementation 'info.hoang8f:android-segmented:1.0.6'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
@@ -35,5 +38,7 @@ dependencies {
     implementation 'com.android.support:design:28.0.0-alpha3'
     implementation 'com.squareup.retrofit2:retrofit:2.1.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
     implementation 'me.sudar:zxing-orient:2.1.1'
+    implementation 'com.sothree.slidinguppanel:library:3.4.0' //sliding up panel
 }

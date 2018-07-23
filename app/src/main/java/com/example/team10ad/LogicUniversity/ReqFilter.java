@@ -76,7 +76,7 @@ public class ReqFilter extends DialogFragment {
             @Override
             public void onResponse(Call<List<Department>> call, Response<List<Department>> response) {
                 if(response.isSuccessful()){
-                    LinearLayout ll = (LinearLayout) view.findViewById(R.id.testlayout);
+                    LinearLayout ll = (LinearLayout) view.findViewById(R.id.deptfilterlist);
                     List<Department> list = new ArrayList<>();
                     list = response.body();
                     final CheckBox[] cbs = new CheckBox[list.size()];

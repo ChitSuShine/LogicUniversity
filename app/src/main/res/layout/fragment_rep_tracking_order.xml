@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.team10ad.LogicUniversity.RequisitionDetail"
-    android:id="@+id/requisitiondetail">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.team10ad.LogicUniversity.DepartmentRep.RepTrackingOrder">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:text="Requisition ID:" />
+                            android:text="Raised By:" />
 
                         <View
                             android:layout_width="30dp"
@@ -45,10 +45,10 @@
                             android:padding="1dp"></View>
 
                         <TextView
-                            android:id="@+id/disbdetailid"
+                            android:id="@+id/raisedBy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"/>
+                            android:gravity="center" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -60,7 +60,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:text="Department name:" />
+                            android:text="Date:" />
 
                         <View
                             android:layout_width="3dp"
@@ -68,7 +68,7 @@
                             android:padding="1dp"></View>
 
                         <TextView
-                            android:id="@+id/disbdetaildept"
+                            android:id="@+id/raisedbydate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center" />
@@ -91,69 +91,70 @@
                             android:padding="25dp"></View>
 
                         <TextView
-                            android:id="@+id/disbdetailcp"
+                            android:id="@+id/collectionpoint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Stationery Store" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="Approved By:" />
+
+                        <View
+                            android:layout_width="18dp"
+                            android:layout_height="match_parent"
+                            android:padding="25dp"></View>
+
+                        <TextView
+                            android:id="@+id/apprBy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center" />
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/deliveryText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+            <com.kofigyan.stateprogressbar.StateProgressBar
+                android:id="@+id/your_state_progress_bar_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:text="Item Description" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Quantity" />
-            </LinearLayout>
+                app:spb_currentStateNumber="three"
+                app:spb_maxStateNumber="four"
+                app:spb_stateBackgroundColor="#BDBDBD"
+                app:spb_stateForegroundColor="@color/colorPrimaryDark"
+                app:spb_stateNumberBackgroundColor="#808080"
+                app:spb_stateNumberForegroundColor="#eeeeee"
+                app:spb_currentStateDescriptionColor="#009688"
+                app:spb_stateDescriptionColor="#808080"
+                app:spb_animateToCurrentProgressState="true"
+                app:spb_checkStateCompleted="true"/>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"></View>
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="6">
             <ListView
-                android:id="@+id/disbdetaillist"
+                android:id="@+id/hodtrackinglistview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></ListView>
-
-
+                android:layout_height="wrap_content"
+                android:layout_weight="5">
+            </ListView>
         </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

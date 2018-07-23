@@ -20,7 +20,6 @@ import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,21 +78,9 @@ public class ReqListForTrackingOrder extends Fragment {
                 if (response.isSuccessful()) {
                     result = response.body();
                     final MyAdapter adapter = new MyAdapter(getContext(),R.layout.row,result);
-                    listView = (ListView) view.findViewById(R.id.listview);
+                    listView = (ListView) view.findViewById(R.id.replistview);
                     listView.setAdapter(adapter);
-                    searchView = (SearchView) view.findViewById(R.id.searchView);
-                    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                        @Override
-                        public boolean onQueryTextSubmit(String s) {
-                            return false;
-                        }
 
-                        @Override
-                        public boolean onQueryTextChange(String s) {
-                            adapter.getFilter().filter(s);
-                            return false;
-                        }
-                    });
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

@@ -1,7 +1,7 @@
 package com.example.team10ad.LogicUniversity.Service;
 
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
-import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.Model.StationaryRetrieval;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ public interface DisbursementService {
     @GET("requisitions/preparing")
     Call<List<Disbursement>> getAllDisbursements();
 
-    @GET("disbursement/BreakDown")
-    Call<List<Disbursement>> getAllStationaryRetrieval();
+    @GET("disbursement/clerk")
+    Call<List<StationaryRetrieval>> getAllStationaryRetrieval();
 
     @GET("requisitionwithdisbursement/{id}")
     Call<Disbursement> getScannedReqId(@Path("id") String id);

@@ -17,7 +17,6 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:background="@color/background">
-            <!-- row 1 -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -36,9 +35,6 @@
                 android:text="A"
                 android:textColor="@color/pinkaccent"/>
 
-            <!-- row 1 end -->
-
-            <!-- row 2 -->
         </LinearLayout>
 
         <LinearLayout
@@ -97,72 +93,20 @@
                     android:text="Quantity" />
 
             </LinearLayout>
-            <!--end column 3-->
-            <!--column 4-->
 
         </LinearLayout>
-        <!-- col 3 end -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/itemcollect"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_gravity="center"
+            android:text="Item Collect"/>
 
-            <!-- col 1 -->
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:text="Clip Paper Small" />
-
-
-            </LinearLayout>
-            <!-- col 1 end -->
-            <!-- col 2 -->
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:text="4" />
-
-
-            </LinearLayout>
-            <!-- col 2 end -->
-            <!-- col 3 -->
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:text="100" />
-
-            </LinearLayout>
-            <!--end column 3-->
-            <!--column 4-->
-
-        </LinearLayout>
+        <ListView
+            android:id="@+id/retrievallist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
 
     </LinearLayout>
 
