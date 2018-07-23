@@ -15,7 +15,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="Scan QR Code" />
+            android:text="Scan QR" />
+
+        <TextView
+            android:id="@+id/rep_warnMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="15dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,6 +39,8 @@
                 android:orientation="horizontal">
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/rep_cardView"
+                    android:visibility="invisible"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -164,7 +174,8 @@
                     android:id="@+id/rep_itemListView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5" />
+                    android:layout_weight="5"
+                    android:background="@android:color/holo_blue_bright" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

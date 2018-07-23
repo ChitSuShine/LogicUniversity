@@ -42,7 +42,13 @@ public class Constants {
     // Constants for RepScanQRFragment
     public static final String REP_RES_NOT_FOUND = "Result Not Found!";
     public static final String REP_SCAN_ERROR_MSG = "Scan Error ";
+    public static final String REP_COLLECTED_MSG = "Delivery is collected.";
+    public static final String REP_MSG = "Collect Delivery";
+    public static final String REP_OUTSTANDING_MSG = "Delivery is partially collected.";
+    public static final String REP_COMPLETE_MSG = "Delivery is already collected.";
     public static final int REP_DELIVER = 4;
+    public static final int REP_OUTSTANDING = 5;
+    public static final int REP_COMPLETE = 6;
 
     public static final String[] STATUS = {
             "Pending",

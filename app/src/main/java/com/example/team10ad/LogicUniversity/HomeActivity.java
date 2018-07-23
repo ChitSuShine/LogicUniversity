@@ -33,6 +33,8 @@ import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
 
+import me.sudar.zxingorient.ZxingOrient;
+import me.sudar.zxingorient.ZxingOrientResult;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,9 +73,7 @@ public class HomeActivity extends AppCompatActivity {
                     } else if (user.getRole() == Constants.HOD_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodDashboardFragment()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_hod);
-                    }
-                    else if (user.getRole() == Constants.DEP_REP_ROLE)
-                    {
+                    } else if (user.getRole() == Constants.DEP_REP_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ReqListForTrackingOrder()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_rep);
                     }
@@ -208,9 +208,30 @@ public class HomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment,menuItem.getItemId()+"").commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, menuItem.getItemId() + "").commit();
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ZxingOrientResult result = ZxingOrient.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            // If qrcode has nothing in it
+            if (result.getContents() == null) {
+                Toast.makeText(MyApp.getInstance(), Constants.REP_RES_NOT_FOUND, Toast.LENGTH_LONG).show();
+            } else {
+                // If qr contains data
+                try {
+                    String qrCode = result.getContents().toString();
+                    RepScanQRFragment.showData(qrCode);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(MyApp.getInstance(), Constants.REP_SCAN_ERROR_MSG + result.getContents(), Toast.LENGTH_LONG).show();
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
