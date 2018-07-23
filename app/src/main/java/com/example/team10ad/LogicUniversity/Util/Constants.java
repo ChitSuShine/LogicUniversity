@@ -42,6 +42,7 @@ public class Constants {
     // Constants for RepScanQRFragment
     public static final String REP_RES_NOT_FOUND = "Result Not Found!";
     public static final String REP_SCAN_ERROR_MSG = "Scan Error ";
+    public static final int REP_DELIVER = 4;
 
     public static final String[] STATUS = {
             "Pending",

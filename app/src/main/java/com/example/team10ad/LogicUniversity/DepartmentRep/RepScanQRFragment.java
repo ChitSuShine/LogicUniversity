@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.DisbAdapter;
+import com.example.team10ad.LogicUniversity.Util.DisbDetailAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 
@@ -87,8 +89,9 @@ public class RepScanQRFragment extends Fragment {
         requestedDate = view.findViewById(R.id.rep_requestedDate);
         collection = view.findViewById(R.id.rep_collection);
         lockerName = view.findViewById(R.id.rep_lockerName);
-        itemsList = view.findViewById(R.id.repListView);
-        Button scanBtn = view.findViewById(R.id.btn_scan);
+        itemsList = view.findViewById(R.id.rep_itemListView);
+        new ZxingOrient(getActivity()).initiateScan();
+        /*Button scanBtn = view.findViewById(R.id.btn_scan);
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,17 +99,46 @@ public class RepScanQRFragment extends Fragment {
                 // new ZxingOrient(getActivity()).initiateScan();
 
                 DisbursementService disbursementService = ServiceGenerator.createService(DisbursementService.class, token);
-                Call<Disbursement> call = disbursementService.getScannedReqId("56");
+                Call<Disbursement> call = disbursementService.getScannedReqId("55");
                 call.enqueue(new Callback<Disbursement>() {
                     @Override
                     public void onResponse(Call<Disbursement> call, Response<Disbursement> response) {
                         if (response.isSuccessful()) {
                             Disbursement disbursement = response.body();
-                            repRaisedBy.setText(disbursement.getRasiedByname());
-                            requestedDate.setText(disbursement.getReqDate());
-                            collection.setText(disbursement.getCpName());
-                            lockerName.setText(disbursement.getLockerName());
-                            List<DisbursementDetail> result=disbursement.getDisbursementDetails();
+                            int delivered = disbursement.getStatus();
+                            if (delivered == Constants.REP_DELIVER) {
+                                repRaisedBy.setText(disbursement.getRasiedByname());
+                                requestedDate.setText(disbursement.getReqDate());
+                                collection.setText(disbursement.getCpName());
+                                lockerName.setText(disbursement.getLockerName());
+                                List<DisbursementDetail> result = disbursement.getDisbursementDetails();
+                                DisbDetailAdapter disbAdapter = new DisbDetailAdapter(getContext(), R.layout.row_disbdetail, result);
+                                itemsList.setAdapter(disbAdapter);
+
+                                Requisition completedReq = new Requisition();
+                                completedReq.setReqID(disbursement.getReqID());
+                                RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
+                                Call<Requisition> requisitionCall = requisitionService.changeRequisitionStatus(completedReq);
+                                requisitionCall.enqueue(new Callback<Requisition>() {
+                                    @Override
+                                    public void onResponse(Call<Requisition> call, Response<Requisition> response) {
+                                        if(response.isSuccessful())
+                                        {
+                                            Toast.makeText(MyApp.getInstance(), "Bravo", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else
+                                        {
+                                            Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Requisition> call, Throwable t) {
+                                        Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            }
                         } else {
                             Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                         }
@@ -118,7 +150,7 @@ public class RepScanQRFragment extends Fragment {
                     }
                 });
             }
-        });
+        });*/
         return view;
     }
 
