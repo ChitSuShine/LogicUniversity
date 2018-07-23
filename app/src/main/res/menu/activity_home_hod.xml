@@ -29,6 +29,10 @@
             android:icon="@drawable/tracking"
             android:title="Tracking Order" />
         <item
+            android:id="@+id/orderhishod"
+            android:icon="@drawable/report"
+            android:title="Order History" />
+        <item
             android:id="@+id/reportHod"
             android:icon="@drawable/report"
             android:title="@string/report" />

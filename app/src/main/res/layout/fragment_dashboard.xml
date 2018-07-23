@@ -64,7 +64,7 @@
                         android:layout_height="64dp"
                         android:background="@drawable/cercelbackgroundgreen"
                         android:padding="10dp"
-                        android:src="@drawable/ic_border_color_black_24dp" />
+                        android:src="@drawable/ic_pin_drop_black_24dp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Disbursement" />
+                        android:text="Delivery Point" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
