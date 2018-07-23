@@ -12,20 +12,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.team10ad.LogicUniversity.DepartmentHead.HodReqApproveRejectFragment;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Service.DisbursementService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.DisbAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
-import com.example.team10ad.LogicUniversity.Util.RetrievalFormFragment;
 import com.example.team10ad.team10ad.R;
 
 import java.util.ArrayList;
@@ -90,20 +88,6 @@ public class RequisitionList extends Fragment {
             }
         });
 
-        /*final LinearLayout test=(LinearLayout)view.findViewById(R.id.testlayout);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RequisitionDetail requisitionDetail=new RequisitionDetail();
-                FragmentManager fm=getFragmentManager();
-                fm.beginTransaction().replace(R.id.reqFrame,requisitionDetail).commit();
-
-
-            }
-        });*/
-       /* TextView filterText=(TextView)view.findViewById(R.id.filterText);
-        filterText.setTypeface(filterText.getTypeface(), Typeface.BOLD);*/
-
         DisbursementService disbService= ServiceGenerator.createService(DisbursementService.class,token);
         Call<List<Disbursement>> call=disbService.getAllDisbursements();
         call.enqueue(new Callback<List<Disbursement>>() {
@@ -114,7 +98,19 @@ public class RequisitionList extends Fragment {
                     final DisbAdapter disbAdapter=new DisbAdapter(getContext(),R.layout.row_disblist,result);
                     disblistview=(ListView) view.findViewById(R.id.disblistview);
                     disblistview.setAdapter(disbAdapter);
+                    disblistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            RequisitionDetail reqdetail=new RequisitionDetail();
+                            Bundle b = new Bundle();
+                            b.putString("id", result.get(i).getReqID());
+                            reqdetail.setArguments(b);
+                            FragmentManager fragmentManager=getFragmentManager();
+                            fragmentManager.beginTransaction().replace(R.id.content_frame, reqdetail).commit();
+                        }
+                    });
                 }
+
                 else{
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                 }

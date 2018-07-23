@@ -10,17 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.team10ad.LogicUniversity.Model.Disbursement;
+import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
 import com.example.team10ad.team10ad.R;
 
 import java.util.List;
 
-public class DisbAdapter extends ArrayAdapter<Disbursement> {
-
+public class DisbDetailAdapter extends ArrayAdapter<DisbursementDetail> {
     int resource;
-    private List<Disbursement> items;
+    private List<DisbursementDetail> items;
 
-    public DisbAdapter(@NonNull Context context, int resource, @NonNull List<Disbursement> items) {
+    public DisbDetailAdapter(@NonNull Context context, int resource, @NonNull List<DisbursementDetail> items) {
         super(context, resource, items);
         this.resource = resource;
         this.items = items;
@@ -32,18 +31,18 @@ public class DisbAdapter extends ArrayAdapter<Disbursement> {
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(resource, null);
 
-        TextView disb1 = (TextView) v.findViewById(R.id.disb1);
-        TextView disb2 = (TextView) v.findViewById(R.id.disb2);
-        TextView disb3 = (TextView) v.findViewById(R.id.disb3);
+        TextView disbdetail1 = (TextView) v.findViewById(R.id.disbdetail1);
+        TextView disbdetail2 = (TextView) v.findViewById(R.id.disbdetail2);
+        TextView disbdetail3 = (TextView) v.findViewById(R.id.disbdetail3);
+        TextView disbdetail4 = (TextView) v.findViewById(R.id.disbdetail4);
 
-        Disbursement disb=items.get(position);
+        DisbursementDetail disbDetail = items.get(position);
 
-        disb1.setText(disb.getDepName());//Department Name
+        disbdetail1.setText(disbDetail.getItemname());
+        disbdetail2.setText(disbDetail.getCategoryName());
+        disbdetail3.setText(disbDetail.getApprovedQty());
+        disbdetail4.setText(disbDetail.getUOM());
 
-        String date = disb.getReqDate();//Requisition Date
-        disb2.setText(date);
-
-        disb3.setText(disb.getCpName());//Collection Point Name
 
         return v;
     }

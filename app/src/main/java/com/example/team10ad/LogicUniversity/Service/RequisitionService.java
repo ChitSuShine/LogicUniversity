@@ -22,4 +22,5 @@ public interface RequisitionService {
 
     @GET("requisitionwithdisbursement/{id}")
     Call<Requisition> getScannedReqId(@Path("id") String id);
+
 }

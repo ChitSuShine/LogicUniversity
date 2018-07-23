@@ -8,6 +8,12 @@
             android:id="@+id/scanRep"
             android:icon="@drawable/dashboard"
             android:title="@string/scanQR" />
+
+        <item
+            android:id="@+id/trackRep"
+            android:icon="@drawable/tracking"
+            android:title="Tracking Order" />
+
         <item
             android:id="@+id/logout"
             android:icon="@drawable/profile"
