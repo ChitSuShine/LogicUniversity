@@ -11,6 +11,10 @@
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
     </style>
 
+    <style name="SlidingUp">
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <attr name="sc_corner_radius" format="dimension" />
     <attr name="sc_border_width" format="dimension" />

@@ -9,11 +9,23 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Model.CollectionPoint;
+import com.example.team10ad.LogicUniversity.Service.CollectionPointService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
+import com.example.team10ad.LogicUniversity.Util.NestedScrollableViewHelper;
 import com.example.team10ad.team10ad.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,10 +39,14 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import static android.support.constraint.Constraints.TAG;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallback{
     private static final String ARG_PARAM1 = "param1";
@@ -46,6 +62,9 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private Marker marker, marker1, marker2;
     private MapView mapFragment;
+
+    //Collection Point List
+    List<CollectionPoint> result;
 
     public ClerkMapDeliveryPoint() { }
 
@@ -71,6 +90,8 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_clerk_map_delivery_point, container, false);
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+
         mapFragment = (MapView) view.findViewById(R.id.map);
         mapFragment.onCreate(savedInstanceState);
         mapFragment.onResume();
@@ -81,6 +102,8 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
         } catch (Exception e) {
             e.printStackTrace();
         }
+        slidingViewCreate(view, token);
+
         return view;
     }
 
@@ -117,27 +140,16 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        final MarkerOptions myMarker = new MarkerOptions();
 
-        LatLng pos = new LatLng(1.3, 103.81);
-        LatLng pos1 = new LatLng(1.3, 103.84);
-        LatLng pos2 = new LatLng(1.3, 103.87);
-        LatLng[] poss = new LatLng[] {pos, pos1, pos2};
-        String[] s = new String[] {"s1", "s2", "s3"};
-        for(int i=0; i<3; i++){
-            myMarker.position(poss[i]);
-            Marker m = mMap.addMarker(myMarker);
-            m.setTag(s[i]);
-        }
-
-        CameraPosition cp = new CameraPosition.Builder().target(pos1).zoom(13).build();
-
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
+        LatLng pos = new LatLng(1.296879, 103.776332);
+        moveCameraTo(pos, 15);
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker mark) {
-                mark.setTitle(mark.getTag().toString());
+                CollectionPoint obj = (CollectionPoint) mark.getTag();
+                mark.setTitle(obj.getCpName());
+                mark.setSnippet(obj.getCpLocation());
                 mark.showInfoWindow();
                 return false;
             }
@@ -149,8 +161,51 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
         });
     }
 
+    private void markerAdd(CollectionPoint cp){
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        markerOptions.position(new LatLng(Double.parseDouble(cp.getLatitude()),
+                Double.parseDouble(cp.getLongitude())));
+        Marker m = mMap.addMarker(markerOptions);
+        m.setTag(cp);
+    }
+
+    private void moveCameraTo(LatLng location, int zoom){
+        CameraPosition cp = new CameraPosition.Builder().target(location).zoom(zoom).build();
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
+    }
+
     public interface OnFragmentInteractionListener {
 
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void slidingViewCreate(View viewParam, String tokenParam){
+        SlidingUpPanelLayout slidingUpPanelLayout =
+                (SlidingUpPanelLayout) viewParam.findViewById(R.id.sliding_layout);
+        final ListView slideView = viewParam.findViewById(R.id.sliding_cplistView);
+        CollectionPointService cpServie = ServiceGenerator.createService(CollectionPointService.class, tokenParam);
+        Call<List<CollectionPoint>> call = cpServie.getCollectionPoints();
+        call.enqueue(new Callback<List<CollectionPoint>>() {
+            @Override
+            public void onResponse(Call<List<CollectionPoint>> call, Response<List<CollectionPoint>> response) {
+                result = response.body();
+                ArrayList<String> arrayList = new ArrayList<>();
+                for (CollectionPoint cp : result) {
+                    arrayList.add(cp.getCpName());
+                    markerAdd(cp);
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>( getContext(), android.R.layout.simple_list_item_1, arrayList);
+                slideView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<CollectionPoint>> call, Throwable t) {
+                Toast.makeText(getContext(), "Failed to Load !", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        NestedScrollableViewHelper helper = new NestedScrollableViewHelper();
+        slidingUpPanelLayout.setScrollableViewHelper(helper);
     }
 }
