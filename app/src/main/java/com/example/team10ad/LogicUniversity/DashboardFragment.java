@@ -68,7 +68,7 @@ public class DashboardFragment extends Fragment {
 
         setupPieChart();
 
-        // Link to inventory screen
+        // Link to Retrieval list screen
         LinearLayout inv=(LinearLayout)view.findViewById(R.id.inventoryID);
         inv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,14 +78,14 @@ public class DashboardFragment extends Fragment {
                 reqFragment.replace(R.id.content_frame,retrieval).commit();
             }
         });
-        // Link to requisition list screen
+        // Link to Delivery Point screen
         LinearLayout req=(LinearLayout)view.findViewById(R.id.requisitionID);
         req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RequisitionList requisitionList=new RequisitionList();
+                ClerkMapDeliveryPoint deliveryList=new ClerkMapDeliveryPoint();
                 FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-                fm.replace(R.id.content_frame,requisitionList);
+                fm.replace(R.id.content_frame,deliveryList);
                 fm.addToBackStack(null);
                 fm.commit();
             }

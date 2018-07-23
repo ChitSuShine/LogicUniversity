@@ -35,7 +35,7 @@ public class Disbursement {
     private String cpName;
 
     @SerializedName("Status")
-    private String Status;
+    private int status;
 
     @SerializedName("Reqdate")
     private String reqDate;
@@ -121,12 +121,12 @@ public class Disbursement {
         this.cpName = cpName;
     }
 
-    public String getStatus() {
-        return Status;
+    public int getStatus() {
+        return status;
     }
 
-    public void setStatus(String status) {
-        Status = status;
+    public void setStatus(int status) {
+        status = status;
     }
 
     public String getReqDate() {

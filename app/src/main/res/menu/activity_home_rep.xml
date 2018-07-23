@@ -15,6 +15,11 @@
             android:title="Tracking Order" />
 
         <item
+            android:id="@+id/orderHisRep"
+            android:icon="@drawable/tracking"
+            android:title="Order History" />
+
+        <item
             android:id="@+id/logout"
             android:icon="@drawable/profile"
             android:title="@string/logout" />

@@ -19,4 +19,7 @@ public interface RequisitionService {
 
     @POST("requisition/update")
     Call<Requisition> updateRequisition(@Body Requisition requisition);
+
+    @POST("requisition/status/completed")
+    Call<Requisition> changeRequisitionStatus(@Body Requisition requisition);
 }

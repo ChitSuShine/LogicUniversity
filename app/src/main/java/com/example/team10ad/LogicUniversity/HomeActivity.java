@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
 import com.example.team10ad.LogicUniversity.DepartmentHead.DelegateAuthorityFragment;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HODOrderHistory;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
 //import com.example.team10ad.LogicUniversity.DepartmentHead.HodReportFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
@@ -73,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     else if (user.getRole() == Constants.DEP_REP_ROLE)
                     {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new RepScanQRFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ReqListForTrackingOrder()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_rep);
                     }
                 } else {
@@ -166,7 +167,11 @@ public class HomeActivity extends AppCompatActivity {
                 break;
 
             case R.id.trackRep:
-                fragmentClass = RepReqListForTrackingOrder.class;
+                fragmentClass = ReqListForTrackingOrder.class;
+                break;
+
+            case R.id.orderHisRep:
+                fragmentClass = HODOrderHistory.class;
                 break;
 
             // HOD
@@ -187,6 +192,9 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.trackinghod:
                 fragmentClass = ReqListForTrackingOrder.class;
+                break;
+            case R.id.orderhishod:
+                fragmentClass = HODOrderHistory.class;
                 break;
             case R.id.reportHod:
                 //fragmentClass = HodReportFragment.class;
