@@ -8,12 +8,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -39,10 +41,12 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sothree.slidinguppanel.ScrollableViewHelper;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,7 +64,7 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
     private GoogleMap mMap;
     private boolean mLocationPermissionGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
-    private Marker marker, marker1, marker2;
+    private Marker marker;
     private MapView mapFragment;
 
     //Collection Point List
@@ -157,7 +161,10 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
-            public void onInfoWindowClick(Marker mark) { }
+            public void onInfoWindowClick(Marker mark) {
+                CollectionPoint cp = (CollectionPoint) mark.getTag();
+                collectionPointDelivery(cp);
+            }
         });
     }
 
@@ -181,7 +188,7 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
     }
 
     private void slidingViewCreate(View viewParam, String tokenParam){
-        SlidingUpPanelLayout slidingUpPanelLayout =
+        final SlidingUpPanelLayout slidingUpPanelLayout =
                 (SlidingUpPanelLayout) viewParam.findViewById(R.id.sliding_layout);
         final ListView slideView = viewParam.findViewById(R.id.sliding_cplistView);
         CollectionPointService cpServie = ServiceGenerator.createService(CollectionPointService.class, tokenParam);
@@ -190,13 +197,21 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
             @Override
             public void onResponse(Call<List<CollectionPoint>> call, Response<List<CollectionPoint>> response) {
                 result = response.body();
-                ArrayList<String> arrayList = new ArrayList<>();
+                final ArrayList<String> arrayList = new ArrayList<>();
                 for (CollectionPoint cp : result) {
                     arrayList.add(cp.getCpName());
                     markerAdd(cp);
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>( getContext(), android.R.layout.simple_list_item_1, arrayList);
                 slideView.setAdapter(adapter);
+                slideView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        CollectionPoint cp = result.get(i);
+                        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                        collectionPointDelivery(cp);
+                    }
+                });
             }
 
             @Override
@@ -207,5 +222,16 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
 
         NestedScrollableViewHelper helper = new NestedScrollableViewHelper();
         slidingUpPanelLayout.setScrollableViewHelper(helper);
+    }
+
+    private void collectionPointDelivery(CollectionPoint cp){
+        DeliveryPointProcess deliveryPointProcess = new DeliveryPointProcess();
+        Bundle b = new Bundle();
+        b.putInt("CpId", cp.getCpId());
+        deliveryPointProcess.setArguments(b);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, deliveryPointProcess);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

@@ -4,5 +4,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.team10ad.LogicUniversity.DepartmentHead.HODReport">
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/frequentlyItemChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.github.mikephil.charting.charts.BarChart>
 
 </FrameLayout>
