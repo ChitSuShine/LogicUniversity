@@ -8,43 +8,39 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Model.Disbursement;
+import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
+import com.example.team10ad.LogicUniversity.Service.DisbursementService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.DisbDetailAdapter;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RequisitionDetail.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RequisitionDetail#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class RequisitionDetail extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    ListView disbdetaillist;
+    List<Disbursement> result=new ArrayList<Disbursement>();
 
-    public RequisitionDetail() {
-        // Required empty public constructor
-    }
+    public RequisitionDetail() { }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RequisitionDetail.
-     */
-    // TODO: Rename and change types and number of parameters
     public static RequisitionDetail newInstance(String param1, String param2) {
         RequisitionDetail fragment = new RequisitionDetail();
         Bundle args = new Bundle();
@@ -66,15 +62,30 @@ public class RequisitionDetail extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_requisition_detail, container, false);
-        /*TextView deliverytext=(TextView)view.findViewById(R.id.deliveryText);
-        deliverytext.setText("The following Items are needed to collect at warehouse");
-        deliverytext.setTypeface(deliverytext.getTypeface(), Typeface.BOLD);*/
+
+        Bundle b = this.getArguments();
+        String id = b.getString("id");
+        final View view= inflater.inflate(R.layout.fragment_requisition_detail, container, false);
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        DisbursementService disbService= ServiceGenerator.createService(DisbursementService.class,token);
+        Call<List<Disbursement>> call=disbService.getAllDisbursements();
+        call.enqueue(new Callback<List<Disbursement>>() {
+            @Override
+            public void onResponse(Call<List<Disbursement>> call, Response<List<Disbursement>> response) {
+                if(response.isSuccessful()){
+                    result=response.body();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Disbursement>> call, Throwable t) {
+
+            }
+        });
         return  view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -92,18 +103,7 @@ public class RequisitionDetail extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

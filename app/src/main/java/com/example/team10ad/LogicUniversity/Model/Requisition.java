@@ -42,20 +42,6 @@ public class Requisition {
     @SerializedName("Requisitiondetails")
     private ArrayList<RequisitionDetail> requisitionDetails;
 
-    public Requisition(){
-        reqID = "";
-        raisedBy = "";
-        rasiedByname = "";
-        approvedBy = "";
-        approvedByname = "";
-        depID = "";
-        depName = "";
-        cpID = "";
-        cpName = "";
-        Status = "";
-        reqDate = "";
-        requisitionDetails = new ArrayList<RequisitionDetail>();
-    }
 
     public String getReqID() {
         return reqID;

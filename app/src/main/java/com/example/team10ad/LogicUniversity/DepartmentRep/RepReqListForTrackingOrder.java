@@ -1,4 +1,4 @@
-package com.example.team10ad.LogicUniversity.Util;
+package com.example.team10ad.LogicUniversity.DepartmentRep;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,15 +8,17 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.Model.StationaryRetrieval;
-import com.example.team10ad.LogicUniversity.RequisitionList;
-import com.example.team10ad.LogicUniversity.Service.DisbursementService;
-import com.example.team10ad.LogicUniversity.Service.InventoryService;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HODTrackingOrder;
+import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.MyAdapter;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 
 import java.util.ArrayList;
@@ -26,8 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class RetrievalFormFragment extends Fragment {
+public class RepReqListForTrackingOrder extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -35,13 +36,13 @@ public class RetrievalFormFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    ListView retrievallist;
-    List<StationaryRetrieval> result;
+    ListView replistview;
+    List<Requisition> result=new ArrayList<Requisition>();
 
-    public RetrievalFormFragment() {
-    }
-    public static RetrievalFormFragment newInstance(String param1, String param2) {
-        RetrievalFormFragment fragment = new RetrievalFormFragment();
+    public RepReqListForTrackingOrder() { }
+
+    public static RepReqListForTrackingOrder newInstance(String param1, String param2) {
+        RepReqListForTrackingOrder fragment = new RepReqListForTrackingOrder();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,52 +63,40 @@ public class RetrievalFormFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view= inflater.inflate(R.layout.fragment_retrieval_form, container, false);
-        Button itemcollect=(Button)view.findViewById(R.id.itemcollect);
-        itemcollect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(),"it's ok",Toast.LENGTH_LONG).show();
-                RequisitionList disbursementList=new RequisitionList();
-                FragmentManager fm=getFragmentManager();
-                fm.beginTransaction().replace(R.id.content_frame,disbursementList).commit();
-            }
-        });
-
+        final View view =inflater.inflate(R.layout.fragment_rep_req_list_for_tracking_order, container, false);
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
-        DisbursementService disbService= ServiceGenerator.createService(DisbursementService.class,token);
-        Call<List<StationaryRetrieval>> call=disbService.getAllStationaryRetrieval();
-        call.enqueue(new Callback<List<StationaryRetrieval>>() {
+        RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
+        Call<List<Requisition>> call = requisitionService.getAllRequisitions();
+        call.enqueue(new Callback<List<Requisition>>() {
             @Override
-            public void onResponse(Call<List<StationaryRetrieval>> call, Response<List<StationaryRetrieval>> response) {
-                if(response.isSuccessful()){
-                    result=response.body();
-                    final RetrievalAdapter retrievalAdapter=new RetrievalAdapter(getContext(),R.layout.row_retrievallist,result);
-                    retrievallist=(ListView)view.findViewById(R.id.retrievallist);
-                    retrievallist.setAdapter(retrievalAdapter);
-                    /*retrievallist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
+                if (response.isSuccessful()) {
+                    result = response.body();
+                    final MyAdapter adapter = new MyAdapter(getContext(),R.layout.row,result);
+                    replistview = (ListView) view.findViewById(R.id.replistview);
+                    replistview.setAdapter(adapter);
+
+                    replistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            RequisitionDetail reqDetail=new RequisitionDetail();
+                            HODTrackingOrder hodTrackingOrder=new HODTrackingOrder();
                             Bundle b = new Bundle();
                             b.putString("id", result.get(i).getReqID());
-                            reqDetail.setArguments(b);
+                            hodTrackingOrder.setArguments(b);
                             FragmentManager fragmentManager=getFragmentManager();
-                            fragmentManager.beginTransaction().replace(R.id.content_frame, reqDetail).commit();
+                            fragmentManager.beginTransaction().replace(R.id.content_frame, hodTrackingOrder).commit();
                         }
-                    });*/
-                }
-                else{
+                    });
+                } else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                 }
-
             }
-
             @Override
-            public void onFailure(Call<List<StationaryRetrieval>> call, Throwable t) {
+            public void onFailure(Call<List<Requisition>> call, Throwable t) {
                 Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
             }
         });
+
         return view;
     }
 
@@ -120,7 +109,6 @@ public class RetrievalFormFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override
@@ -129,8 +117,8 @@ public class RetrievalFormFragment extends Fragment {
         mListener = null;
     }
 
-
     public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

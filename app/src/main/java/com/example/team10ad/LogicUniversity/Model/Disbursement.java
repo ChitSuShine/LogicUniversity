@@ -48,6 +48,23 @@ public class Disbursement {
     @SerializedName("Requisitiondetails")
     private ArrayList<RequisitionDetail> requisitionDetails;
 
+    public Disbursement(){
+        reqID = "";
+        raisedBy = "";
+        rasiedByname = "";
+        approvedBy = "";
+        approvedByname = "";
+        depID = "";
+        depName = "";
+        cpID = "";
+        cpName = "";
+        Status = "";
+        reqDate = "";
+        LockerID="";
+        LockerName="";
+        requisitionDetails = new ArrayList<RequisitionDetail>();
+    }
+
     public String getReqID() {
         return reqID;
     }

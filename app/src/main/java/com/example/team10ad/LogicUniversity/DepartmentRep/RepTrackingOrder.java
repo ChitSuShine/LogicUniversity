@@ -1,4 +1,4 @@
-package com.example.team10ad.LogicUniversity.DepartmentHead;
+package com.example.team10ad.LogicUniversity.DepartmentRep;
 
 import android.content.Context;
 import android.net.Uri;
@@ -21,24 +21,20 @@ import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class HODTrackingOrder extends Fragment {
-
+public class RepTrackingOrder extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static final String[] STATE = {"ONE", "ONE", "ONE", "TWO", "THREE", "FOUR", "FOUR", "ONE"};
+
     private String mParam1;
     private String mParam2;
-
-    private static final String[] STATE = {"ONE", "ONE", "ONE", "TWO", "THREE", "FOUR", "FOUR", "ONE"};
 
     private OnFragmentInteractionListener mListener;
     Requisition result;
@@ -46,10 +42,10 @@ public class HODTrackingOrder extends Fragment {
 
     String[] descriptionData = {"Pending", "Preparing", "RtC", "Completed"};
 
-    public HODTrackingOrder() { }
+    public RepTrackingOrder() { }
 
-    public static HODTrackingOrder newInstance(String param1, String param2) {
-        HODTrackingOrder fragment = new HODTrackingOrder();
+    public static RepTrackingOrder newInstance(String param1, String param2) {
+        RepTrackingOrder fragment = new RepTrackingOrder();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,7 +67,7 @@ public class HODTrackingOrder extends Fragment {
                              Bundle savedInstanceState) {
         Bundle b = this.getArguments();
         String id = b.getString("id");
-        final View view= inflater.inflate(R.layout.fragment_hodtracking_order, container, false);
+        final View view= inflater.inflate(R.layout.fragment_rep_tracking_order, container, false);
 
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
@@ -134,9 +130,8 @@ public class HODTrackingOrder extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
     public interface OnFragmentInteractionListener {
-
+        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
