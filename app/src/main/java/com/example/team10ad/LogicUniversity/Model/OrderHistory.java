@@ -23,7 +23,7 @@ public class OrderHistory {
     private String Status;
 
     public String getReqdate() {
-        return Reqdate;
+        return Reqdate.substring(0,10);
     }
 
     public void setReqdate(String reqdate) {

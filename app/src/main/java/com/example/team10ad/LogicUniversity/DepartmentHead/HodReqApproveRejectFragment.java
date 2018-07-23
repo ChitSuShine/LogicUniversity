@@ -105,7 +105,39 @@ public class HodReqApproveRejectFragment extends Fragment {
                 Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
             }
         });
+        //approve
+        Button appovebtn=view.findViewById(R.id.approvebtn);
+        appovebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                result.setStatus("1");
+                RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
+                Call<Requisition> rejcall = requisitionService.updateRequisition(result);
+                rejcall.enqueue(new Callback<Requisition>() {
+                    @Override
+                    public void onResponse(Call<Requisition> call, Response<Requisition> response) {
+                        if (response.isSuccessful()) {
+                            result=response.body();
+                            HodRequisitionListFragment hodRequisitionListFragment = new HodRequisitionListFragment();
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            ft.detach(HodReqApproveRejectFragment.this);
+                            ft.add(R.id.content_frame, new HodRequisitionListFragment());
+                            ft.commit();
+                        }
+                        else {
+                            Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<Requisition> call, Throwable t) {
+                        Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+        //reject
         Button rejectreq=view.findViewById(R.id.rejectbtn);
         rejectreq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +169,7 @@ public class HodReqApproveRejectFragment extends Fragment {
 
             }
         });
+
         return view;
     }
 
