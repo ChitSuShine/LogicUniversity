@@ -1,7 +1,7 @@
 package com.example.team10ad.LogicUniversity.Util;
 
 public class Constants {
-    // Constants for Requests
+    // Constants for API Requests
     public static final String GRANT_TYPE = "password";
     public static final String API_BASE_URL = "http://lussisadteam10api.azurewebsites.net/api/";
     public static final String BEARER = "bearer ";
@@ -38,6 +38,10 @@ public class Constants {
     public static final String DELEGATE_SUCCESS_MSG = "Your delegation is successful.";
     public static final String NO_DELEGATION = "There is no previous delegation.";
     public static final String DELEGATED_USER ="delegatedUser";
+
+    // Constants for RepScanQRFragment
+    public static final String REP_RES_NOT_FOUND = "Result Not Found!";
+    public static final String REP_SCAN_ERROR_MSG = "Scan Error ";
 
     public static final String[] STATUS = {
             "Pending",

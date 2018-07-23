@@ -1,5 +1,6 @@
 package com.example.team10ad.LogicUniversity.Model;
 
+import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class Disbursement {
     private String LockerName;
 
     @SerializedName("Requisitiondetails")
-    private ArrayList<RequisitionDetail> requisitionDetails;
+    private ArrayList<DisbursementDetail> disbursementDetails;
 
     public String getReqID() {
         return reqID;
@@ -129,7 +130,7 @@ public class Disbursement {
     }
 
     public String getReqDate() {
-        return reqDate;
+        return reqDate.substring(0, Constants.TEN);
     }
 
     public void setReqDate(String reqDate) {
@@ -152,11 +153,11 @@ public class Disbursement {
         LockerName = lockerName;
     }
 
-    public ArrayList<RequisitionDetail> getRequisitionDetails() {
-        return requisitionDetails;
+    public ArrayList<DisbursementDetail> getDisbursementDetails() {
+        return disbursementDetails;
     }
 
-    public void setRequisitionDetails(ArrayList<RequisitionDetail> requisitionDetails) {
-        this.requisitionDetails = requisitionDetails;
+    public void setDisbursementDetails(ArrayList<DisbursementDetail> disbursementDetails) {
+        this.disbursementDetails = disbursementDetails;
     }
 }

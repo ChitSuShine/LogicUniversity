@@ -9,18 +9,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.HomeActivity;
+import com.example.team10ad.LogicUniversity.Model.Disbursement;
+import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
 import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.Service.DisbursementService;
 import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.DisbAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import me.sudar.zxingorient.ZxingOrient;
+import me.sudar.zxingorient.ZxingOrientResult;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +48,11 @@ public class RepScanQRFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
-    private TextView scannedData;
+    private TextView repRaisedBy;
+    private TextView requestedDate;
+    private TextView collection;
+    private TextView lockerName;
+    private ListView itemsList;
 
     public RepScanQRFragment() {
         // Required empty public constructor
@@ -68,31 +83,37 @@ public class RepScanQRFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rep_scan_qr, container, false);
 
+        repRaisedBy = view.findViewById(R.id.rep_rasiedBy);
+        requestedDate = view.findViewById(R.id.rep_requestedDate);
+        collection = view.findViewById(R.id.rep_collection);
+        lockerName = view.findViewById(R.id.rep_lockerName);
+        itemsList = view.findViewById(R.id.repListView);
         Button scanBtn = view.findViewById(R.id.btn_scan);
-        scannedData = view.findViewById(R.id.scannedData);
-        // Qr code scanner object
-        final IntentIntegrator qrScan = new IntentIntegrator(getActivity());
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Initiating the qr code scan
-                // qrScan.initiateScan();
+                // new ZxingOrient(getActivity()).initiateScan();
 
-                RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
-                Call<Requisition> call = requisitionService.getScannedReqId("8");
-                call.enqueue(new Callback<Requisition>() {
+                DisbursementService disbursementService = ServiceGenerator.createService(DisbursementService.class, token);
+                Call<Disbursement> call = disbursementService.getScannedReqId("56");
+                call.enqueue(new Callback<Disbursement>() {
                     @Override
-                    public void onResponse(Call<Requisition> call, Response<Requisition> response) {
+                    public void onResponse(Call<Disbursement> call, Response<Disbursement> response) {
                         if (response.isSuccessful()) {
-                            Requisition resultedRequisition = response.body();
-                            scannedData.setText(resultedRequisition.getApprovedByname());
+                            Disbursement disbursement = response.body();
+                            repRaisedBy.setText(disbursement.getRasiedByname());
+                            requestedDate.setText(disbursement.getReqDate());
+                            collection.setText(disbursement.getCpName());
+                            lockerName.setText(disbursement.getLockerName());
+                            List<DisbursementDetail> result=disbursement.getDisbursementDetails();
                         } else {
                             Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<Requisition> call, Throwable t) {
+                    public void onFailure(Call<Disbursement> call, Throwable t) {
                         Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -104,20 +125,19 @@ public class RepScanQRFragment extends Fragment {
     // Getting the scan results
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        ZxingOrientResult result = ZxingOrient.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             // If qrcode has nothing in it
             if (result.getContents() == null) {
-                Toast.makeText(MyApp.getInstance(), "Result Not Found", Toast.LENGTH_LONG).show();
+                Toast.makeText(MyApp.getInstance(), Constants.REP_RES_NOT_FOUND, Toast.LENGTH_LONG).show();
             } else {
                 // If qr contains data
                 try {
-
                     String qrCode = result.getContents().toString();
-                    scannedData.setText(result.getContents().toString());
+
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(MyApp.getInstance(), "Scan Error " + result.getContents(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyApp.getInstance(), Constants.REP_SCAN_ERROR_MSG + result.getContents(), Toast.LENGTH_LONG).show();
                 }
             }
         } else {
