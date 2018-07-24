@@ -195,7 +195,7 @@ public class InventoryFragment extends Fragment {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String today = format.format(todayDate);
 
-        Toast.makeText(MyApp.getInstance(),"MG "+detailList.size(), Toast.LENGTH_SHORT).show();
+        // Creating Adjustment object to post
         Adjustment adjustment = new Adjustment();
         adjustment.setRaisedBy(user.getUserId());
         adjustment.setIssuedDate(today);
@@ -208,7 +208,7 @@ public class InventoryFragment extends Fragment {
             public void onResponse(Call<Adjustment> call, Response<Adjustment> response) {
                 if(response.isSuccessful())
                 {
-                    Toast.makeText(MyApp.getInstance(), Constants.INVENTORY_SUCCESS_MSG + response.body().getAdjId(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApp.getInstance(), Constants.INVENTORY_SUCCESS_MSG, Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
