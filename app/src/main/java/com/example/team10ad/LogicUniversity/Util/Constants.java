@@ -15,6 +15,7 @@ public class Constants {
     // Constants for user roles
     public static final int CLERK_ROLE = 1;
     public static final int HOD_ROLE = 4;
+    public static final int EMP_ROLE = 5;
     public static final int DEP_REP_ROLE = 6;
 
     // Constants for Error Messages

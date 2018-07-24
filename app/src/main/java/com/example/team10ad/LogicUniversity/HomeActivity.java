@@ -23,7 +23,6 @@ import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
 //import com.example.team10ad.LogicUniversity.DepartmentHead.HodReportFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ReqListForTrackingOrder;
-import com.example.team10ad.LogicUniversity.DepartmentRep.RepReqListForTrackingOrder;
 import com.example.team10ad.LogicUniversity.DepartmentRep.RepScanQRFragment;
 import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
@@ -69,13 +68,16 @@ public class HomeActivity extends AppCompatActivity {
 
                     if (user.getRole() == Constants.CLERK_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new DashboardFragment()).commit();
-                        nvDrawer.inflateMenu(R.menu.activity_home_drawer);
+                        nvDrawer.inflateMenu(R.menu.activity_home_clerk);
                     } else if (user.getRole() == Constants.HOD_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodDashboardFragment()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_hod);
                     } else if (user.getRole() == Constants.DEP_REP_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ReqListForTrackingOrder()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_rep);
+                    } else if (user.getRole() == Constants.EMP_ROLE) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ReqListForTrackingOrder()).commit();
+                        nvDrawer.inflateMenu(R.menu.activity_home_emp);
                     }
                 } else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
@@ -118,7 +120,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.home, menu);
+        getMenuInflater().inflate(R.menu.about, menu);
         return true;
     }
 
@@ -126,7 +128,10 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+            AboutFragment aboutFragment = new AboutFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, aboutFragment).commit();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -137,7 +142,7 @@ public class HomeActivity extends AppCompatActivity {
         Class fragmentClass;
         int id = menuItem.getItemId();
 
-        //logout
+        // Logout
         if (id == R.id.logout) {
             MyApp.getInstance().getPreferenceManager().clearLoginData();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -161,7 +166,7 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentClass = ClerkReportFragment.class;
                 break;
 
-            // Dep Rep
+            // Dep Rep & Employee
             case R.id.scanRep:
                 fragmentClass = RepScanQRFragment.class;
                 break;
