@@ -1,200 +1,169 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.team10ad.LogicUniversity.DepartmentHead.DelegateAuthorityFragment">
+    android:orientation="vertical"
+    android:weightSum="3">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:weightSum="2" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/label_currentEmployeeName"
-                android:layout_width="175dp"
-                android:layout_height="32dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="Current Employee Name: "
-                android:layout_marginLeft="10dp"
                 android:textStyle="bold"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:orientation="vertical">
+
 
             <TextView
                 android:id="@+id/currentEmployeeName"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:weightSum="2" >
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textStyle="bold"/>/>
 
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="9dp">
+        </View>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/label_delegateStartDate"
-                android:layout_width="100dp"
-                android:layout_height="32dp"
-                android:text="Start Date: "
-                android:layout_marginLeft="10dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:orientation="vertical">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Start Date:"
+                android:textStyle="bold"/>
+
 
             <TextView
                 android:id="@+id/delegateStartDate"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"/>
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textStyle="bold"/>/>
+
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:weightSum="2" >
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="9dp">
+        </View>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/delegateEndDate"
-                android:layout_width="100dp"
-                android:layout_height="32dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="End Date: "
-                android:layout_marginLeft="10dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="left">
+                android:textStyle="bold"/>
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+            <LinearLayout
                 android:id="@+id/dateLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/selectedEndDate"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/roundedborderedit"
-                    android:padding="8dp"
-                    />
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/roundedborderedit" />
 
                 <ImageButton
                     android:id="@+id/btn_endDate"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignRight="@id/selectedEndDate"
-                    android:padding="5dp"
-                    android:src="@drawable/calendar"
-                    />
-            </RelativeLayout>
+                    android:src="@drawable/calendar" />
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
-
         <View
             android:layout_width="match_parent"
-            android:layout_height="12dp"
-            />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:orientation="horizontal"
-        android:weightSum="2" >
-
+            android:layout_height="9dp">
+        </View>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <Button
                 android:id="@+id/btn_delegateUpdate"
-                android:text="Add Extension"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="10dp"
-                style="@style/ButtonStyle.Colored"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
+                android:layout_weight="1"
+                android:background="@drawable/my_button_approve"
+                android:text="Add Extension"
+                android:textColor="@color/background"/>
+            <View
+                android:layout_width="6dp"
+                android:layout_height="match_parent">
+            </View>
 
             <Button
                 android:id="@+id/btn_delegateCancel"
-                android:text="Cancel Delegation"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="10dp"
-                style="@style/ButtonStyle.Colored"/>
+                android:layout_weight="1"
+                android:background="@drawable/my_button_approve"
+                android:text="Cancel Delegation"
+                android:textColor="@color/background"/>
+
         </LinearLayout>
+
+
+
     </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="12dp"
-            />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#F5F5F5"
-
-            >
+            android:weightSum="12"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/employeeName"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="Please select one person to delegate authority"
                 android:textStyle="bold"
-                android:textSize="15dp"/>
+                android:textSize="15dp" />
 
             <ListView
                 android:id="@+id/employeeListView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="5" />
+                android:layout_height="0dp"
+                android:layout_weight="11" />
         </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+</LinearLayout>

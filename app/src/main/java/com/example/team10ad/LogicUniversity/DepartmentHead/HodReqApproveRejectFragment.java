@@ -121,8 +121,7 @@ public class HodReqApproveRejectFragment extends Fragment {
                             HodRequisitionListFragment hodRequisitionListFragment = new HodRequisitionListFragment();
                             FragmentTransaction ft = getFragmentManager().beginTransaction();
                             ft.detach(HodReqApproveRejectFragment.this);
-                            ft.add(R.id.content_frame, new HodRequisitionListFragment());
-                            ft.commit();
+                            ft.add(R.id.content_frame, hodRequisitionListFragment).commit();
                         }
                         else {
                             Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();

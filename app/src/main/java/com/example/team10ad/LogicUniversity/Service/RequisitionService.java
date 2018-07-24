@@ -22,4 +22,7 @@ public interface RequisitionService {
 
     @POST("requisition/status/completed")
     Call<Requisition> changeRequisitionStatus(@Body Requisition requisition);
+
+    @GET("requisition/updatetopreparing")
+    Call<Requisition> updateReqtoPreparing (@Body Requisition requisition);
 }
