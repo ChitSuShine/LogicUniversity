@@ -81,16 +81,7 @@ public class RequisitionList extends Fragment {
         final View view=inflater.inflate(R.layout.fragment_requisition_list, container, false);
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
-        LinearLayout filter=(LinearLayout)view.findViewById(R.id.filterID);
-        filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment reqFil = new ReqFilter();
-                reqFil.setTargetFragment(RequisitionList.this, 1);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                reqFil.show(ft, "Filter");
-            }
-        });
+
 
         DisbursementService disbService= ServiceGenerator.createService(DisbursementService.class,token);
         Call<List<Disbursement>> call=disbService.getAllDisbursements();
@@ -145,16 +136,6 @@ public class RequisitionList extends Fragment {
 
         void onFragmentInteraction(Uri uri);
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ArrayList<String> ss = data.getStringArrayListExtra("param");
-        TextView ft = (TextView) getView().findViewById(R.id.filterText);
-        StringBuilder str = new StringBuilder();
-        for(String sss : ss) {
-            str.append(sss);
-            str.append(" ; ");
-        }
-        ft.setText(str);
-    }
+
 }
 

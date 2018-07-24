@@ -44,20 +44,23 @@ public class InventoryDetail {
     private String RecommendedOrderQty;
 
 
-    public InventoryDetail(){
-        Invid = "";
-        Itemid = "";
-        ItemDescription = "";
-        Stock = "";
-        ReorderLevel = "";
-        ReorderQty = "";
-        Catid = "";
-        CatName = "";
-        Description = "";
-        ShelfLocation = "";
-        ShelfLevel = "";
-        Uom = "";
-        RecommendedOrderQty = "";
+    private String currentStock;
+    private String reason;
+    public String getCurrentStock()
+    {
+        return currentStock;
+    }
+    public void setCurrentStock(String currentStock)
+    {
+        this.currentStock = currentStock;
+    }
+    public String getReason()
+    {
+        return reason;
+    }
+    public void setReason(String reason)
+    {
+        this.reason = reason;
     }
 
     public String getInvid() {
