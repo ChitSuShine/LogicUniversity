@@ -12,6 +12,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
+import com.example.team10ad.LogicUniversity.Model.FreqentlyItem;
+import com.example.team10ad.LogicUniversity.Service.ReportService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.LogicUniversity.Util.RetrievalFormFragment;
 import com.example.team10ad.team10ad.R;
 import com.github.mikephil.charting.charts.PieChart;
@@ -22,6 +27,10 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DashboardFragment extends Fragment {
 
@@ -34,8 +43,7 @@ public class DashboardFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     // Data for pie chart
-    int qty[]={89,50,45,30};
-    String name[]={"Pen","Pencil","Stapler","Clip"};
+    private List<PieEntry> pieEntries = new ArrayList<>();
 
     private View currentView;
 
@@ -65,8 +73,26 @@ public class DashboardFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         currentView = view;
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        final PieChart pieChart=(PieChart)currentView.findViewById(R.id.piechart);
+        ReportService rService = ServiceGenerator.createService(ReportService.class, token);
+        Call<List<FreqentlyItem>> call = rService.frequetlyOrderedItemList();
+        call.enqueue(new Callback<List<FreqentlyItem>>() {
+            @Override
+            public void onResponse(Call<List<FreqentlyItem>> call, Response<List<FreqentlyItem>> response) {
+                if(response.isSuccessful()){
+                    for(FreqentlyItem item : response.body()){
+                        pieEntries.add(new PieEntry(item.getQty(), item.getDescription()));
+                    }
+                    setupPieChart(pieChart, pieEntries);
+                }
+            }
 
-        setupPieChart();
+            @Override
+            public void onFailure(Call<List<FreqentlyItem>> call, Throwable t) {
+
+            }
+        });
 
         // Link to Retrieval list screen
         LinearLayout inv=(LinearLayout)view.findViewById(R.id.inventoryID);
@@ -118,20 +144,14 @@ public class DashboardFragment extends Fragment {
     }
 
     // Set pie chart in dashboard
-    private void setupPieChart() {
-        List<PieEntry> pieEntries=new ArrayList<>();
-        for(int i=0;i<qty.length;i++){
-            pieEntries.add(new PieEntry(qty[i],name[i]));
-        }
-        PieDataSet pieDataSet=new PieDataSet(pieEntries,"");
+    private void setupPieChart(PieChart chart, List<PieEntry> entries) {
+        PieDataSet pieDataSet=new PieDataSet(entries,"");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         PieData pieData=new PieData();
         pieData.setDataSet(pieDataSet);
-
-        PieChart pieChart=(PieChart)currentView.findViewById(R.id.piechart);
-        pieChart.setData(pieData);
-        pieChart.getDescription().setText("Top 5 frequent ordered items in 2018");
-        pieChart.animateX(1000);
-        pieChart.invalidate();
+        chart.setData(pieData);
+        chart.getDescription().setText("Top 5 frequent ordered items in 2018");
+        chart.animateX(1000);
+        chart.invalidate();
     }
 }
