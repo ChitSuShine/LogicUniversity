@@ -14,19 +14,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
+import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
 import com.example.team10ad.LogicUniversity.Service.DisbursementService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.DisbAdapter;
+import com.example.team10ad.LogicUniversity.Util.ExpandableAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -44,7 +48,7 @@ public class RequisitionList extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    ListView disblistview;
+    ExpandableListView disblistview;
     List<Disbursement> result=new ArrayList<Disbursement>();
 
     public RequisitionList() {
@@ -95,20 +99,15 @@ public class RequisitionList extends Fragment {
             public void onResponse(Call<List<Disbursement>> call, Response<List<Disbursement>> response) {
                 if(response.isSuccessful()){
                     result=response.body();
-                    final DisbAdapter disbAdapter=new DisbAdapter(getContext(),R.layout.row_disblist,result);
-                    disblistview=(ListView) view.findViewById(R.id.disblistview);
-                    disblistview.setAdapter(disbAdapter);
-                    disblistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            RequisitionDetail reqdetail=new RequisitionDetail();
-                            Bundle b = new Bundle();
-                            b.putString("id", result.get(i).getReqID());
-                            reqdetail.setArguments(b);
-                            FragmentManager fragmentManager=getFragmentManager();
-                            fragmentManager.beginTransaction().replace(R.id.content_frame, reqdetail).commit();
-                        }
-                    });
+                    HashMap<Disbursement, List<DisbursementDetail>> map = new
+                            HashMap<>();
+                    for(Disbursement d : result){
+                        map.put(d, d.getDisbursementDetails());
+                    }
+                    disblistview=(ExpandableListView) view.findViewById(R.id.disblistview);
+                    ExpandableAdapter adapter = new ExpandableAdapter(getContext(),
+                            result, map);
+                    disblistview.setAdapter(adapter);
                 }
 
                 else{

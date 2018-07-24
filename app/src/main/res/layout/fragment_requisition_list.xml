@@ -49,12 +49,12 @@
                 android:gravity="center"/>
         </android.support.v7.widget.CardView>
 
-        <ListView
+        <ExpandableListView
             android:id="@+id/disblistview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </ListView>
+        </ExpandableListView>
     </LinearLayout>
 
 </FrameLayout>

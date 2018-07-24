@@ -24,26 +24,34 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Model.CollectionPoint;
+import com.example.team10ad.LogicUniversity.Model.User;
+import com.example.team10ad.LogicUniversity.Service.CollectionPointService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ChangeCollectionPoint.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ChangeCollectionPoint#newInstance} factory method to
- * create an instance of this fragment.
- */
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ChangeCollectionPoint extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private CollectionPoint current = new CollectionPoint();
 
     private OnFragmentInteractionListener mListener;
 
@@ -51,15 +59,6 @@ public class ChangeCollectionPoint extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChangeCollectionPoint.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ChangeCollectionPoint newInstance(String param1, String param2) {
         ChangeCollectionPoint fragment = new ChangeCollectionPoint();
         Bundle args = new Bundle();
@@ -84,11 +83,32 @@ public class ChangeCollectionPoint extends Fragment {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_change_collection_point, container, false);
         final TextView currentcp=(TextView)view.findViewById(R.id.currentcp);
-        currentcp.setText("Your Current collection point is : ");
-        RadioGroup radioGroup1 = (RadioGroup)view.findViewById(R.id.changeRadioGroup);
-        /*for (int i = 0; i < radioGroup .getChildCount(); i++) {
-            ((RadioButton) radioGroup.getChildAt(i)).setText(String.valueOf(i));
-        }*/
+        final RadioGroup radioGroup1 = (RadioGroup)view.findViewById(R.id.changeRadioGroup);
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+
+        String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
+        final User user = new Gson().fromJson(json, User.class);
+        final int deptId = user.getDepId();
+
+        final CollectionPointService cpService = ServiceGenerator.createService(CollectionPointService.class, token);
+
+        String name = setCurrent(cpService, deptId);
+        Call<List<CollectionPoint>> call = cpService.getCollectionPoints();
+        call.enqueue(new Callback<List<CollectionPoint>>() {
+            @Override
+            public void onResponse(Call<List<CollectionPoint>> call, Response<List<CollectionPoint>> response) {
+                if(response.isSuccessful()) {
+                    for (CollectionPoint cP : response.body()) {
+                        addBtn(radioGroup1, cP);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CollectionPoint>> call, Throwable t) {
+                Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Button btn = view.findViewById(R.id.cpchange);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -107,17 +127,6 @@ public class ChangeCollectionPoint extends Fragment {
             }
         });
 
-        radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                RadioButton r = view
-                        .findViewById(radioGroup.getCheckedRadioButtonId());
-                currentcp.setText(r.getText());
-                if(r.isChecked())
-                    r.setTypeface(null, Typeface.BOLD_ITALIC);
-                    r.setTextSize(24);
-            }
-        });
         return view;
     }
 
@@ -141,8 +150,38 @@ public class ChangeCollectionPoint extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
+    private void addBtn(RadioGroup rGrp, CollectionPoint cp){
+        RadioButton radioButton = new RadioButton(getContext());
+        radioButton.setHeight(140);
+        Integer currentId = current.getCpId();
+        if(currentId.equals(cp.getCpId())) {
+            radioButton.setTypeface(null, Typeface.BOLD);
+            radioButton.setChecked(true);
+        }
+        radioButton.setTextSize(18f);
+        radioButton.setId(cp.getCpId());
+        radioButton.setText(cp.getCpName());
+        rGrp.addView(radioButton);
+    }
+
+    private String setCurrent(CollectionPointService cpS, int deptId) {
+        Call<List<CollectionPoint>> call = cpS.getActiveCollectionPoint(deptId);
+        call.enqueue(new Callback<List<CollectionPoint>>() {
+            @Override
+            public void onResponse(Call<List<CollectionPoint>> call, Response<List<CollectionPoint>> response) {
+                List<CollectionPoint> temp = response.body();
+                current.setCpId(temp.get(temp.size()-1).getCpId());
+                current.setCpName(temp.get(temp.size()-1).getCpName());
+            }
+
+            @Override
+            public void onFailure(Call<List<CollectionPoint>> call, Throwable t) {
+                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return current.getCpName();
+    }
 }

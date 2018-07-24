@@ -39,49 +39,9 @@
                     android:id="@+id/changeRadioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/view_spacing_medium">
 
-                    <RadioButton
-                        android:id="@+id/rb1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/view_spacing_medium"
-                        android:text="Jurong East"/>
-
-                    <RadioButton
-                        android:id="@+id/rb2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/view_spacing_medium"
-                        android:text="QueensTown" />
-
-                    <RadioButton
-                        android:id="@+id/rb3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/view_spacing_medium"
-                        android:text="Haw Par Villa"/>
-
-                    <RadioButton
-                        android:id="@+id/rb4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/view_spacing_medium"
-                        android:text="Clementi"/>
-
-                    <RadioButton
-                        android:id="@+id/rb5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/view_spacing_medium"
-                        android:text="Dover" />
-
-                    <RadioButton
-                        android:id="@+id/rb6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/view_spacing_medium"
-                        android:text="Bouna Vista"/>
                 </RadioGroup>
 
                 <Button
