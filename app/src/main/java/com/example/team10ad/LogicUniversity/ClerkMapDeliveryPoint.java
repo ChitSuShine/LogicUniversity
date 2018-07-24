@@ -52,7 +52,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallback{
+public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallback {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -70,7 +70,8 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
     //Collection Point List
     List<CollectionPoint> result;
 
-    public ClerkMapDeliveryPoint() { }
+    public ClerkMapDeliveryPoint() {
+    }
 
     public static ClerkMapDeliveryPoint newInstance(String param1, String param2) {
         ClerkMapDeliveryPoint fragment = new ClerkMapDeliveryPoint();
@@ -168,7 +169,7 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
         });
     }
 
-    private void markerAdd(CollectionPoint cp){
+    private void markerAdd(CollectionPoint cp) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
         markerOptions.position(new LatLng(Double.parseDouble(cp.getLatitude()),
@@ -177,7 +178,7 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
         m.setTag(cp);
     }
 
-    private void moveCameraTo(LatLng location, int zoom){
+    private void moveCameraTo(LatLng location, int zoom) {
         CameraPosition cp = new CameraPosition.Builder().target(location).zoom(zoom).build();
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
     }
@@ -187,7 +188,7 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
         void onFragmentInteraction(Uri uri);
     }
 
-    private void slidingViewCreate(View viewParam, String tokenParam){
+    private void slidingViewCreate(View viewParam, String tokenParam) {
         final SlidingUpPanelLayout slidingUpPanelLayout =
                 (SlidingUpPanelLayout) viewParam.findViewById(R.id.sliding_layout);
         final ListView slideView = viewParam.findViewById(R.id.sliding_cplistView);
@@ -196,22 +197,26 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
         call.enqueue(new Callback<List<CollectionPoint>>() {
             @Override
             public void onResponse(Call<List<CollectionPoint>> call, Response<List<CollectionPoint>> response) {
-                result = response.body();
-                final ArrayList<String> arrayList = new ArrayList<>();
-                for (CollectionPoint cp : result) {
-                    arrayList.add(cp.getCpName());
-                    markerAdd(cp);
-                }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>( getContext(), android.R.layout.simple_list_item_1, arrayList);
-                slideView.setAdapter(adapter);
-                slideView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        CollectionPoint cp = result.get(i);
-                        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                        collectionPointDelivery(cp);
+                if (response.isSuccessful()) {
+                    result = response.body();
+                    final ArrayList<String> arrayList = new ArrayList<>();
+                    for (CollectionPoint cp : result) {
+                        arrayList.add(cp.getCpName());
+                        markerAdd(cp);
                     }
-                });
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, arrayList);
+                    slideView.setAdapter(adapter);
+                    slideView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            CollectionPoint cp = result.get(i);
+                            slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                            collectionPointDelivery(cp);
+                        }
+                    });
+                } else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -224,7 +229,7 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
         slidingUpPanelLayout.setScrollableViewHelper(helper);
     }
 
-    private void collectionPointDelivery(CollectionPoint cp){
+    private void collectionPointDelivery(CollectionPoint cp) {
         DeliveryPointProcess deliveryPointProcess = new DeliveryPointProcess();
         Bundle b = new Bundle();
         b.putInt("CpId", cp.getCpId());

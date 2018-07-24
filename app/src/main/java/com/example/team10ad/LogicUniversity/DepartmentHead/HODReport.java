@@ -1,24 +1,41 @@
 package com.example.team10ad.LogicUniversity.DepartmentHead;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Model.FreqentlyItem;
+import com.example.team10ad.LogicUniversity.Service.ReportService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HODReport extends Fragment implements OnChartValueSelectedListener{
 
@@ -28,17 +45,22 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
     private String mParam1;
     private String mParam2;
 
-    BarChart mChart;
+    // Bar Colors
+    int[] reds = {255,54,255,75,153};
+    int[] greens = {99,162,206,192,102};
+    int[] blues = {132,235,86,192,255};
 
-    float groupSpace = 0.1f;
-    float barSpace = 0.05f; // x4 DataSet
-    float barWidth = 0.25f; // x4 DataSet
+    // Bar data
+    private BarChart mChart;
+    private List<FreqentlyItem> result;
+    private ArrayList<BarEntry> barEntries;
+    private BarDataSet dataSet;
+    private BarData barData;
+    private ArrayList<String> xVals;
 
     private OnFragmentInteractionListener mListener;
 
-    public HODReport() {
-
-    }
+    public HODReport() { }
 
     public static HODReport newInstance(String param1, String param2) {
         HODReport fragment = new HODReport();
@@ -61,62 +83,45 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_hodreport, container, false);
+        barData = new BarData();
+        xVals = new ArrayList<>();
+        final View view= inflater.inflate(R.layout.fragment_hodreport, container, false);
+        final String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        ReportService service = ServiceGenerator.createService(ReportService.class, token);
+        Call<List<FreqentlyItem>> call = service.frequetlyOrderedItemList();
+        call.enqueue(new Callback<List<FreqentlyItem>>() {
+            @Override
+            public void onResponse(Call<List<FreqentlyItem>> call, Response<List<FreqentlyItem>> response) {
+                if(response.isSuccessful()){
+                    result = response.body();
+                    int i = 0;
+                    for(FreqentlyItem item: result){
+                        barEntries = new ArrayList<>();
+                        barEntries.add(new BarEntry(i, item.getQty()));
+                        xVals.add(item.getDescription());
+                        dataSet = new BarDataSet(barEntries, item.getDescription());
+                        dataSet.setColor(Color.argb( 85, reds[i], greens[i], blues[i]));
+                        dataSet.setBarBorderColor(Color.rgb( reds[i], greens[i], blues[i]));
+                        dataSet.setBarBorderWidth(1.5f);
+                        barData.addDataSet(dataSet);
+                        i++;
+                    }
+                    mChart = view.findViewById(R.id.frequentlyItemChart);
+                    // chart settings with predefined methods
+                    mChart = generalSetting(mChart);
+                    mChart = xAxisSetting(mChart, xVals);
+                    mChart = yAxisSetting(mChart);
+                    mChart = legendSetting(mChart);
+                    mChart.setData(barData);
+                    mChart.invalidate();
+                }
+            }
 
-        mChart = view.findViewById(R.id.frequentlyItemChart);
-        mChart.setOnChartValueSelectedListener(this);
-
-        mChart.setDrawBarShadow(false);
-        mChart.setDrawValueAboveBar(true);
-
-        mChart.getDescription().setEnabled(false);
-
-        // if more than 60 entries are displayed in the chart, no values will be
-        // drawn
-        mChart.setMaxVisibleValueCount(60);
-
-        // scaling can now only be done on x- and y-axis separately
-        mChart.setPinchZoom(false);
-
-        mChart.setDrawGridBackground(false);
-        // mChart.setDrawYLabels(false);
-
-        IAxisValueFormatter xAxisFormatter = new LargeValueFormatter();
-
-        XAxis xAxis = mChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setGranularity(1f); // only intervals of 1 day
-        xAxis.setLabelCount(7);
-        xAxis.setValueFormatter(xAxisFormatter);
-
-        IAxisValueFormatter custom = new LargeValueFormatter();
-
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setValueFormatter(custom);
-        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        leftAxis.setSpaceTop(15f);
-        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-
-        YAxis rightAxis = mChart.getAxisRight();
-        rightAxis.setDrawGridLines(false);
-        rightAxis.setValueFormatter(custom);
-        rightAxis.setSpaceTop(15f);
-        rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-
-        Legend l = mChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(false);
-        l.setForm(Legend.LegendForm.SQUARE);
-        l.setFormSize(9f);
-        l.setTextSize(11f);
-        l.setXEntrySpace(4f);
-        // l.setExtra(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
-        // "def", "ghj", "ikl", "mno" });
-        // l.setCustom(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
-        // "def", "ghj", "ikl", "mno" });
+            @Override
+            public void onFailure(Call<List<FreqentlyItem>> call, Throwable t) {
+                Toast.makeText(getContext(), "Connection Error !", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
     }
@@ -140,16 +145,58 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
     }
 
     @Override
-    public void onValueSelected(Entry e, Highlight h) {
-
-    }
+    public void onValueSelected(Entry e, Highlight h) { }
 
     @Override
-    public void onNothingSelected() {
-
-    }
+    public void onNothingSelected() { }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    // bar chart styling
+    private BarChart generalSetting(BarChart chart){
+        chart.setDrawBarShadow(false);
+        chart.setDrawValueAboveBar(true);
+        chart.getDescription().setEnabled(false);
+        chart.setDrawGridBackground(false);
+        chart.getAxisRight().setEnabled(false);
+        chart.animateY(1000);
+        return chart;
+    }
+
+    // bar chart styling x axis
+    private BarChart xAxisSetting(BarChart chart, ArrayList<String> lbls){
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setAxisMinimum(-1f);
+        xAxis.setAxisMaximum(5f);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setEnabled(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        //xAxis.setDrawLabels(false);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(lbls));
+        xAxis.setLabelRotationAngle(270);
+        return chart;
+    }
+
+    // bar chart styling y axis
+    private BarChart yAxisSetting(BarChart chart){
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setValueFormatter(new LargeValueFormatter());
+        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        return chart;
+    }
+
+    // bar chart legend settings
+    private BarChart legendSetting(BarChart chart){
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(true);
+        l.setTextSize(12f);
+        return chart;
     }
 }

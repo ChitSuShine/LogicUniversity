@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class FreqentlyItem {
     @SerializedName("Itemid")
-    private int deptId;
+    private int itemid;
 
     @SerializedName("Description")
     private String description;
@@ -12,12 +12,12 @@ public class FreqentlyItem {
     @SerializedName("Qty")
     private int qty;
 
-    public int getDeptId() {
-        return deptId;
+    public int getItemid() {
+        return itemid;
     }
 
-    public void setDeptId(int deptId) {
-        this.deptId = deptId;
+    public void setItemid(int itemid) {
+        this.itemid = itemid;
     }
 
     public String getDescription() {

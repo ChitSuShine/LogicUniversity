@@ -8,6 +8,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface ReportService {
-    @GET("frequentlyitemlist")
+    @GET("FrequentlyItemList")
     Call<List<FreqentlyItem>> frequetlyOrderedItemList();
 }
