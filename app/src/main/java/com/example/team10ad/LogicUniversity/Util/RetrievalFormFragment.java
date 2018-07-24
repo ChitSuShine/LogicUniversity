@@ -13,16 +13,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
-import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.LogicUniversity.Model.StationaryRetrieval;
 import com.example.team10ad.LogicUniversity.RequisitionList;
 import com.example.team10ad.LogicUniversity.Service.DisbursementService;
-import com.example.team10ad.LogicUniversity.Service.InventoryService;
-import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.team10ad.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -102,8 +98,6 @@ public class RetrievalFormFragment extends Fragment {
                 fm.beginTransaction().replace(R.id.content_frame,disbursementList).commit();
             }
         });
-
-
         return view;
     }
 

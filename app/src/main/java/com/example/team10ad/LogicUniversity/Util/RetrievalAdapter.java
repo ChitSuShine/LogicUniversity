@@ -15,7 +15,8 @@ import com.example.team10ad.team10ad.R;
 
 import java.util.List;
 
-public class RetrievalAdapter extends ArrayAdapter<StationaryRetrieval> {
+public class RetrievalAdapter extends ArrayAdapter<StationaryRetrieval>  {
+
     int resource;
     private List<StationaryRetrieval> items;
 
@@ -24,6 +25,7 @@ public class RetrievalAdapter extends ArrayAdapter<StationaryRetrieval> {
         this.resource = resource;
         this.items = items;
     }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -47,10 +49,7 @@ public class RetrievalAdapter extends ArrayAdapter<StationaryRetrieval> {
         retrieve5.setText(retrieval.getCatName());
         retrieve6.setText(retrieval.getShelfLocaition()+retrieval.getShelfLevel());
         retrieve7.setText(retrieval.getTotal());
-
-
-
-
         return v;
+
     }
 }
