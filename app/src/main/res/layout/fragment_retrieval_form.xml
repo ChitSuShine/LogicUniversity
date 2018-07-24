@@ -95,18 +95,27 @@
             </LinearLayout>
 
         </LinearLayout>
-        <Button
-            android:id="@+id/itemcollect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Item Collect"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="10">
 
         <ListView
             android:id="@+id/retrievallist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="9">
         </ListView>
+        <Button
+            android:id="@+id/itemcollect"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:text="Item Collect"
+            android:layout_weight="1"/>
+        </LinearLayout>
 
     </LinearLayout>
 

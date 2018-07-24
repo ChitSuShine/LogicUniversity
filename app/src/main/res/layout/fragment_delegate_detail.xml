@@ -9,184 +9,186 @@
         android:layout_height="match_parent"
         android:background="@color/background"
         android:orientation="vertical">
-        <!-- Employee List Title -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:clipToPadding="false"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Please set delegation period"
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-        <!--Employee List-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="12dp"
-            />
-    <!--From Date-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2" >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="Name: " />
-        </LinearLayout>
-        <View
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-           />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/delegatedUserName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            />
-        </LinearLayout>
-        <!--End From Date-->
+            android:layout_height="12dp" />
 
-
-        <!-- From Date Picker -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2" >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="From: " />
-        </LinearLayout>
-        <View
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            />
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:orientation="horizontal">
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/startDate"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/roundedborderedit"
-                    android:padding="8dp"
-
-                    />
-
-                <ImageButton
-                    android:id="@+id/btn_startDate"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@id/startDate"
-                    android:padding="5dp"
-                    android:src="@drawable/calendar"
-
-
-                    />
-            </RelativeLayout>
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            />
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2" >
+            android:gravity="center">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="To: " />
+                android:clipToPadding="false"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Name: " />
+            </LinearLayout>
+
             <View
                 android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+                android:background="@color/background"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/delegatedUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:textSize="17sp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="From: " />
+            </LinearLayout>
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:orientation="horizontal">
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/endDate"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/roundedborderedit"
-                    android:padding="8dp"/>
+                    <TextView
+                        android:id="@+id/startDate"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/roundedborderedit"
+                        android:padding="8dp"
 
-                <ImageButton
-                    android:id="@+id/btn_endDate"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@id/endDate"
-                    android:padding="5dp"
-                    android:src="@drawable/calendar"/>
-            </RelativeLayout>
-        </LinearLayout>
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btn_startDate"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@id/startDate"
+                        android:padding="5dp"
+                        android:src="@drawable/calendar"
+
+
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                />
+                android:layout_height="50dp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="To: " />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal">
+
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/endDate"
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/roundedborderedit"
+                        android:padding="8dp" />
+
+                    <ImageButton
+                        android:id="@+id/btn_endDate"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@id/endDate"
+                        android:padding="5dp"
+                        android:src="@drawable/calendar" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="7dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -199,8 +201,9 @@
                 android:id="@+id/btn_delegate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/my_button_approve"
                 android:text="Delegate"
-                style="@style/ButtonStyle.Colored"/>
+                android:textColor="@color/background" />
         </LinearLayout>
     </LinearLayout>
 

@@ -92,7 +92,7 @@ public class DelegateAuthorityFragment extends Fragment {
                 int mMonth = c.get(Calendar.MONTH); // current month
                 int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
                 // startDate picker dialog
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -101,6 +101,7 @@ public class DelegateAuthorityFragment extends Fragment {
                                 // set day of month , month and year value in the edit text
                                 selectedEndDate.setText(year + "-"
                                         + (monthOfYear + 1) + "-" + dayOfMonth);
+
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();

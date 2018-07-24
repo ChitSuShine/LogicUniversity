@@ -12,10 +12,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Model.Disbursement;
+import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.LogicUniversity.Model.StationaryRetrieval;
 import com.example.team10ad.LogicUniversity.RequisitionList;
 import com.example.team10ad.LogicUniversity.Service.DisbursementService;
 import com.example.team10ad.LogicUniversity.Service.InventoryService;
+import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.team10ad.R;
 
@@ -37,6 +40,8 @@ public class RetrievalFormFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     ListView retrievallist;
     List<StationaryRetrieval> result;
+    Disbursement res;
+    String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
     public RetrievalFormFragment() {
     }
@@ -63,6 +68,30 @@ public class RetrievalFormFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         final View view= inflater.inflate(R.layout.fragment_retrieval_form, container, false);
+
+        DisbursementService disbService= ServiceGenerator.createService(DisbursementService.class,token);
+        Call<List<StationaryRetrieval>> call=disbService.getAllStationaryRetrieval();
+        call.enqueue(new Callback<List<StationaryRetrieval>>() {
+            @Override
+            public void onResponse(Call<List<StationaryRetrieval>> call, Response<List<StationaryRetrieval>> response) {
+                if(response.isSuccessful()){
+                    result=response.body();
+                    final RetrievalAdapter retrievalAdapter=new RetrievalAdapter(getContext(),R.layout.row_retrievallist,result);
+                    retrievallist=(ListView)view.findViewById(R.id.retrievallist);
+                    retrievallist.setAdapter(retrievalAdapter);
+                }
+                else{
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<StationaryRetrieval>> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Item Collect Button
+
         Button itemcollect=(Button)view.findViewById(R.id.itemcollect);
         itemcollect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,40 +103,7 @@ public class RetrievalFormFragment extends Fragment {
             }
         });
 
-        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
-        DisbursementService disbService= ServiceGenerator.createService(DisbursementService.class,token);
-        Call<List<StationaryRetrieval>> call=disbService.getAllStationaryRetrieval();
-        call.enqueue(new Callback<List<StationaryRetrieval>>() {
-            @Override
-            public void onResponse(Call<List<StationaryRetrieval>> call, Response<List<StationaryRetrieval>> response) {
-                if(response.isSuccessful()){
-                    result=response.body();
-                    final RetrievalAdapter retrievalAdapter=new RetrievalAdapter(getContext(),R.layout.row_retrievallist,result);
-                    retrievallist=(ListView)view.findViewById(R.id.retrievallist);
-                    retrievallist.setAdapter(retrievalAdapter);
-                    /*retrievallist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            RequisitionDetail reqDetail=new RequisitionDetail();
-                            Bundle b = new Bundle();
-                            b.putString("id", result.get(i).getReqID());
-                            reqDetail.setArguments(b);
-                            FragmentManager fragmentManager=getFragmentManager();
-                            fragmentManager.beginTransaction().replace(R.id.content_frame, reqDetail).commit();
-                        }
-                    });*/
-                }
-                else{
-                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
-                }
 
-            }
-
-            @Override
-            public void onFailure(Call<List<StationaryRetrieval>> call, Throwable t) {
-                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
-            }
-        });
         return view;
     }
 

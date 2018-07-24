@@ -4,11 +4,17 @@
     android:layout_height="match_parent"
     tools:context="com.example.team10ad.LogicUniversity.DepartmentHead.ReqListForTrackingOrder">
 
+    <android.support.design.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ListView
         android:id="@+id/replistview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </ListView>
+
+    </android.support.design.card.MaterialCardView>
 
 </RelativeLayout>
