@@ -50,6 +50,8 @@ public class Constants {
     public static final int REP_OUTSTANDING = 5;
     public static final int REP_COMPLETE = 6;
 
+    //Constants for InventoryFragment
+    public static final String INVENTORY_SUCCESS_MSG = "You have successfully updated inventory.";
     public static final String[] STATUS = {
             "Pending",
             "Approved",
