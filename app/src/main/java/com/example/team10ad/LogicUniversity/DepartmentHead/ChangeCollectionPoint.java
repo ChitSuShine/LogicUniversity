@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.CollectionPoint;
+import com.example.team10ad.LogicUniversity.Model.DepartmentCollectionPoint;
 import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.CollectionPointService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
@@ -52,6 +53,7 @@ public class ChangeCollectionPoint extends Fragment {
     private String mParam2;
 
     private CollectionPoint current = new CollectionPoint();
+    private TextView currentcp;
 
     private OnFragmentInteractionListener mListener;
 
@@ -82,7 +84,7 @@ public class ChangeCollectionPoint extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_change_collection_point, container, false);
-        final TextView currentcp=(TextView)view.findViewById(R.id.currentcp);
+        currentcp=(TextView)view.findViewById(R.id.currentcp);
         final RadioGroup radioGroup1 = (RadioGroup)view.findViewById(R.id.changeRadioGroup);
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
@@ -91,22 +93,32 @@ public class ChangeCollectionPoint extends Fragment {
         final int deptId = user.getDepId();
 
         final CollectionPointService cpService = ServiceGenerator.createService(CollectionPointService.class, token);
-
-        String name = setCurrent(cpService, deptId);
-        Call<List<CollectionPoint>> call = cpService.getCollectionPoints();
-        call.enqueue(new Callback<List<CollectionPoint>>() {
+        Call<List<DepartmentCollectionPoint>> call = cpService.getPendingCollectionPoints();
+        call.enqueue(new Callback<List<DepartmentCollectionPoint>>() {
             @Override
-            public void onResponse(Call<List<CollectionPoint>> call, Response<List<CollectionPoint>> response) {
-                if(response.isSuccessful()) {
-                    for (CollectionPoint cP : response.body()) {
-                        addBtn(radioGroup1, cP);
+            public void onResponse(Call<List<DepartmentCollectionPoint>> call, Response<List<DepartmentCollectionPoint>> response) {
+                if(response.isSuccessful()){
+                    List<DepartmentCollectionPoint> dcpList = response.body();
+                    boolean isPending = false;
+                    for (DepartmentCollectionPoint dcp : dcpList) {
+                        if(dcp.getDeptId() == deptId){
+                            isPending = true;
+                            break;
+                        }
+                    }
+                    if(isPending){
+                        currentcp.setText("Your previous request is pending.");
+                        ((Button) view.findViewById(R.id.cpchange))
+                                .setEnabled(false);
+                    } else {
+                        loadData(cpService, radioGroup1, deptId);
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<List<CollectionPoint>> call, Throwable t) {
-                Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<DepartmentCollectionPoint>> call, Throwable t) {
+
             }
         });
 
@@ -114,16 +126,35 @@ public class ChangeCollectionPoint extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Change Collection Point")
-                        .setMessage("Collection Point is changed successfully.")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
+                DepartmentCollectionPoint dcp = new DepartmentCollectionPoint();
+                dcp.setCpId(radioGroup1.getCheckedRadioButtonId());
+                dcp.setDeptId(deptId);
+                Call<DepartmentCollectionPoint> call = cpService.changeCollectionPoint(dcp);
+                call.enqueue(new Callback<DepartmentCollectionPoint>() {
+                    @Override
+                    public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
+                        if(response.isSuccessful() && response.body() != null){
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle("Change Collection Point")
+                                    .setMessage("Collection Point is changed successfully.")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            getFragmentManager().beginTransaction()
+                                                    .replace(R.id.content_frame, new HodDashboardFragment())
+                                                    .commit();
+                                        }
+                                    })
+                                    .show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<DepartmentCollectionPoint> call, Throwable t) {
+                        Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -153,35 +184,55 @@ public class ChangeCollectionPoint extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void addBtn(RadioGroup rGrp, CollectionPoint cp){
-        RadioButton radioButton = new RadioButton(getContext());
-        radioButton.setHeight(140);
-        Integer currentId = current.getCpId();
-        if(currentId.equals(cp.getCpId())) {
-            radioButton.setTypeface(null, Typeface.BOLD);
-            radioButton.setChecked(true);
-        }
-        radioButton.setTextSize(18f);
-        radioButton.setId(cp.getCpId());
-        radioButton.setText(cp.getCpName());
-        rGrp.addView(radioButton);
+    private void loadData(final CollectionPointService cpService,
+                          final RadioGroup radioGroup, int deptId){
+        Call<DepartmentCollectionPoint> call = cpService.getActiveCollectionPoint(deptId);
+        call.enqueue(new Callback<DepartmentCollectionPoint>() {
+            @Override
+            public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
+                if(response.isSuccessful()){
+                    DepartmentCollectionPoint temp = response.body();
+                    populateCpRadioBtns(cpService, radioGroup, temp.getCpId());
+                    currentcp.setText(new StringBuilder("Current collection point is ")
+                            .append(temp.getCpName()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DepartmentCollectionPoint> call, Throwable t) {
+
+            }
+        });
     }
 
-    private String setCurrent(CollectionPointService cpS, int deptId) {
-        Call<List<CollectionPoint>> call = cpS.getActiveCollectionPoint(deptId);
+    private void populateCpRadioBtns(CollectionPointService cpS, final RadioGroup rGrp, final int currentId){
+        Call<List<CollectionPoint>> call = cpS.getCollectionPoints();
         call.enqueue(new Callback<List<CollectionPoint>>() {
             @Override
             public void onResponse(Call<List<CollectionPoint>> call, Response<List<CollectionPoint>> response) {
-                List<CollectionPoint> temp = response.body();
-                current.setCpId(temp.get(temp.size()-1).getCpId());
-                current.setCpName(temp.get(temp.size()-1).getCpName());
+                if(response.isSuccessful()) {
+                    for (CollectionPoint cP : response.body()) {
+                        addBtn(rGrp, cP, currentId);
+                    }
+                }
             }
 
             @Override
             public void onFailure(Call<List<CollectionPoint>> call, Throwable t) {
-                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
             }
         });
-        return current.getCpName();
+    }
+
+    private void addBtn(RadioGroup rGrp, CollectionPoint cp, int currentId){
+        RadioButton radioButton = new RadioButton(getContext());
+        if(cp.getCpId() == currentId) {
+            radioButton.setTypeface(null, Typeface.BOLD);
+            radioButton.setChecked(true);
+        }
+        radioButton.setTextSize(17f);
+        radioButton.setId(cp.getCpId());
+        radioButton.setText(cp.getCpName());
+        rGrp.addView(radioButton);
     }
 }
