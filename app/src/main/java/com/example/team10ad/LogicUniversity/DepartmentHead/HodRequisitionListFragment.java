@@ -15,12 +15,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.HodReqListAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +67,8 @@ public class HodRequisitionListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_hod_requisition_list, container, false);
-
+        String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
+        final User user = new Gson().fromJson(userInfo, User.class);
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
         Call<List<Requisition>> call = requisitionService.getAllRequisitions();
@@ -76,7 +79,7 @@ public class HodRequisitionListFragment extends Fragment {
                     result=response.body();
                     List<Requisition> filtered = new ArrayList<Requisition>();
                     for(Requisition rq: result){
-                        if(rq.getStatus().equals("0"))
+                        if(rq.getStatus().equals("0")&& Integer.parseInt(rq.getDepID())==user.getDepId())
                             filtered.add(rq);
                     }
                     final HodReqListAdapter adapter = new HodReqListAdapter(getContext(),R.layout.row_hodreqlist,filtered);
