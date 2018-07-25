@@ -21,11 +21,11 @@ public class HodPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         switch (i) {
             case 0:
-                return new Report1Fragment();
+                return new HODReport();
             case 1:
-                return new Report2Fragment();
+                return new HODReport2();
             case 2:
-                return new Report3Fragment();
+                return new HODReport3();
             default:
                 return null;
         }

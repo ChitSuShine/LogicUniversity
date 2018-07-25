@@ -134,16 +134,14 @@ public class HodDashboardFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-        //assign
-        CardView cardassign=(CardView)view.findViewById(R.id.cardassign);
-        cardassign.setOnClickListener(new View.OnClickListener() {
+        //Collection Point
+        CardView cardcollect=(CardView)view.findViewById(R.id.cardcollect);
+        cardcollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AssignDepRepFragment hodassign=new AssignDepRepFragment();
+                ChangeCollectionPoint hodcollect=new ChangeCollectionPoint();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content_frame, hodassign);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                fragmentTransaction.replace(R.id.content_frame, hodcollect).commit();
             }
         });
         //tracking
@@ -158,30 +156,6 @@ public class HodDashboardFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-       /* //change collection point
-        CardView cardcollect=(CardView)view.findViewById(R.id.cardcollect);
-        cardcollect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ChangeCollectionPoint hodcollect=new ChangeCollectionPoint();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content_frame, hodcollect);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-        //report
-        CardView cardreport=(CardView)view.findViewById(R.id.cardreport);
-        cardreport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HODReport hodreport=new HODReport();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.content_frame, hodreport);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });*/
         return view;
     }
 

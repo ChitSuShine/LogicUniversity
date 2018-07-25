@@ -101,7 +101,9 @@ public class DashboardFragment extends Fragment {
             public void onClick(View view) {
                 RetrievalFormFragment retrieval=new RetrievalFormFragment();
                 FragmentTransaction reqFragment=getActivity().getSupportFragmentManager().beginTransaction();
-                reqFragment.replace(R.id.content_frame,retrieval).commit();
+                reqFragment.replace(R.id.content_frame,retrieval);
+                reqFragment.addToBackStack(null);
+                reqFragment.commit();
             }
         });
         // Link to Delivery Point screen
@@ -120,7 +122,6 @@ public class DashboardFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -139,7 +140,6 @@ public class DashboardFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

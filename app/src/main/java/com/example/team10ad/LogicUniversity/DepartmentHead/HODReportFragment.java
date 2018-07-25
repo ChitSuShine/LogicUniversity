@@ -1,4 +1,4 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.DepartmentHead;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.team10ad.LogicUniversity.PagerAdapter;
 import com.example.team10ad.team10ad.R;
 
-public class ClerkReportFragment extends Fragment {
-
+public class HODReportFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -22,10 +22,10 @@ public class ClerkReportFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ClerkReportFragment() { }
+    public HODReportFragment() { }
 
-    public static ClerkReportFragment newInstance(String param1, String param2) {
-        ClerkReportFragment fragment = new ClerkReportFragment();
+    public static HODReportFragment newInstance(String param1, String param2) {
+        HODReportFragment fragment = new HODReportFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -46,15 +46,15 @@ public class ClerkReportFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view = inflater.inflate(R.layout.fragment_clerk_report, container, false);
-        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
+        View view= inflater.inflate(R.layout.fragment_hod_report, container, false);
+        TabLayout tabLayout = view.findViewById(R.id.hodtabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Report 1"));
         tabLayout.addTab(tabLayout.newTab().setText("Report 2"));
         tabLayout.addTab(tabLayout.newTab().setText("Report 3"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = view.findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter
+        final ViewPager viewPager = view.findViewById(R.id.hodpager);
+        final HodPagerAdapter adapter = new HodPagerAdapter
                 (getFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
@@ -78,6 +78,7 @@ public class ClerkReportFragment extends Fragment {
         return view;
     }
 
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -94,9 +95,7 @@ public class ClerkReportFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
