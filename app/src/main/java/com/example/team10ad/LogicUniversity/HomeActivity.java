@@ -61,23 +61,27 @@ public class HomeActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     User user = response.body();
-                    // To store current login user's info
+                    // Storing current login user's info
                     Gson gson = new Gson();
                     String json = gson.toJson(user);
                     MyApp.getInstance().getPreferenceManager().putString(Constants.USER_GSON, json);
-
+                    // Navigating related menus
                     if (user.getRole() == Constants.CLERK_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new DashboardFragment()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_clerk);
+                        nvDrawer.setCheckedItem(R.id.dashboard);
                     } else if (user.getRole() == Constants.HOD_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodDashboardFragment()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_hod);
+                        nvDrawer.setCheckedItem(R.id.dashboardHod);
                     } else if (user.getRole() == Constants.DEP_REP_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ReqListForTrackingOrder()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_rep);
+                        nvDrawer.setCheckedItem(R.id.trackRep);
                     } else if (user.getRole() == Constants.EMP_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ReqListForTrackingOrder()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_emp);
+                        nvDrawer.setCheckedItem(R.id.trackRep);
                     }
                 } else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
@@ -131,7 +135,7 @@ public class HomeActivity extends AppCompatActivity {
         if (id == R.id.action_about) {
             AboutFragment aboutFragment = new AboutFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, aboutFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, aboutFragment).addToBackStack(null).commit();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -145,6 +149,7 @@ public class HomeActivity extends AppCompatActivity {
         // Logout
         if (id == R.id.logout) {
             MyApp.getInstance().getPreferenceManager().clearLoginData();
+            // finishAffinity();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
         }
@@ -219,6 +224,7 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout.closeDrawers();
     }
 
+    // Processing QR results
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         ZxingOrientResult result = ZxingOrient.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
