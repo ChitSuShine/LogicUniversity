@@ -1,13 +1,24 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.team10ad.LogicUniversity.DepartmentHead.HodReportFragment">
+    android:orientation="vertical"
+    tools:context="com.example.team10ad.LogicUniversity.DepartmentHead.HODReportFragment"
+    android:background="@color/background">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.design.widget.TabLayout
+        android:id="@+id/hodtabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hod Report" />
+        android:layout_height="wrap_content"
+        android:background="@color/background"/>
 
-</FrameLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/hodpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

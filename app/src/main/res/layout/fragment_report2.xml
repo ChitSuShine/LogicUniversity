@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.team10ad.LogicUniversity.Report2Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/halfPieChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.github.mikephil.charting.charts.PieChart>
+        android:layout_height="match_parent">
+
+    </com.github.mikephil.charting.charts.PieChart>
 
 </LinearLayout>

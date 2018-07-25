@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
@@ -8,29 +9,15 @@
             android:id="@+id/dashboardHod"
             android:icon="@drawable/dashboard"
             android:title="@string/dashboard" />
-        <item
-            android:id="@+id/apprejreq"
-            android:icon="@drawable/approvereject"
-            android:title="Approve/Reject Requisition" />
+
         <item
             android:id="@+id/assignDeptRep"
             android:icon="@drawable/assign"
             android:title="Assign Representative" />
-        <item
-            android:id="@+id/changeCP"
-            android:icon="@drawable/collectionpoint"
-            android:title="Collection Point" />
-        <item
-            android:id="@+id/delegateAuthority"
-            android:icon="@drawable/delegate"
-            android:title="Delegate Authority" />
-        <item
-            android:id="@+id/trackinghod"
-            android:icon="@drawable/tracking"
-            android:title="Tracking Order" />
+
         <item
             android:id="@+id/orderhishod"
-            android:icon="@drawable/report"
+            android:icon="@drawable/ic_history_black_24dp"
             android:title="Order History" />
         <item
             android:id="@+id/reportHod"

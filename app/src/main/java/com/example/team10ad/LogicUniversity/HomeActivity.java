@@ -19,6 +19,8 @@ import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
 import com.example.team10ad.LogicUniversity.DepartmentHead.DelegateAuthorityFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HODOrderHistory;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HODReport;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HODReportFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
 //import com.example.team10ad.LogicUniversity.DepartmentHead.HodReportFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
@@ -109,12 +111,17 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        /*DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
+        }*/
+        finish();
+        /*Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);*/
     }
 
     @Override
@@ -155,6 +162,7 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.inventory:
                 fragmentClass = InventoryFragment.class;
+
                 break;
             case R.id.requisition:
                 fragmentClass = RequisitionList.class;
@@ -183,27 +191,15 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.dashboardHod:
                 fragmentClass = HodDashboardFragment.class;
                 break;
-            case R.id.apprejreq:
-                fragmentClass = HodRequisitionListFragment.class;
-                break;
             case R.id.assignDeptRep:
                 fragmentClass = AssignDepRepFragment.class;
-                break;
-            case R.id.changeCP:
-                fragmentClass = ChangeCollectionPoint.class;
-                break;
-            case R.id.delegateAuthority:
-                fragmentClass = DelegateAuthorityFragment.class;
-                break;
-            case R.id.trackinghod:
-                fragmentClass = ReqListForTrackingOrder.class;
                 break;
             case R.id.orderhishod:
                 fragmentClass = HODOrderHistory.class;
                 break;
             case R.id.reportHod:
-                //fragmentClass = HodReportFragment.class;
-                //break;
+                fragmentClass = HODReportFragment.class;
+                break;
             default:
                 fragmentClass = DashboardFragment.class;
         }
