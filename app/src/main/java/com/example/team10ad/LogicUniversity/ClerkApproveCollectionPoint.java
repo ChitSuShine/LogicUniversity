@@ -4,14 +4,32 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.example.team10ad.LogicUniversity.Model.DepartmentCollectionPoint;
+import com.example.team10ad.LogicUniversity.Model.User;
+import com.example.team10ad.LogicUniversity.Service.CollectionPointService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.ClerkApproveCPAdapter;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+import com.google.gson.Gson;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ClerkApproveCollectionPoint extends Fragment {
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -19,6 +37,13 @@ public class ClerkApproveCollectionPoint extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    List<DepartmentCollectionPoint> result;
+    DepartmentCollectionPoint dcp ;
+    ListView approveCPList;
+
+    String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+
+
 
     public ClerkApproveCollectionPoint() { }
 
@@ -43,8 +68,34 @@ public class ClerkApproveCollectionPoint extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_clerk_approve_collection_point, container, false);
+
+        final View view=inflater.inflate(R.layout.fragment_clerk_approve_collection_point, container, false);
+
+        CollectionPointService cpService= ServiceGenerator.createService(CollectionPointService.class,token);
+
+        Call<List<DepartmentCollectionPoint>> callCP=cpService.getPendingCollectionPoints();
+        callCP.enqueue(new Callback<List<DepartmentCollectionPoint>>() {
+            @Override
+            public void onResponse(Call<List<DepartmentCollectionPoint>> call, Response<List<DepartmentCollectionPoint>> response) {
+                if(response.isSuccessful()){
+
+                    result=response.body();
+
+                    ClerkApproveCPAdapter CPAdapter=new ClerkApproveCPAdapter(getContext(),R.layout.row_approvecp,result);
+                    approveCPList=(ListView)view.findViewById(R.id.approveCPList);
+                    approveCPList.setAdapter(CPAdapter);
+                }
+                else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+            @Override
+            public void onFailure(Call<List<DepartmentCollectionPoint>> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
@@ -68,6 +119,4 @@ public class ClerkApproveCollectionPoint extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
-
-
 }

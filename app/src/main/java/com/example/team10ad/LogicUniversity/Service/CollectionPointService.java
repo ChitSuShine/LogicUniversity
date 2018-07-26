@@ -23,4 +23,7 @@ public interface CollectionPointService {
 
     @GET("departmentcollectionpoint/status/0")
     Call<List<DepartmentCollectionPoint>> getPendingCollectionPoints();
+
+    @POST("departmentcollectionpoint/confirm")
+    Call<DepartmentCollectionPoint> approveCollectionPoint(@Body DepartmentCollectionPoint dcp);
 }

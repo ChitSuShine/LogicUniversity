@@ -67,11 +67,14 @@ public class HodRequisitionListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_hod_requisition_list, container, false);
+
         String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
         final User user = new Gson().fromJson(userInfo, User.class);
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+
         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
         Call<List<Requisition>> call = requisitionService.getAllRequisitions();
+
         call.enqueue(new Callback<List<Requisition>>() {
             @Override
             public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {

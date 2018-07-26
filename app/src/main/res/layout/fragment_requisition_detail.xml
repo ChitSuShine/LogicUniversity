@@ -33,9 +33,11 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
+
+
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="left"
                             android:text="Requisition ID:" />
 
@@ -46,9 +48,12 @@
 
                         <TextView
                             android:id="@+id/disbdetailid"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"/>
+                        <view
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -69,9 +74,12 @@
 
                         <TextView
                             android:id="@+id/disbdetaildept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center" />
+                        <view
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -113,19 +121,20 @@
             android:weightSum="2">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:text="Item Description" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Item Description"
+                    android:textColor="@color/bg"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
@@ -133,7 +142,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Quantity" />
+                    android:text="Quantity"
+                    android:textColor="@color/bg"/>
             </LinearLayout>
         </LinearLayout>
 
