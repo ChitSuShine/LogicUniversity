@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/temp_approve"
+            android:icon="@drawable/tracking"
+            android:title="Approve/Reject Requisitions" />
+
+        <item
+            android:id="@+id/trackRep"
+            android:icon="@drawable/tracking"
+            android:title="Tracking Order" />
+
+        <item
+            android:id="@+id/orderHisRep"
+            android:icon="@drawable/tracking"
+            android:title="Order History" />
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/profile"
+            android:title="@string/logout" />
+    </group>
+</menu>
