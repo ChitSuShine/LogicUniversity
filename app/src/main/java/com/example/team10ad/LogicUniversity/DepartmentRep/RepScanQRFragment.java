@@ -20,6 +20,7 @@ import com.example.team10ad.LogicUniversity.HomeActivity;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
 import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.DisbursementService;
 import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
@@ -28,6 +29,7 @@ import com.example.team10ad.LogicUniversity.Util.DisbAdapter;
 import com.example.team10ad.LogicUniversity.Util.DisbDetailAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
@@ -131,7 +133,7 @@ public class RepScanQRFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public static void showData(String qrCode) {
+    public static void showData(final String qrCode) {
         final String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         DisbursementService disbursementService = ServiceGenerator.createService(DisbursementService.class, token);
         Call<Disbursement> call = disbursementService.getScannedReqId(qrCode);
@@ -139,9 +141,12 @@ public class RepScanQRFragment extends Fragment {
             @Override
             public void onResponse(Call<Disbursement> call, Response<Disbursement> response) {
                 if (response.isSuccessful()) {
+                    Gson gson = new Gson();
+                    String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
+                    User user = gson.fromJson(json, User.class);
                     Disbursement disbursement = response.body();
                     int delivered = disbursement.getStatus();
-                    if (delivered == Constants.REP_DELIVER) {
+                    if (delivered == Constants.REP_DELIVER && disbursement.getDepID().equals(Integer.toString(user.getDepId()))) {
                         repCardView.setVisibility(View.VISIBLE);
                         repRaisedBy.setText(disbursement.getRasiedByname());
                         requestedDate.setText(disbursement.getReqDate());
@@ -170,12 +175,86 @@ public class RepScanQRFragment extends Fragment {
                                 Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
                             }
                         });
-                    } else if (delivered == Constants.REP_OUTSTANDING) {
-                        repMsg.setText(Constants.REP_OUTSTANDING_MSG);
+                    } else if (delivered == Constants.REP_OUTSTANDING && disbursement.getDepID().equals(Integer.toString(user.getDepId()))) {
+                        processOutstandingReqs(qrCode);
                     } else if (delivered == Constants.REP_COMPLETE) {
                         repMsg.setText(Constants.REP_COMPLETE_MSG);
                     }
                 } else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Disbursement> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    // Process outstanding requisitions
+    public static void processOutstandingReqs(final String qrCode)
+    {
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        DisbursementService disbursementService = ServiceGenerator.createService(DisbursementService.class, token);
+        Call<Disbursement> dCall = disbursementService.getOutstandingReq(qrCode);
+        dCall.enqueue(new Callback<Disbursement>() {
+            @Override
+            public void onResponse(Call<Disbursement> call, Response<Disbursement> response) {
+                if(response.isSuccessful())
+                {
+                    Disbursement disbursement = response.body();
+                    int status = disbursement.getStatus();
+                    if(status == 0)
+                    {
+                        repMsg.setText(Constants.REP_OUTSTANDING_MSG);
+                    }
+                    else if (status == 1)
+                    {
+                        repMsg.setText(Constants.REP_COMPLETE_MSG);
+                    }
+                    else if (status == 2)
+                    {
+                        changeStatus(qrCode);
+                    }
+                }
+                else
+                {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Disbursement> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public static void changeStatus(String reqId)
+    {
+        Disbursement completedDisbursement = new Disbursement();
+        completedDisbursement.setReqID(reqId);
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        DisbursementService disbursementService = ServiceGenerator.createService(DisbursementService.class, token);
+        Call<Disbursement> disbursementCall = disbursementService.changeOutstandingStatus(completedDisbursement);
+        disbursementCall.enqueue(new Callback<Disbursement>() {
+            @Override
+            public void onResponse(Call<Disbursement> call, Response<Disbursement> response) {
+                if(response.isSuccessful())
+                {
+                    Disbursement disbursement = response.body();
+                    repCardView.setVisibility(View.VISIBLE);
+                    repRaisedBy.setText(disbursement.getRasiedByname());
+                    requestedDate.setText(disbursement.getReqDate());
+                    collection.setText(disbursement.getCpName());
+                    lockerName.setText(disbursement.getLockerName());
+                    List<DisbursementDetail> result = disbursement.getDisbursementDetails();
+                    DisbDetailAdapter disbAdapter = new DisbDetailAdapter(MyApp.getInstance().getApplicationContext(), R.layout.row_disbdetail, result);
+                    itemsList.setAdapter(disbAdapter);
+                    Toast.makeText(MyApp.getInstance(), Constants.REP_COLLECTED_MSG, Toast.LENGTH_SHORT).show();
+                }
+                else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                 }
             }

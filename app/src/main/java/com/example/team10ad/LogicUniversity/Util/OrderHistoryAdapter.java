@@ -37,6 +37,7 @@ public class OrderHistoryAdapter extends ArrayAdapter<OrderHistory> {
         TextView orderhis4=(TextView) v.findViewById(R.id.orderhis4);
 
         OrderHistory orderhis=items.get(position);
+
         orderhis1.setText(orderhis.getReqdate());
         orderhis2.setText(orderhis.getRaisename());
         orderhis3.setText(orderhis.getCpname());

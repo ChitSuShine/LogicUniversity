@@ -17,6 +17,7 @@ public class Constants {
     public static final int HOD_ROLE = 4;
     public static final int EMP_ROLE = 5;
     public static final int DEP_REP_ROLE = 6;
+    public static final int TEMP_HOD = 7;
 
     // Constants for Error Messages
     public static final String INVALID_INFO = "Invalid username and password!";

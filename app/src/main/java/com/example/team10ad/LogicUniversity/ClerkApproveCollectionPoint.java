@@ -1,37 +1,35 @@
-package com.example.team10ad.LogicUniversity.DepartmentHead;
+package com.example.team10ad.LogicUniversity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.Model.DepartmentCollectionPoint;
 import com.example.team10ad.LogicUniversity.Model.User;
-import com.example.team10ad.LogicUniversity.Service.RequisitionService;
+import com.example.team10ad.LogicUniversity.Service.CollectionPointService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.ClerkApproveCPAdapter;
 import com.example.team10ad.LogicUniversity.Util.Constants;
-import com.example.team10ad.LogicUniversity.Util.HodReqListAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HodRequisitionListFragment extends Fragment {
+public class ClerkApproveCollectionPoint extends Fragment {
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -39,14 +37,18 @@ public class HodRequisitionListFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    ListView listView;
-    List<Requisition> result=new ArrayList<Requisition>();
+    List<DepartmentCollectionPoint> result;
+    DepartmentCollectionPoint dcp ;
+    ListView approveCPList;
 
-    public HodRequisitionListFragment() {
-    }
+    String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
-    public static HodRequisitionListFragment newInstance(String param1, String param2) {
-        HodRequisitionListFragment fragment = new HodRequisitionListFragment();
+
+
+    public ClerkApproveCollectionPoint() { }
+
+    public static ClerkApproveCollectionPoint newInstance(String param1, String param2) {
+        ClerkApproveCollectionPoint fragment = new ClerkApproveCollectionPoint();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,47 +64,41 @@ public class HodRequisitionListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        final View view= inflater.inflate(R.layout.fragment_hod_requisition_list, container, false);
 
-        String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
-        final User user = new Gson().fromJson(userInfo, User.class);
-        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        final View view=inflater.inflate(R.layout.fragment_clerk_approve_collection_point, container, false);
 
-        RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
-        Call<List<Requisition>> call = requisitionService.getAllRequisitions();
+        CollectionPointService cpService= ServiceGenerator.createService(CollectionPointService.class,token);
 
-        call.enqueue(new Callback<List<Requisition>>() {
+        Call<List<DepartmentCollectionPoint>> callCP=cpService.getPendingCollectionPoints();
+        callCP.enqueue(new Callback<List<DepartmentCollectionPoint>>() {
             @Override
-            public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
+            public void onResponse(Call<List<DepartmentCollectionPoint>> call, Response<List<DepartmentCollectionPoint>> response) {
                 if(response.isSuccessful()){
+
                     result=response.body();
-                    List<Requisition> filtered = new ArrayList<Requisition>();
-                    for(Requisition rq: result){
-                        if(rq.getStatus().equals("0")&& Integer.parseInt(rq.getDepID())==user.getDepId())
-                            filtered.add(rq);
-                    }
-                    final HodReqListAdapter adapter = new HodReqListAdapter(getContext(),R.layout.row_hodreqlist,filtered);
-                    listView = (ListView) view.findViewById(R.id.hodtrackinglistview);
-                    listView.setAdapter(adapter);
+
+                    ClerkApproveCPAdapter CPAdapter=new ClerkApproveCPAdapter(getContext(),R.layout.row_approvecp,result);
+                    approveCPList=(ListView)view.findViewById(R.id.approveCPList);
+                    approveCPList.setAdapter(CPAdapter);
                 }
                 else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+
                 }
             }
-
             @Override
-            public void onFailure(Call<List<Requisition>> call, Throwable t) {
+            public void onFailure(Call<List<DepartmentCollectionPoint>> call, Throwable t) {
                 Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
             }
         });
+
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -121,7 +117,6 @@ public class HodRequisitionListFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -42,7 +42,7 @@ public class DashboardFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     // Data for pie chart
-    private List<PieEntry> pieEntries = new ArrayList<>();
+    private List<PieEntry> pieEntries ;
 
     private View currentView;
 
@@ -74,6 +74,7 @@ public class DashboardFragment extends Fragment {
         currentView = view;
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         final PieChart pieChart=(PieChart)currentView.findViewById(R.id.piechart);
+        pieEntries=new ArrayList<>();
         ReportService rService = ServiceGenerator.createService(ReportService.class, token);
         Call<List<FreqentlyItem>> call = rService.frequentlyOrderedItemList();
         call.enqueue(new Callback<List<FreqentlyItem>>() {

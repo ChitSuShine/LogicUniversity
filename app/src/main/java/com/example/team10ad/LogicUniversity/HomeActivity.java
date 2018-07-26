@@ -5,14 +5,18 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
@@ -84,6 +88,10 @@ public class HomeActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ReqListForTrackingOrder()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_emp);
                         nvDrawer.setCheckedItem(R.id.trackRep);
+                    } else if (user.getRole() == Constants.TEMP_HOD) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodRequisitionListFragment()).commit();
+                        nvDrawer.inflateMenu(R.menu.activity_home_temphod);
+                        nvDrawer.setCheckedItem(R.id.temp_approve);
                     }
                 } else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
@@ -115,35 +123,37 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        /*DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
-        }*/
-        finish();
-        /*Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);*/
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                finishAffinity();
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.about, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_about) {
-            AboutFragment aboutFragment = new AboutFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, aboutFragment).addToBackStack(null).commit();
-            return true;
+        switch (item.getItemId()){
+            case R.id.action_about:
+                AboutFragment aboutFragment = new AboutFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, aboutFragment).addToBackStack(null).commit();
+                break;
+            case R.id.noti:
+                Notification notimain=new Notification();
+                FragmentManager fragmentMg = getSupportFragmentManager();
+                fragmentMg.beginTransaction().replace(R.id.content_frame, notimain).addToBackStack(null).commit();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -156,68 +166,74 @@ public class HomeActivity extends AppCompatActivity {
         // Logout
         if (id == R.id.logout) {
             MyApp.getInstance().getPreferenceManager().clearLoginData();
-            // finishAffinity();
+            finishAffinity();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
+        } else {
+            switch (id) {
+                // Temporary HOD
+                case R.id.temp_approve:
+                    fragmentClass = HodRequisitionListFragment.class;
+                    break;
+
+                // Clerk
+                case R.id.dashboard:
+                    fragmentClass = DashboardFragment.class;
+                    break;
+                case R.id.inventory:
+                    fragmentClass = InventoryFragment.class;
+                    break;
+                case R.id.requisition:
+                    fragmentClass = RequisitionList.class;
+                    break;
+                case R.id.tracking:
+                    fragmentClass = ClerkMapDeliveryPoint.class;
+                    break;
+                case R.id.report:
+                    fragmentClass = ClerkReportFragment.class;
+                    break;
+
+                // Dep Rep & Employee
+                case R.id.scanRep:
+                    fragmentClass = RepScanQRFragment.class;
+                    break;
+                case R.id.trackRep:
+                    fragmentClass = ReqListForTrackingOrder.class;
+                    break;
+                case R.id.orderHisRep:
+                    fragmentClass = HODOrderHistory.class;
+                    break;
+
+                // HOD
+                case R.id.dashboardHod:
+                    fragmentClass = HodDashboardFragment.class;
+                    break;
+                case R.id.assignDeptRep:
+                    fragmentClass = AssignDepRepFragment.class;
+                    break;
+                case R.id.orderhishod:
+                    fragmentClass = HODOrderHistory.class;
+                    break;
+                case R.id.reportHod:
+                    fragmentClass = HODReportFragment.class;
+                    break;
+                default:
+                    fragmentClass = DashboardFragment.class;
+            }
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStack();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.content_frame, fragment, menuItem.getItemId() + "");
+            ft.addToBackStack(null).commit();
+            menuItem.setChecked(true);
+            setTitle(menuItem.getTitle());
+            drawerLayout.closeDrawers();
         }
-        switch (id) {
-            // Clerk
-            case R.id.dashboard:
-                fragmentClass = DashboardFragment.class;
-                break;
-            case R.id.inventory:
-                fragmentClass = InventoryFragment.class;
-
-                break;
-            case R.id.requisition:
-                fragmentClass = RequisitionList.class;
-                break;
-            case R.id.tracking:
-                fragmentClass = ClerkMapDeliveryPoint.class;
-                break;
-            case R.id.report:
-                fragmentClass = ClerkReportFragment.class;
-                break;
-
-            // Dep Rep & Employee
-            case R.id.scanRep:
-                fragmentClass = RepScanQRFragment.class;
-                break;
-
-            case R.id.trackRep:
-                fragmentClass = ReqListForTrackingOrder.class;
-                break;
-
-            case R.id.orderHisRep:
-                fragmentClass = HODOrderHistory.class;
-                break;
-
-            // HOD
-            case R.id.dashboardHod:
-                fragmentClass = HodDashboardFragment.class;
-                break;
-            case R.id.assignDeptRep:
-                fragmentClass = AssignDepRepFragment.class;
-                break;
-            case R.id.orderhishod:
-                fragmentClass = HODOrderHistory.class;
-                break;
-            case R.id.reportHod:
-                fragmentClass = HODReportFragment.class;
-                break;
-            default:
-                fragmentClass = DashboardFragment.class;
-        }
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, menuItem.getItemId() + "").commit();
-        menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
-        drawerLayout.closeDrawers();
     }
 
     // Processing QR results
@@ -241,4 +257,8 @@ public class HomeActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+
+
+
 }

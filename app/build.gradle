@@ -27,6 +27,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
     implementation 'com.android.support:cardview-v7:28.0.0-alpha3'
     implementation 'com.android.support:gridlayout-v7:28.0.0-alpha3'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'//bar chart
     implementation 'com.kofigyan.stateprogressbar:stateprogressbar:1.0.0'//progress tracker
     implementation 'com.google.android.gms:play-services-maps:15.0.1'//map
