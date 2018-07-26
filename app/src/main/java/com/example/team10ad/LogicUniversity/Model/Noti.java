@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class Noti {
 
     @SerializedName("NotiID")
-    private String NotiID;
+    private int NotiID;
 
     @SerializedName("Datetime")
     private String Datetime;
@@ -31,11 +31,11 @@ public class Noti {
     @SerializedName("NotiType")
     private int NotiType;
 
-    public String getNotiID() {
+    public int getNotiID() {
         return NotiID;
     }
 
-    public void setNotiID(String notiID) {
+    public void setNotiID(int notiID) {
         NotiID = notiID;
     }
 

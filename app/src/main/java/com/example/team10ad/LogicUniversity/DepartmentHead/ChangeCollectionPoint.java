@@ -218,11 +218,12 @@ public class ChangeCollectionPoint extends Fragment {
 
     private void addBtn(RadioGroup rGrp, CollectionPoint cp, int currentId){
         RadioButton radioButton = new RadioButton(getContext());
+        radioButton.setTextSize(17f);
         if(cp.getCpId() == currentId) {
             radioButton.setTypeface(null, Typeface.BOLD);
             radioButton.setChecked(true);
+            radioButton.setTextSize(22f);
         }
-        radioButton.setTextSize(17f);
         radioButton.setId(cp.getCpId());
         radioButton.setText(cp.getCpName());
         rGrp.addView(radioButton);
