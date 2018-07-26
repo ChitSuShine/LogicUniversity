@@ -88,6 +88,10 @@ public class HomeActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ReqListForTrackingOrder()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_emp);
                         nvDrawer.setCheckedItem(R.id.trackRep);
+                    } else if (user.getRole() == Constants.TEMP_HOD) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodRequisitionListFragment()).commit();
+                        nvDrawer.inflateMenu(R.menu.activity_home_temphod);
+                        nvDrawer.setCheckedItem(R.id.temp_approve);
                     }
                 } else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
@@ -165,68 +169,71 @@ public class HomeActivity extends AppCompatActivity {
             finishAffinity();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
+        } else {
+            switch (id) {
+                // Temporary HOD
+                case R.id.temp_approve:
+                    fragmentClass = HodRequisitionListFragment.class;
+                    break;
+
+                // Clerk
+                case R.id.dashboard:
+                    fragmentClass = DashboardFragment.class;
+                    break;
+                case R.id.inventory:
+                    fragmentClass = InventoryFragment.class;
+                    break;
+                case R.id.requisition:
+                    fragmentClass = RequisitionList.class;
+                    break;
+                case R.id.tracking:
+                    fragmentClass = ClerkMapDeliveryPoint.class;
+                    break;
+                case R.id.report:
+                    fragmentClass = ClerkReportFragment.class;
+                    break;
+
+                // Dep Rep & Employee
+                case R.id.scanRep:
+                    fragmentClass = RepScanQRFragment.class;
+                    break;
+                case R.id.trackRep:
+                    fragmentClass = ReqListForTrackingOrder.class;
+                    break;
+                case R.id.orderHisRep:
+                    fragmentClass = HODOrderHistory.class;
+                    break;
+
+                // HOD
+                case R.id.dashboardHod:
+                    fragmentClass = HodDashboardFragment.class;
+                    break;
+                case R.id.assignDeptRep:
+                    fragmentClass = AssignDepRepFragment.class;
+                    break;
+                case R.id.orderhishod:
+                    fragmentClass = HODOrderHistory.class;
+                    break;
+                case R.id.reportHod:
+                    fragmentClass = HODReportFragment.class;
+                    break;
+                default:
+                    fragmentClass = DashboardFragment.class;
+            }
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStack();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.content_frame, fragment, menuItem.getItemId() + "");
+            ft.addToBackStack(null).commit();
+            menuItem.setChecked(true);
+            setTitle(menuItem.getTitle());
+            drawerLayout.closeDrawers();
         }
-        switch (id) {
-            // Clerk
-            case R.id.dashboard:
-                fragmentClass = DashboardFragment.class;
-                break;
-            case R.id.inventory:
-                fragmentClass = InventoryFragment.class;
-
-                break;
-            case R.id.requisition:
-                fragmentClass = RequisitionList.class;
-                break;
-            case R.id.tracking:
-                fragmentClass = ClerkMapDeliveryPoint.class;
-                break;
-            case R.id.report:
-                fragmentClass = ClerkReportFragment.class;
-                break;
-
-            // Dep Rep & Employee
-            case R.id.scanRep:
-                fragmentClass = RepScanQRFragment.class;
-                break;
-
-            case R.id.trackRep:
-                fragmentClass = ReqListForTrackingOrder.class;
-                break;
-
-            case R.id.orderHisRep:
-                fragmentClass = HODOrderHistory.class;
-                break;
-
-            // HOD
-            case R.id.dashboardHod:
-                fragmentClass = HodDashboardFragment.class;
-                break;
-            case R.id.assignDeptRep:
-                fragmentClass = AssignDepRepFragment.class;
-                break;
-            case R.id.orderhishod:
-                fragmentClass = HODOrderHistory.class;
-                break;
-            case R.id.reportHod:
-                fragmentClass = HODReportFragment.class;
-                break;
-            default:
-                fragmentClass = DashboardFragment.class;
-        }
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.popBackStack();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.content_frame, fragment, menuItem.getItemId() + "");
-        ft.addToBackStack(null).commit();
-        menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
-        drawerLayout.closeDrawers();
     }
 
     // Processing QR results

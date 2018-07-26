@@ -20,6 +20,7 @@ import com.example.team10ad.LogicUniversity.HomeActivity;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
 import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.DisbursementService;
 import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
@@ -28,6 +29,7 @@ import com.example.team10ad.LogicUniversity.Util.DisbAdapter;
 import com.example.team10ad.LogicUniversity.Util.DisbDetailAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
@@ -139,9 +141,12 @@ public class RepScanQRFragment extends Fragment {
             @Override
             public void onResponse(Call<Disbursement> call, Response<Disbursement> response) {
                 if (response.isSuccessful()) {
+                    Gson gson = new Gson();
+                    String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
+                    User user = gson.fromJson(json, User.class);
                     Disbursement disbursement = response.body();
                     int delivered = disbursement.getStatus();
-                    if (delivered == Constants.REP_DELIVER) {
+                    if (delivered == Constants.REP_DELIVER && disbursement.getDepID().equals(Integer.toString(user.getDepId()))) {
                         repCardView.setVisibility(View.VISIBLE);
                         repRaisedBy.setText(disbursement.getRasiedByname());
                         requestedDate.setText(disbursement.getReqDate());
@@ -170,7 +175,7 @@ public class RepScanQRFragment extends Fragment {
                                 Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
                             }
                         });
-                    } else if (delivered == Constants.REP_OUTSTANDING) {
+                    } else if (delivered == Constants.REP_OUTSTANDING && disbursement.getDepID().equals(Integer.toString(user.getDepId()))) {
                         repMsg.setText(Constants.REP_OUTSTANDING_MSG);
                     } else if (delivered == Constants.REP_COMPLETE) {
                         repMsg.setText(Constants.REP_COMPLETE_MSG);
