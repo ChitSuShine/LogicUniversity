@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,13 +66,18 @@ public class Notification extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext())
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentTitle("My notification")
+                .setContentText("Much longer text that cannot fit one line...")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         final View view= inflater.inflate(R.layout.fragment_notification, container, false);
 
         String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
         final User user = new Gson().fromJson(userInfo, User.class);
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
-        NotiService notiService= ServiceGenerator.createService(NotiService.class,token);
+        final NotiService notiService= ServiceGenerator.createService(NotiService.class,token);
         Call<List<Noti>> callnoti=notiService.getNotiByCondition(false,user.getDepId(),user.getRole());
         callnoti.enqueue(new Callback<List<Noti>>() {
             @Override
@@ -85,46 +91,57 @@ public class Notification extends Fragment {
                     notiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            int notiType = notiadapter.getItems().get(i).getNotiType();
-                            switch (notiType){
-                                case 0:
-                                    break;
-                                case 1:
-                                    break;
-                                case 2:
-                                    HodRequisitionListFragment hodapprej=new HodRequisitionListFragment();
-                                    FragmentManager fragmentManager=getFragmentManager();
-                                    fragmentManager.beginTransaction().replace(R.id.content_frame, hodapprej).commit();
-                                    break;
-                                case 3:
-                                    break;
-                                case 4:
-                                    break;
-                                case 5:
-                                    break;
-                                case 6:
-                                    break;
-                                case 7:
-                                    break;
-                                case 8:
-                                    break;
-                                case 9:
-                                    break;
-                                case 10:
-                                    ClerkApproveCollectionPoint clerkapprovecp=new ClerkApproveCollectionPoint();
-                                    FragmentManager fragmentManager10=getFragmentManager();
-                                    fragmentManager10.beginTransaction().replace(R.id.content_frame, clerkapprovecp).commit();
-                                    break;
-                                case 11:
-                                    break;
-                                case 12:
-                                    break;
-                                case 13:
-                                    break;
+                            final int notiType = notiadapter.getItems().get(i).getNotiType();
+                            int notiId = notiadapter.getItems().get(i).getNotiID();
+                            Call<Noti> callNoti = notiService.markAsRead(notiId);
+                            callNoti.enqueue(new Callback<Noti>() {
+                                @Override
+                                public void onResponse(Call<Noti> call, Response<Noti> response) {
+                                    if(response.isSuccessful()){
+                                        switch (notiType){
+                                            case 0:
+                                                break;
+                                            case 1:
+                                                break;
+                                            case 2:
+                                                HodRequisitionListFragment hodapprej=new HodRequisitionListFragment();
+                                                FragmentManager fragmentManager=getFragmentManager();
+                                                fragmentManager.beginTransaction().replace(R.id.content_frame, hodapprej).commit();
+                                                break;
+                                            case 3:
+                                                break;
+                                            case 4:
+                                                break;
+                                            case 5:
+                                                break;
+                                            case 6:
+                                                break;
+                                            case 7:
+                                                break;
+                                            case 8:
+                                                break;
+                                            case 9:
+                                                break;
+                                            case 10:
+                                                ClerkApproveCollectionPoint clerkapprovecp=new ClerkApproveCollectionPoint();
+                                                FragmentManager fragmentManager10=getFragmentManager();
+                                                fragmentManager10.beginTransaction().replace(R.id.content_frame, clerkapprovecp).commit();
+                                                break;
+                                            case 11:
+                                                break;
+                                            case 12:
+                                                break;
+                                            case 13:
+                                                break;
+                                        }
+                                    }
+                                }
 
+                                @Override
+                                public void onFailure(Call<Noti> call, Throwable t) {
 
-
-                            }
+                                }
+                            });
                         }
                     });
                 }

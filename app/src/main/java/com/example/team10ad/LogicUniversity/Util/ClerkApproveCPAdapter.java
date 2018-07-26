@@ -72,7 +72,6 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
             @Override
             public void onClick(View view){
                 dcp= getItem(position);
-                dcp.setStatus(1);
 
                 CollectionPointService cpService = ServiceGenerator.createService(CollectionPointService.class, token);
                 Call<DepartmentCollectionPoint> call = cpService.approveCollectionPoint(dcp);
@@ -96,6 +95,25 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dcp= getItem(position);
+
+                CollectionPointService cpService = ServiceGenerator.createService(CollectionPointService.class, token);
+                Call<DepartmentCollectionPoint> call = cpService.rejectCollectionPoint(dcp);
+                call.enqueue(new Callback<DepartmentCollectionPoint>() {
+                    @Override
+                    public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(MyApp.getInstance(), "Cancelled", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<DepartmentCollectionPoint> call, Throwable t) {
+                        Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
         });

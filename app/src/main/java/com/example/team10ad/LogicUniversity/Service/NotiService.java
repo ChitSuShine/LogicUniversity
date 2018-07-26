@@ -1,6 +1,7 @@
 package com.example.team10ad.LogicUniversity.Service;
 
 import com.example.team10ad.LogicUniversity.Model.Noti;
+import com.example.team10ad.LogicUniversity.Notification;
 
 import java.util.List;
 
@@ -15,4 +16,7 @@ public interface NotiService {
 
     @GET("noti/isread/{isread}/{deptid}/{role}")
     Call<List<Noti>> getNotiByCondition(@Path("isread") boolean isread,@Path("deptid") int deptid,@Path("role") int role);
+
+    @GET("notification/updateasread/{id}")
+    Call<Noti> markAsRead(@Path("id") int id);
 }
