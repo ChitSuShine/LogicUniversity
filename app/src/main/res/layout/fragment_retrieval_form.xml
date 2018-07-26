@@ -22,18 +22,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Shelf Location:"
-                android:textSize="24dp"
+                android:textSize="20sp"
                 android:layout_gravity="left"
-                android:textColor="@color/pinkaccent"/>
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"/>
 
             <TextView
                 android:id="@+id/inventoryID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="24dp"
+                android:textSize="20sp"
                 android:text="A"
-                android:textColor="@color/pinkaccent"/>
+                android:textColor="@color/colorPrimaryDark"/>
 
         </LinearLayout>
 
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="3"
-            android:background="@color/lightgray">
+            >
 
             <!-- col 1 -->
 
@@ -56,7 +57,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
-                    android:text="Item Name:" />
+                    android:text="Item Name:"
+                    android:textColor="@color/bg"
+                    android:gravity="center"/>
 
 
             </LinearLayout>
@@ -73,7 +76,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
-                    android:text="Shelf Level:" />
+                    android:text="Shelf Level:"
+                    android:textColor="@color/bg"
+                    android:gravity="center"/>
 
 
             </LinearLayout>
@@ -90,7 +95,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
-                    android:text="Quantity" />
+                    android:text="Quantity"
+                    android:textColor="@color/bg"
+                    android:gravity="center"/>
 
             </LinearLayout>
 
@@ -110,11 +117,12 @@
         </ListView>
         <Button
             android:id="@+id/itemcollect"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:text="Item Collect"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@drawable/my_button_approve"/>
         </LinearLayout>
 
     </LinearLayout>

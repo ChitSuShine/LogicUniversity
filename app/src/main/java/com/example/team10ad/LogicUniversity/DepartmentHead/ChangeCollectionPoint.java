@@ -113,7 +113,7 @@ public class ChangeCollectionPoint extends Fragment {
 
             @Override
             public void onFailure(Call<List<DepartmentCollectionPoint>> call, Throwable t) {
-
+                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -147,7 +147,7 @@ public class ChangeCollectionPoint extends Fragment {
 
                     @Override
                     public void onFailure(Call<DepartmentCollectionPoint> call, Throwable t) {
-                        Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -211,7 +211,7 @@ public class ChangeCollectionPoint extends Fragment {
 
             @Override
             public void onFailure(Call<List<CollectionPoint>> call, Throwable t) {
-                Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
             }
         });
     }
