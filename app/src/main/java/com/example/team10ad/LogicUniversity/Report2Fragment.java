@@ -10,15 +10,22 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Model.Department;
+import com.example.team10ad.LogicUniversity.Model.ItemUsageHod;
+import com.example.team10ad.LogicUniversity.Service.DepartmentService;
+import com.example.team10ad.LogicUniversity.Service.ReportService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -30,9 +37,16 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Report2Fragment extends Fragment {
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -42,9 +56,13 @@ public class Report2Fragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private PieChart halfPie;
-    private String[] data = {"ONE","TWO","THREE","FOUR"};
+    private ArrayList<String> data;
+    private ArrayList<PieEntry> pieEntries;
+    private HashMap<String, Integer> deptMap;
+    private Spinner spin;
 
-    public Report2Fragment() { }
+    public Report2Fragment() {
+    }
 
     public static Report2Fragment newInstance(String param1, String param2) {
         Report2Fragment fragment = new Report2Fragment();
@@ -67,21 +85,31 @@ public class Report2Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        data = new ArrayList<>();
+        deptMap = new HashMap<>();
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_report2, container, false);
+        halfPie = view.findViewById(R.id.halfPieChart);
+        spin = view.findViewById(R.id.spinner2);
+
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        DepartmentService deptService = ServiceGenerator.createService(DepartmentService.class, token);
+        ReportService service = ServiceGenerator.createService(ReportService.class, token);
+
+        addSpinner(deptService, service);
+
+        return view;
+    }
+
+    private void setupChart() {
 
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        halfPie = view.findViewById(R.id.halfPieChart);
         halfPie.setBackgroundColor(Color.WHITE);
-
-        moveOffScreen();
 
         halfPie.setUsePercentValues(true);
         halfPie.getDescription().setEnabled(false);
-
-        halfPie.setCenterText(generateCenterSpannableText());
 
         halfPie.setDrawHoleEnabled(true);
         halfPie.setHoleColor(Color.WHITE);
@@ -101,14 +129,13 @@ public class Report2Fragment extends Fragment {
         halfPie.setRotationAngle(180f);
         halfPie.setCenterTextOffset(0, -20);
 
-        setData(4, 100);
-
         halfPie.animateY(1400, Easing.EasingOption.EaseInOutQuad);
 
         Legend l = halfPie.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setTextSize(16f);
         l.setDrawInside(false);
         l.setXEntrySpace(7f);
         l.setYEntrySpace(0f);
@@ -117,55 +144,100 @@ public class Report2Fragment extends Fragment {
         // entry label styling
         halfPie.setEntryLabelColor(Color.WHITE);
         halfPie.setEntryLabelTextSize(12f);
-
-        return view;
     }
 
-    private void setData(int count, float range) {
+    private void addSpinner(DepartmentService departmentService, final ReportService service) {
+        Call<List<Department>> callDept = departmentService.getAllDepartments();
+        callDept.enqueue(new Callback<List<Department>>() {
+            @Override
+            public void onResponse(Call<List<Department>> call, Response<List<Department>> response) {
+                if (response.isSuccessful()) {
+                    List<String> temp = new ArrayList<>();
+                    for (Department d : response.body()) {
+                        deptMap.put(d.getDeptName(), d.getDeptId());
+                        temp.add(d.getDeptName());
+                    }
+                    // Creating adapter for spinner
+                    ArrayAdapter<String> dataAdapter =
+                            new ArrayAdapter<String>(getContext(),
+                                    android.R.layout.simple_spinner_item, temp);
 
-        ArrayList<PieEntry> values = new ArrayList<PieEntry>();
+                    // attaching data adapter to spinner
+                    spin.setAdapter(dataAdapter);
+                    spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            int deptId = deptMap.get(adapterView.getSelectedItem().toString());
+                            pieEntries = new ArrayList<>();
+                            setupChart();
+                            populateChart(service, deptId, adapterView.getSelectedItem().toString());
+                        }
 
-        for (int i = 0; i < count; i++) {
-            values.add(new PieEntry((float)Math.random(), data[i]));
-        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                        }
+                    });
+                }
+            }
 
-        PieDataSet dataSet = new PieDataSet(values, "Election Results");
+            @Override
+            public void onFailure(Call<List<Department>> call, Throwable t) {
+                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void populateChart(final ReportService s, final int id, final String name) {
+
+        Call<List<ItemUsageHod>> call = s.getItemUsageHod();
+        call.enqueue(new Callback<List<ItemUsageHod>>() {
+            @Override
+            public void onResponse(Call<List<ItemUsageHod>> call, Response<List<ItemUsageHod>> response) {
+                if (response.isSuccessful()) {
+                    int total = 0;
+                    for (ItemUsageHod item : response.body()) {
+                        if (item.getDeptId() == id) {
+                            pieEntries.add(new PieEntry(item.getQty(), item.getDescription()));
+                            total += item.getQty();
+                        }
+                    }
+                    setData("Item Usage", name, total);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ItemUsageHod>> call, Throwable t) {
+                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setData(String label, String centerTxt, int total) {
+        PieDataSet dataSet = new PieDataSet(pieEntries, label);
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 
+
+        halfPie.setCenterText(generateCenterSpannableText("Total "+String.valueOf(total)));
+        halfPie.setCenterTextSize(17f);
+        halfPie.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
+
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        halfPie.animateY(1400, Easing.EasingOption.EaseInOutQuad);
         //dataSet.setSelectionShift(0f);
 
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(11f);
+        data.setValueTextSize(14f);
         data.setValueTextColor(Color.WHITE);
         halfPie.setData(data);
 
         halfPie.invalidate();
     }
 
-    private SpannableString generateCenterSpannableText() {
-
-        SpannableString s = new SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda");
-        s.setSpan(new RelativeSizeSpan(1.7f), 0, 14, 0);
-        s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
-        s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, s.length() - 15, 0);
-        s.setSpan(new RelativeSizeSpan(.8f), 14, s.length() - 15, 0);
-        s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 14, s.length(), 0);
-        s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length() - 14, s.length(), 0);
+    private SpannableString generateCenterSpannableText(String string) {
+        SpannableString s = new SpannableString(string);
         return s;
-    }
-
-    private void moveOffScreen() {
-
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        int height = display.getHeight();
-        int offset = (int)(height * 0.65); /* percent to move */
-
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) halfPie.getLayoutParams();
-        params.setMargins(0, 0, 0, -offset);
-        halfPie.setLayoutParams(params);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -190,4 +262,6 @@ public class Report2Fragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

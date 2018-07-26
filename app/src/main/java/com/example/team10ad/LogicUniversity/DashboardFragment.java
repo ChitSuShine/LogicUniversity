@@ -4,14 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
 import com.example.team10ad.LogicUniversity.Model.FreqentlyItem;
 import com.example.team10ad.LogicUniversity.Service.ReportService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
@@ -76,7 +75,7 @@ public class DashboardFragment extends Fragment {
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         final PieChart pieChart=(PieChart)currentView.findViewById(R.id.piechart);
         ReportService rService = ServiceGenerator.createService(ReportService.class, token);
-        Call<List<FreqentlyItem>> call = rService.frequetlyOrderedItemList();
+        Call<List<FreqentlyItem>> call = rService.frequentlyOrderedItemList();
         call.enqueue(new Callback<List<FreqentlyItem>>() {
             @Override
             public void onResponse(Call<List<FreqentlyItem>> call, Response<List<FreqentlyItem>> response) {
@@ -90,7 +89,7 @@ public class DashboardFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<FreqentlyItem>> call, Throwable t) {
-
+                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
             }
         });
 
