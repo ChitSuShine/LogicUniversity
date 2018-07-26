@@ -23,7 +23,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
@@ -88,7 +87,7 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
         final View view= inflater.inflate(R.layout.fragment_hodreport, container, false);
         final String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         ReportService service = ServiceGenerator.createService(ReportService.class, token);
-        Call<List<FreqentlyItem>> call = service.frequetlyOrderedItemList();
+        Call<List<FreqentlyItem>> call = service.frequentlyOrderedItemList();
         call.enqueue(new Callback<List<FreqentlyItem>>() {
             @Override
             public void onResponse(Call<List<FreqentlyItem>> call, Response<List<FreqentlyItem>> response) {

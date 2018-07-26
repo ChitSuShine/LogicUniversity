@@ -113,7 +113,7 @@ public class ChangeCollectionPoint extends Fragment {
 
             @Override
             public void onFailure(Call<List<DepartmentCollectionPoint>> call, Throwable t) {
-
+                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -147,7 +147,7 @@ public class ChangeCollectionPoint extends Fragment {
 
                     @Override
                     public void onFailure(Call<DepartmentCollectionPoint> call, Throwable t) {
-                        Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -211,18 +211,19 @@ public class ChangeCollectionPoint extends Fragment {
 
             @Override
             public void onFailure(Call<List<CollectionPoint>> call, Throwable t) {
-                Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void addBtn(RadioGroup rGrp, CollectionPoint cp, int currentId){
         RadioButton radioButton = new RadioButton(getContext());
+        radioButton.setTextSize(17f);
         if(cp.getCpId() == currentId) {
             radioButton.setTypeface(null, Typeface.BOLD);
             radioButton.setChecked(true);
+            radioButton.setTextSize(22f);
         }
-        radioButton.setTextSize(17f);
         radioButton.setId(cp.getCpId());
         radioButton.setText(cp.getCpName());
         rGrp.addView(radioButton);
