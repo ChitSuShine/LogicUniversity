@@ -132,7 +132,7 @@ public class Report2Fragment extends Fragment {
         halfPie.animateY(1400, Easing.EasingOption.EaseInOutQuad);
 
         Legend l = halfPie.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         l.setOrientation(Legend.LegendOrientation.VERTICAL);
         l.setTextSize(16f);
@@ -161,7 +161,7 @@ public class Report2Fragment extends Fragment {
                     ArrayAdapter<String> dataAdapter =
                             new ArrayAdapter<String>(getContext(),
                                     android.R.layout.simple_spinner_item, temp);
-
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     // attaching data adapter to spinner
                     spin.setAdapter(dataAdapter);
                     spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -201,7 +201,7 @@ public class Report2Fragment extends Fragment {
                             total += item.getQty();
                         }
                     }
-                    setData("Item Usage", name, total);
+                    setData("", name, total);
                 }
             }
 
