@@ -26,4 +26,7 @@ public interface CollectionPointService {
 
     @POST("departmentcollectionpoint/confirm")
     Call<DepartmentCollectionPoint> approveCollectionPoint(@Body DepartmentCollectionPoint dcp);
+
+    @POST("departmentcollectionpoint/reject")
+    Call<DepartmentCollectionPoint> rejectCollectionPoint(@Body DepartmentCollectionPoint dcp);
 }

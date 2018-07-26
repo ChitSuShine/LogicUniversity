@@ -3,6 +3,7 @@ package com.example.team10ad.LogicUniversity.Util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
     DepartmentCollectionPoint dcp = new DepartmentCollectionPoint();
     private List<DepartmentCollectionPoint> items;
     private static List<Button> btns = new ArrayList<>();
+
     String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
     public ClerkApproveCPAdapter(@NonNull Context context, int resource, @NonNull List<DepartmentCollectionPoint> items) {
@@ -43,7 +46,7 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
     }
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         final View v = inflater.inflate(resource, null);
 
@@ -61,19 +64,14 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
 
         Button app_btn = new Button(getContext());
         app_btn.setText("Approve");
-        LinearLayout layoutapp = v.findViewById(R.id.approve);
-        btns.add(app_btn);
-        layoutapp.addView(app_btn);
 
         Button cancel_btn = new Button(getContext());
         cancel_btn.setText("Cancel");
-        LinearLayout layoutcancel = v.findViewById(R.id.cancel);
-        btns.add(cancel_btn);
-        layoutcancel.addView(cancel_btn);
 
-        layoutapp.setOnClickListener(new View.OnClickListener() {
+        app_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
+                dcp= getItem(position);
                 dcp.setStatus(1);
 
                 CollectionPointService cpService = ServiceGenerator.createService(CollectionPointService.class, token);
@@ -82,7 +80,7 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
                     @Override
                     public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
                         if(response.isSuccessful()){
-                            dcp=response.body();
+                            Toast.makeText(MyApp.getInstance(), "Approved", Toast.LENGTH_SHORT).show();
                         }
                         else {
                             Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
@@ -95,6 +93,22 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
                 });
             }
         });
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+        LinearLayout layoutapp = v.findViewById(R.id.approve);
+        btns.add(app_btn);
+        layoutapp.addView(app_btn);
+
+        LinearLayout layoutcancel = v.findViewById(R.id.cancel);
+        btns.add(cancel_btn);
+        layoutcancel.addView(cancel_btn);
+
         return v;
     }
 }

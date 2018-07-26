@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -87,7 +88,6 @@ public class ClerkApproveCollectionPoint extends Fragment {
                 }
                 else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
-
                 }
             }
             @Override
@@ -95,7 +95,6 @@ public class ClerkApproveCollectionPoint extends Fragment {
                 Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
             }
         });
-
         return view;
     }
 
