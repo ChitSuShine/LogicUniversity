@@ -146,13 +146,9 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().replace(R.id.content_frame, aboutFragment).addToBackStack(null).commit();
                 break;
             case R.id.noti:
-                /*ClerkApproveCollectionPoint clerkcp=new ClerkApproveCollectionPoint();
+                Notification notimain=new Notification();
                 FragmentManager fragmentMg = getSupportFragmentManager();
-                fragmentMg.beginTransaction().replace(R.id.content_frame, clerkcp).addToBackStack(null).commit();*/
-                View menuItemView = findViewById(R.id.noti);
-                PopupMenu popupMenu = new PopupMenu(this, menuItemView);
-                popupMenu.inflate(R.menu.about);
-                popupMenu.show();
+                fragmentMg.beginTransaction().replace(R.id.content_frame, notimain).addToBackStack(null).commit();
                 break;
         }
         return super.onOptionsItemSelected(item);
