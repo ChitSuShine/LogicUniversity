@@ -24,4 +24,5 @@
     <style name="ButtonStyle.Colored" parent="Widget.AppCompat.Button.Colored">
     </style>
 
+
 </resources>
