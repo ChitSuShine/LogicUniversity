@@ -48,6 +48,7 @@ public class Constants {
     public static final String REP_MSG = "Collect Delivery";
     public static final String REP_OUTSTANDING_MSG = "Delivery is partially collected.";
     public static final String REP_COMPLETE_MSG = "Delivery is already collected.";
+    public static final String REP_WRONG_DEP = "It's not your QR. Please check.";
     public static final int REP_DELIVER = 4;
     public static final int REP_OUTSTANDING = 5;
     public static final int REP_COMPLETE = 6;
