@@ -193,11 +193,17 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         BarDataSet set1, set2, set3;
 
         set1 = new BarDataSet(barValues1, "Sup 1");
-        set1.setColor(Color.rgb(104, 241, 175));
+        set1.setColor(Color.argb(85,104,241,175));
+        set1.setBarBorderColor(Color.rgb(104,241,175));
+        set1.setBarBorderWidth(1.5f);
         set2 = new BarDataSet(barValues2, "Sup 2");
-        set2.setColor(Color.rgb(164, 228, 251));
+        set2.setColor(Color.argb(85,164, 228, 251));
+        set2.setBarBorderColor(Color.rgb(164, 228, 251));
+        set2.setBarBorderWidth(1.5f);
         set3 = new BarDataSet(barValues3, "Sup 3");
-        set3.setColor(Color.rgb(242, 247, 158));
+        set3.setColor(Color.argb(85,242, 247, 158));
+        set3.setBarBorderColor(Color.rgb(242, 247, 158));
+        set3.setBarBorderWidth(1.5f);
 
         BarData data = new BarData(set1, set2, set3);
         data.setValueFormatter(new LargeValueFormatter());
