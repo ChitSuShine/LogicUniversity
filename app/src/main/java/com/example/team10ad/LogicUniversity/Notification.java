@@ -1,6 +1,7 @@
 package com.example.team10ad.LogicUniversity;
 
 import android.content.Context;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -66,11 +67,6 @@ public class Notification extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext())
-                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
-                .setContentTitle("My notification")
-                .setContentText("Much longer text that cannot fit one line...")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         final View view= inflater.inflate(R.layout.fragment_notification, container, false);
 
         String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
@@ -91,6 +87,13 @@ public class Notification extends Fragment {
                     notiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext())
+                                    .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                                    .setContentTitle("My notification")
+                                    .setContentText("Much longer text that cannot fit one line...")
+                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            mBuilder.setSound(alarmSound);
                             final int notiType = notiadapter.getItems().get(i).getNotiType();
                             int notiId = notiadapter.getItems().get(i).getNotiID();
                             Call<Noti> callNoti = notiService.markAsRead(notiId);
