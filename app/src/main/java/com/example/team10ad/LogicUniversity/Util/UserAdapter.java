@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(resource, null);
+
 
         TextView employeeName = (TextView) view.findViewById(R.id.employeeName);
         User user = items.get(position);
