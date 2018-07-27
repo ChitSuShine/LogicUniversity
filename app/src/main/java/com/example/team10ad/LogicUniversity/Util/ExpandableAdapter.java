@@ -4,13 +4,20 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
 import com.example.team10ad.team10ad.R;
@@ -27,6 +34,10 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
+    }
+
+    public List<Disbursement> get_listDataHeader() {
+        return _listDataHeader;
     }
 
     @Override
@@ -92,7 +103,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        Disbursement headerTitle = (Disbursement) getGroup(groupPosition);
+        final Disbursement headerTitle = (Disbursement) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -106,6 +117,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         TextView disb3 = (TextView) convertView
                 .findViewById(R.id.disb3);
 
+        convertView.setTag(headerTitle);
         disb1.setText(headerTitle.getDepName());
         disb2.setText(headerTitle.getReqDate());
         disb3.setText(Constants.STATUS[headerTitle.getStatus()]);
