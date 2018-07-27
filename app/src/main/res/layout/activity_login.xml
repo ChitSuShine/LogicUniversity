@@ -39,7 +39,7 @@
                     android:id="@+id/input_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:foreground="@color/black"
+                    android:foreground="@color/colorblack"
                     android:hint="Username"
                     android:inputType="textEmailAddress" />
             </android.support.design.widget.TextInputLayout>
@@ -55,7 +55,7 @@
                     android:id="@+id/input_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:foreground="@color/black"
+                    android:foreground="@color/colorblack"
                     android:hint="Password"
                     android:inputType="textPassword" />
             </android.support.design.widget.TextInputLayout>
