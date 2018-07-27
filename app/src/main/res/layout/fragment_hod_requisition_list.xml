@@ -22,7 +22,7 @@
                     android:layout_height="match_parent"
                     android:text="Raised by"
                     android:gravity="center"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/title"
                     android:textColor="@color/bg"
                     android:textStyle="bold"/>
             </LinearLayout>
@@ -37,7 +37,7 @@
                     android:layout_height="match_parent"
                     android:text="Date"
                     android:gravity="center"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/title"
                     android:textColor="@color/bg"
                     android:textStyle="bold"/>
             </LinearLayout>
@@ -53,7 +53,7 @@
                     android:text="Status"
                     android:gravity="center"
                     android:textColor="@color/bg"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/title"
                     android:textStyle="bold"/>
 
             </LinearLayout>
