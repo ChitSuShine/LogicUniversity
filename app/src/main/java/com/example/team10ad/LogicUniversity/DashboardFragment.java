@@ -1,6 +1,7 @@
 package com.example.team10ad.LogicUniversity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.LogicUniversity.Util.RetrievalFormFragment;
 import com.example.team10ad.team10ad.R;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -159,10 +161,13 @@ public class DashboardFragment extends Fragment {
     private void setupPieChart(PieChart chart, List<PieEntry> entries) {
         PieDataSet pieDataSet=new PieDataSet(entries,"");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setValueTextSize(R.dimen.subheading);
+        pieDataSet.setValueTextColor(Color.WHITE);
         PieData pieData=new PieData();
         pieData.setDataSet(pieDataSet);
         chart.setData(pieData);
-        chart.getDescription().setText("Top 5 frequent ordered items in 2018");
+        Description d = chart.getDescription();
+        d.setText("Top 5 frequent ordered items in 2018");
         chart.animateX(1000);
         chart.invalidate();
     }
