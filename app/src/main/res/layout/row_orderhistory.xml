@@ -15,14 +15,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Raised Date:"/>
+            android:text="Raised Date:"
+            android:textColor="@color/colorblack"/>
 
         <TextView
             android:id="@+id/orderhis1"
             android:gravity="left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="@color/colorblack"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -36,14 +39,17 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Raised By:"/>
+            android:text="Raised By:"
+            android:textColor="@color/colorblack"/>
 
         <TextView
             android:layout_weight="1"
             android:id="@+id/orderhis2"
             android:gravity="left"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorblack"
+            android:textStyle="bold"/>
 
     </LinearLayout>
     <LinearLayout
@@ -56,14 +62,17 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Collection Point:"/>
+            android:text="Collection Point:"
+            android:textColor="@color/colorblack"/>
 
         <TextView
             android:gravity="left"
             android:layout_weight="1"
             android:id="@+id/orderhis3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorblack"
+            android:textStyle="bold"/>
 
     </LinearLayout>
     <LinearLayout
@@ -76,14 +85,17 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Status:"/>
+            android:text="Status:"
+            android:textColor="@color/colorblack"/>
 
         <TextView
             android:gravity="left"
             android:layout_weight="1"
             android:id="@+id/orderhis4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorblack"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 </LinearLayout>

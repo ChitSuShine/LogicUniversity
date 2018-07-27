@@ -79,7 +79,7 @@
                     android:text="Approve"
                     android:layout_gravity="center_horizontal"
                     android:textAlignment="center"
-                    android:textColor="@color/bg"
+                    android:textColor="@color/colorblack"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
