@@ -83,7 +83,6 @@ public class RequisitionList extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -112,6 +111,10 @@ public class RequisitionList extends Fragment {
                         if (Integer.parseInt(item.getCpID()) == CpId) {
                             result.add(item);
                         }
+                    }
+                    if(result.isEmpty()){
+                        TextView txt = view.findViewById(R.id.emptyReqList);
+                        txt.setText("Nothing to deliver!!");
                     }
                     HashMap<Disbursement, List<DisbursementDetail>> map = new
                             HashMap<>();

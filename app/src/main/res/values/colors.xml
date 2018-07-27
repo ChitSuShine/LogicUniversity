@@ -11,6 +11,7 @@
     <color name="materialgreen">#BB86FC</color>
     <color name="pinkaccent">#ff4081</color>
     <color name="bg">#3AAFA9</color>
+    <color name="bgdisabled">#98e1dd</color>
     <color name="selector_red_focused">#22D50000</color>
     <color name="selector_red_pressed">#44D50000</color>
     <color name="selector_normal">@android:color/transparent</color>
