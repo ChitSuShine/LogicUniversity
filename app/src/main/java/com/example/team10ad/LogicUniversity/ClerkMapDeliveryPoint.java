@@ -230,12 +230,13 @@ public class ClerkMapDeliveryPoint extends Fragment implements OnMapReadyCallbac
     }
 
     private void collectionPointDelivery(CollectionPoint cp) {
-        DeliveryPointProcess deliveryPointProcess = new DeliveryPointProcess();
+        RequisitionList disbListFrag = new RequisitionList();
         Bundle b = new Bundle();
         b.putInt("CpId", cp.getCpId());
-        deliveryPointProcess.setArguments(b);
+        b.putString("Cp", cp.getCpName());
+        disbListFrag.setArguments(b);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, deliveryPointProcess);
+        ft.replace(R.id.content_frame, disbListFrag);
         ft.addToBackStack(null);
         ft.commit();
     }

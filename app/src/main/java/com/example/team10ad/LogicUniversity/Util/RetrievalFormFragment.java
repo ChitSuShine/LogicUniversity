@@ -12,10 +12,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.ClerkMapDeliveryPoint;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Model.StationaryRetrieval;
 import com.example.team10ad.LogicUniversity.RequisitionList;
 import com.example.team10ad.LogicUniversity.Service.DisbursementService;
+import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.team10ad.R;
 
@@ -72,6 +74,8 @@ public class RetrievalFormFragment extends Fragment {
             public void onResponse(Call<List<StationaryRetrieval>> call, Response<List<StationaryRetrieval>> response) {
                 if(response.isSuccessful()){
                     result=response.body();
+                    if(result.size() < 1)
+                        ((Button) view.findViewById(R.id.itemcollect)).setEnabled(false);
                     final RetrievalAdapter retrievalAdapter=new RetrievalAdapter(getContext(),R.layout.row_retrievallist,result);
                     retrievallist=(ListView)view.findViewById(R.id.retrievallist);
                     retrievallist.setAdapter(retrievalAdapter);
@@ -92,10 +96,23 @@ public class RetrievalFormFragment extends Fragment {
         itemcollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"it's ok",Toast.LENGTH_LONG).show();
-                RequisitionList disbursementList=new RequisitionList();
-                FragmentManager fm=getFragmentManager();
-                fm.beginTransaction().replace(R.id.content_frame,disbursementList).commit();
+                DisbursementService dService = ServiceGenerator.createService(DisbursementService.class,token);
+                Call<List<Disbursement>> call = dService.collectAllItems();
+                call.enqueue(new Callback<List<Disbursement>>() {
+                    @Override
+                    public void onResponse(Call<List<Disbursement>> call, Response<List<Disbursement>> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(getActivity(),"Items Collected!",Toast.LENGTH_LONG).show();
+                        }
+                        ClerkMapDeliveryPoint cpMap=new ClerkMapDeliveryPoint();
+                        FragmentManager fm=getFragmentManager();
+                        fm.beginTransaction().replace(R.id.content_frame,cpMap).commit();
+                    }
+                    @Override
+                    public void onFailure(Call<List<Disbursement>> call, Throwable t) {
+                        Toast.makeText(getActivity(),"CONNECTION ERROR!",Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
         return view;
