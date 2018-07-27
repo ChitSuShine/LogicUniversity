@@ -4,12 +4,12 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="@dimen/default_gap"
-    android:weightSum="10">
+    android:weightSum="14">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="7"
+        android:layout_weight="12"
         android:orientation="vertical">
 
         <TextView
@@ -34,6 +34,14 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="3"></LinearLayout>
+        android:layout_weight="2">
+        <Button
+            android:id="@+id/btnDeliver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Deliver Item(s)"
+            android:focusable="false"/>
+    </LinearLayout>
 
 </LinearLayout>

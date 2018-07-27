@@ -10,6 +10,7 @@
     <dimen name="heading">22dp</dimen>
     <dimen name="subheading">19dp</dimen>
     <dimen name="btnsize">117dp</dimen>
+    <dimen name="listspacing">36dp</dimen>
 
     <!-- Selectable Items -->
     <dimen name="selectable_rounded_rect_corner_radius">3dp</dimen>

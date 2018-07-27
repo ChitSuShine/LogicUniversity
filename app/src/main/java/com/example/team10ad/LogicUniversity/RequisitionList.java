@@ -128,27 +128,6 @@ public class RequisitionList extends Fragment {
                     ExpandableAdapter adapter = new ExpandableAdapter(getContext(),
                             result, map);
                     disblistview.setAdapter(adapter);
-                    disblistview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                        @Override
-                        public boolean onItemLongClick(AdapterView<?> adapterView, final View view, int i, long l) {
-                            AlertDialog.Builder deliverDiag = new AlertDialog.Builder(getContext())
-                                    .setTitle("Finish Delivering Item(s)?")
-                                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            deliver(disbService, (Disbursement) view.getTag());
-                                        }
-                                    })
-                                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            dialogInterface.cancel();
-                                        }
-                                    });
-                            deliverDiag.show();
-                            return false;
-                        }
-                    });
                 } else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                 }
@@ -183,43 +162,6 @@ public class RequisitionList extends Fragment {
     public interface OnFragmentInteractionListener {
 
         void onFragmentInteraction(Uri uri);
-    }
-
-    private void deliver(DisbursementService disbursementService, final Disbursement disb){
-        Requisition req = new Requisition();
-        req.setDepID(disb.getDepID());
-        req.setReqID(disb.getReqID());
-        req.setCpID(disb.getCpID());
-        req.setApprovedBy(disb.getApprovedBy());
-        req.setRaisedBy(disb.getApprovedBy());
-        req.setStatus(String.valueOf(4));
-        Call<Requisition> call = disbursementService.UpdateRequisition(req);
-        call.enqueue(new Callback<Requisition>() {
-            @Override
-            public void onResponse(Call<Requisition> call, Response<Requisition> response) {
-                if(response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Delivered!", Toast.LENGTH_SHORT).show();
-                    redirect(disb);
-                }
-            }
-            @Override
-            public void onFailure(Call<Requisition> call, Throwable t) {
-                Toast.makeText(getContext(),
-                        "CONNECTION ERROR!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void redirect(Disbursement disbursement){
-        RequisitionList reqList = new RequisitionList();
-        Bundle b = new Bundle();
-        b.putInt("CpId", Integer.parseInt(disbursement.getCpID()));
-        b.putString("Cp", disbursement.getCpName());
-        reqList.setArguments(b);
-        getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, reqList)
-                .commit();
     }
 }
 
