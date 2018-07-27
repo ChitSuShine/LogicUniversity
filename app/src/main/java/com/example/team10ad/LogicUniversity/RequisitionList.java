@@ -17,8 +17,11 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.team10ad.LogicUniversity.Model.CollectionPoint;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
 import com.example.team10ad.LogicUniversity.Service.DisbursementService;
@@ -28,10 +31,14 @@ import com.example.team10ad.LogicUniversity.Util.DisbAdapter;
 import com.example.team10ad.LogicUniversity.Util.ExpandableAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+import com.github.ybq.android.spinkit.SpinKitView;
+import com.github.ybq.android.spinkit.style.Wave;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,10 +85,17 @@ public class RequisitionList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        String Cp = getArguments().getString("Cp");
+        final int CpId = getArguments().getInt("CpId");
         final View view=inflater.inflate(R.layout.fragment_requisition_list, container, false);
+        ((TextView) view.findViewById(R.id.lblCp)).setText(Cp);
+
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
-
+        final ProgressBar progressBar = (SpinKitView) view.findViewById(R.id.loadingReqList);
+        Wave wave = new Wave();
+        progressBar.setIndeterminateDrawable(wave);
+        progressBar.showContextMenu();
 
         DisbursementService disbService= ServiceGenerator.createService(DisbursementService.class,token);
         Call<List<Disbursement>> call=disbService.getAllDisbursements();
@@ -89,7 +103,12 @@ public class RequisitionList extends Fragment {
             @Override
             public void onResponse(Call<List<Disbursement>> call, Response<List<Disbursement>> response) {
                 if(response.isSuccessful()){
-                    result=response.body();
+                    progressBar.setVisibility(View.GONE);
+                    for(Disbursement item : response.body()){
+                        if(Integer.parseInt(item.getCpID()) == CpId){
+                            result.add(item);
+                        }
+                    }
                     HashMap<Disbursement, List<DisbursementDetail>> map = new
                             HashMap<>();
                     for(Disbursement d : result){
