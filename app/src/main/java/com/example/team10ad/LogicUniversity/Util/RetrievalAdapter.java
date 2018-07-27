@@ -37,18 +37,15 @@ public class RetrievalAdapter extends ArrayAdapter<StationaryRetrieval>  {
         TextView retrieve3 = (TextView) v.findViewById(R.id.retrieve3);
         TextView retrieve4 = (TextView) v.findViewById(R.id.retrieve4);
         TextView retrieve5 = (TextView) v.findViewById(R.id.retrieve5);
-        TextView retrieve6 = (TextView) v.findViewById(R.id.retrieve6);
-        TextView retrieve7 = (TextView) v.findViewById(R.id.retrieve7);
+
 
         StationaryRetrieval retrieval=items.get(position);
 
-        retrieve1.setText(retrieval.getItemId());
+        retrieve1.setText(retrieval.getShelfLocaition()+retrieval.getShelfLevel());
         retrieve2.setText(retrieval.getDescription());
-        retrieve3.setText(retrieval.getUom());
-        retrieve4.setText(retrieval.getCatId());
-        retrieve5.setText(retrieval.getCatName());
-        retrieve6.setText(retrieval.getShelfLocaition()+retrieval.getShelfLevel());
-        retrieve7.setText(retrieval.getTotal());
+        retrieve3.setText(retrieval.getCatName());
+        retrieve4.setText(retrieval.getUom());
+        retrieve5.setText(retrieval.getTotal());
         return v;
 
     }

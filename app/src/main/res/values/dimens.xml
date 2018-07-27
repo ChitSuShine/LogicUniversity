@@ -7,6 +7,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="view_spacing_medium">16dp</dimen>
     <dimen name="view_spacing_extra_small">4dp</dimen>
+    <dimen name="heading">22dp</dimen>
+    <dimen name="btnsize">117dp</dimen>
 
     <!-- Selectable Items -->
     <dimen name="selectable_rounded_rect_corner_radius">3dp</dimen>

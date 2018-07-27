@@ -118,6 +118,18 @@ public class DashboardFragment extends Fragment {
                 fm.commit();
             }
         });
+        //Link to Report
+        LinearLayout report=(LinearLayout)view.findViewById(R.id.clerkreport);
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClerkReportFragment reportList=new ClerkReportFragment();
+                FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                fm.replace(R.id.content_frame,reportList);
+                fm.addToBackStack(null);
+                fm.commit();
+            }
+        });
 
         return view;
     }

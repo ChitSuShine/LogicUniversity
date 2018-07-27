@@ -13,8 +13,14 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface DisbursementService {
+    @GET("requisition/updatetopreparing")
+    Call<List<Disbursement>> collectAllItems();
+
     @GET("requisitions/preparing")
     Call<List<Disbursement>> getAllDisbursements();
+
+    @POST("requisition/update")
+    Call<Requisition> UpdateRequisition(@Body Requisition requisition);
 
     @GET("disbursement/clerk")
     Call<List<StationaryRetrieval>> getAllStationaryRetrieval();
