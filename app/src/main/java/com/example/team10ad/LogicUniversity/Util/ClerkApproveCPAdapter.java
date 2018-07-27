@@ -2,10 +2,15 @@ package com.example.team10ad.LogicUniversity.Util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +20,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.ClerkApproveCollectionPoint;
 import com.example.team10ad.LogicUniversity.Model.DepartmentCollectionPoint;
 import com.example.team10ad.LogicUniversity.Service.CollectionPointService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.team10ad.R;
+import com.google.android.gms.common.internal.DialogRedirect;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.mrapp.android.dialog.MaterialDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,38 +59,55 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
         TextView CPdeptname=(TextView)v.findViewById(R.id.CPdeptname);
         TextView CPname=(TextView)v.findViewById(R.id.CPname);
         TextView CPlocation=(TextView)v.findViewById(R.id.CPlocation);
-        TextView cpStatus=(TextView)v.findViewById(R.id.cpStatus);
 
         DepartmentCollectionPoint deptCP=items.get(position);
 
         CPdeptname.setText(deptCP.getDeptName());
         CPname.setText(deptCP.getCpName());
         CPlocation.setText(deptCP.getCpLocation());
-        cpStatus.setText(String.valueOf(deptCP.getStatus()));
 
         Button app_btn = new Button(getContext());
         app_btn.setText("Approve");
         app_btn.setTextColor(getContext().getResources().getColor( R.color.background));
-        app_btn.setBackgroundColor(getContext().getResources().getColor( R.color.bg));
+        app_btn.setBackground(getContext().getResources().getDrawable( R.drawable.my_button_cancel));
 
         Button cancel_btn = new Button(getContext());
-        cancel_btn.setText("Cancel");
+        cancel_btn.setText("Reject");
         cancel_btn.setTextColor(getContext().getResources().getColor( R.color.background));
-        cancel_btn.setBackgroundColor(getContext().getResources().getColor( R.color.bg));
+        cancel_btn.setBackground(getContext().getResources().getDrawable( R.drawable.my_button_cancel));
 
         app_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
+
+                MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
+                dialogBuilder.setTitle(R.string.approve_title);
+                dialogBuilder.setMessage(R.string.approve_message);
+                dialogBuilder.setIcon(R.drawable.ic_check);
+                dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FragmentTransaction ft =
+                                ((FragmentActivity)getContext())
+                                .getSupportFragmentManager()
+                                .beginTransaction();
+                        ft.replace(R.id.content_frame, new ClerkApproveCollectionPoint())
+                                .commit();
+                    }
+                });
+                MaterialDialog dialog = dialogBuilder.create();
+                dialog.setTitleColor(Color.BLACK);
+                dialog.setMessageColor(Color.BLACK);
+                dialog.setButtonTextColor(Color.BLACK);
+                dialog.show();
+
                 dcp= getItem(position);
                 CollectionPointService cpService = ServiceGenerator.createService(CollectionPointService.class, token);
                 Call<DepartmentCollectionPoint> call = cpService.approveCollectionPoint(dcp);
                 call.enqueue(new Callback<DepartmentCollectionPoint>() {
                     @Override
                     public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
-                        if(response.isSuccessful()){
-                            Toast.makeText(MyApp.getInstance(), "Approved", Toast.LENGTH_SHORT).show();
-
-                        }
+                        if(response.isSuccessful()){ }
                         else {
                             Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                         }
@@ -97,6 +122,28 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
+                dialogBuilder.setTitle(R.string.reject_title);
+                dialogBuilder.setMessage(R.string.reject_message);
+                dialogBuilder.setIcon(R.drawable.ic_reject);
+                dialogBuilder.setPositiveButton(android.R.string.ok,  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FragmentTransaction ft =
+                                ((FragmentActivity)getContext())
+                                        .getSupportFragmentManager()
+                                        .beginTransaction();
+                        ft.replace(R.id.content_frame, new ClerkApproveCollectionPoint())
+                                .commit();
+                    }
+                });
+                MaterialDialog dialog = dialogBuilder.create();
+                dialog.setTitleColor(Color.BLACK);
+                dialog.setMessageColor(Color.BLACK);
+                dialog.setButtonTextColor(Color.BLACK);
+                dialog.show();
+
                 dcp= getItem(position);
 
                 CollectionPointService cpService = ServiceGenerator.createService(CollectionPointService.class, token);
@@ -104,9 +151,7 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
                 call.enqueue(new Callback<DepartmentCollectionPoint>() {
                     @Override
                     public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
-                        if(response.isSuccessful()){
-                            Toast.makeText(MyApp.getInstance(), "Cancelled", Toast.LENGTH_SHORT).show();
-                        }
+                        if(response.isSuccessful()){ }
                         else {
                             Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                         }
