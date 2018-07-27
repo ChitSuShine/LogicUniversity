@@ -12,4 +12,7 @@
 
     <!-- Selectable Items -->
     <dimen name="selectable_rounded_rect_corner_radius">3dp</dimen>
+
+    <!-- User Defined -->
+    <dimen name="title">18dp</dimen>
 </resources>
