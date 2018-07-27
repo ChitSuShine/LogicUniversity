@@ -18,18 +18,12 @@
             android:layout_height="0dp"
             android:layout_weight="13">
 
-
-
-        <android.support.design.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
         <ListView
             android:id="@+id/inventorylistview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ListView>
 
-        </android.support.design.card.MaterialCardView>
+
 
 
     </LinearLayout>
