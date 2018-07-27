@@ -87,6 +87,9 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        sup1 = new ArrayList<>();
+        sup2 = new ArrayList<>();
+        sup3 = new ArrayList<>();
         barValues1 = new ArrayList<BarEntry>();
         barValues2 = new ArrayList<BarEntry>();
         barValues3 = new ArrayList<BarEntry>();

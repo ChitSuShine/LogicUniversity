@@ -3,9 +3,13 @@ package com.example.team10ad.LogicUniversity.Util;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +24,15 @@ import android.widget.Toast;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
+import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.RequisitionList;
+import com.example.team10ad.LogicUniversity.Service.DisbursementService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.team10ad.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ExpandableAdapter extends BaseExpandableListAdapter {
 
@@ -61,6 +73,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.dis_list_item, null);
+            LinearLayout lo = convertView.findViewById(R.id.childList);
         }
 
         TextView disbdeteail1 = (TextView) convertView
@@ -117,7 +130,29 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         TextView disb3 = (TextView) convertView
                 .findViewById(R.id.disb3);
 
-        convertView.setTag(headerTitle);
+        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        final DisbursementService disbService = ServiceGenerator.createService(DisbursementService.class, token);
+        Button btn = convertView.findViewById(R.id.btnDeliver);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder deliverDiag = new AlertDialog.Builder(_context)
+                        .setTitle("Finish Delivering Item(s)?")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deliver(disbService, headerTitle);
+                            }
+                        })
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                deliverDiag.show();
+            }
+        });
         disb1.setText(headerTitle.getDepName());
         disb2.setText(headerTitle.getReqDate());
         disb3.setText(Constants.STATUS[headerTitle.getStatus()]);
@@ -133,5 +168,43 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    private void deliver(DisbursementService disbursementService, final Disbursement disb) {
+        Requisition req = new Requisition();
+        req.setDepID(disb.getDepID());
+        req.setReqID(disb.getReqID());
+        req.setCpID(disb.getCpID());
+        req.setApprovedBy(disb.getApprovedBy());
+        req.setRaisedBy(disb.getApprovedBy());
+        req.setStatus(String.valueOf(4));
+        Call<Requisition> call = disbursementService.UpdateRequisition(req);
+        call.enqueue(new Callback<Requisition>() {
+            @Override
+            public void onResponse(Call<Requisition> call, Response<Requisition> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(_context, "Delivered!", Toast.LENGTH_SHORT).show();
+                    redirect(disb);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Requisition> call, Throwable t) {
+                Toast.makeText(_context,
+                        "CONNECTION ERROR!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void redirect(Disbursement disbursement) {
+        RequisitionList reqList = new RequisitionList();
+        Bundle b = new Bundle();
+        b.putInt("CpId", Integer.parseInt(disbursement.getCpID()));
+        b.putString("Cp", disbursement.getCpName());
+        reqList.setArguments(b);
+        FragmentTransaction ft = ((FragmentActivity) _context)
+                .getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, reqList).commit();
     }
 }

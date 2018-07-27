@@ -10,6 +10,7 @@
     <dimen name="heading">22dp</dimen>
     <dimen name="subheading">19dp</dimen>
     <dimen name="btnsize">117dp</dimen>
+    <dimen name="listspacing">36dp</dimen>
     <dimen name="textsize">15sp</dimen>
 
     <!-- Selectable Items -->

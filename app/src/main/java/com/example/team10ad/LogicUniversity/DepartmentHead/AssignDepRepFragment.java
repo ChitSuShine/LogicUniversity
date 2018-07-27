@@ -124,7 +124,7 @@ public class AssignDepRepFragment extends Fragment {
 
                                             }
                                         })
-                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .setIcon(R.drawable.alert)
                                         .show();
                             } else {
                                 new android.support.v7.app.AlertDialog.Builder(getContext())

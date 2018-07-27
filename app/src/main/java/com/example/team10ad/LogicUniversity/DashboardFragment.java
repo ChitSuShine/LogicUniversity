@@ -1,6 +1,10 @@
 package com.example.team10ad.LogicUniversity;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Typeface;
+import android.hardware.camera2.params.ColorSpaceTransform;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -19,9 +24,12 @@ import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.LogicUniversity.Util.RetrievalFormFragment;
 import com.example.team10ad.team10ad.R;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.ColorFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -158,12 +166,26 @@ public class DashboardFragment extends Fragment {
     // Set pie chart in dashboard
     private void setupPieChart(PieChart chart, List<PieEntry> entries) {
         PieDataSet pieDataSet=new PieDataSet(entries,"");
-        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+        pieDataSet.setValueTextSize(14f);
+        setLegend(chart);
         PieData pieData=new PieData();
         pieData.setDataSet(pieDataSet);
         chart.setData(pieData);
-        chart.getDescription().setText("Top 5 frequent ordered items in 2018");
+        Description d = chart.getDescription();
+        d.setText("Top 5 frequent ordered items in 2018");
+        d.setTypeface(Typeface.DEFAULT_BOLD);
+        d.setTextSize(18f);
+        chart.setDrawEntryLabels(false);
         chart.animateX(1000);
         chart.invalidate();
+    }
+
+    private void setLegend(PieChart chart){
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
     }
 }

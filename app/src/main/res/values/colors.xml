@@ -15,4 +15,5 @@
     <color name="selector_red_pressed">#44D50000</color>
     <color name="selector_normal">@android:color/transparent</color>
     <color name="pgreen">#7fffd4</color>
+    <color name="drawerBackground">#c0c0c0</color>
 </resources>
