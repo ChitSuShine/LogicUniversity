@@ -3,6 +3,7 @@ package com.example.team10ad.LogicUniversity.DepartmentHead;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -10,6 +11,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
@@ -37,6 +40,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.mrapp.android.dialog.MaterialDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -129,7 +133,7 @@ public class ChangeCollectionPoint extends Fragment {
                     @Override
                     public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
                         if(response.isSuccessful() && response.body() != null){
-                            new AlertDialog.Builder(getContext())
+                           /* new AlertDialog.Builder(getContext())
                                     .setTitle("Change Collection Point")
                                     .setMessage("Your request has been sent!")
                                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -141,7 +145,28 @@ public class ChangeCollectionPoint extends Fragment {
                                                     .commit();
                                         }
                                     })
-                                    .show();
+                                    .show();*/
+                            MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
+                            dialogBuilder.setTitle(R.string.info_title);
+                            dialogBuilder.setMessage(R.string.info_message);
+                            dialogBuilder.setIcon(R.drawable.ic_info);
+                            dialogBuilder.setPositiveButton(android.R.string.ok,  new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    FragmentTransaction ft =
+                                            ((FragmentActivity)getContext())
+                                                    .getSupportFragmentManager()
+                                                    .beginTransaction();
+                                    ft.replace(R.id.content_frame, new ChangeCollectionPoint())
+                                            .commit();
+                                }
+                            });
+                            MaterialDialog dialog = dialogBuilder.create();
+                            dialog.setTitleColor(Color.BLACK);
+                            dialog.setMessageColor(Color.BLACK);
+                            dialog.setButtonTextColor(Color.BLACK);
+                            dialog.show();
+
                         }
                     }
 
@@ -191,9 +216,7 @@ public class ChangeCollectionPoint extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DepartmentCollectionPoint> call, Throwable t) {
-
-            }
+            public void onFailure(Call<DepartmentCollectionPoint> call, Throwable t) { }
         });
     }
 
