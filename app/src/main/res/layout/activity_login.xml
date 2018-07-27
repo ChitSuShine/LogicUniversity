@@ -39,9 +39,9 @@
                     android:id="@+id/input_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:foreground="@color/colorblack"
                     android:hint="Username"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorblack" />
             </android.support.design.widget.TextInputLayout>
 
             <!-- Password Label -->
@@ -55,9 +55,9 @@
                     android:id="@+id/input_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:foreground="@color/colorblack"
                     android:hint="Password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorblack" />
             </android.support.design.widget.TextInputLayout>
 
             <!-- Login Button -->

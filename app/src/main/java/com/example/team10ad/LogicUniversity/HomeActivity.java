@@ -11,19 +11,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
-import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
-import com.example.team10ad.LogicUniversity.DepartmentHead.DelegateAuthorityFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HODOrderHistory;
-import com.example.team10ad.LogicUniversity.DepartmentHead.HODReport;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HODReportFragment;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
 //import com.example.team10ad.LogicUniversity.DepartmentHead.HodReportFragment;
@@ -67,6 +62,11 @@ public class HomeActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     User user = response.body();
+                    TextView profileName = findViewById(R.id.profileName);
+                    profileName.setText(user.getFullName());
+                    TextView userRole = findViewById(R.id.userRole);
+                    String role = getRole(user.getRole());
+                    userRole.setText(role);
                     // Storing current login user's info
                     Gson gson = new Gson();
                     String json = gson.toJson(user);
@@ -88,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ReqListForTrackingOrder()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_emp);
                         nvDrawer.setCheckedItem(R.id.trackRep);
-                    } else if (user.getRole() == Constants.TEMP_HOD) {
+                    } else if (user.getRole() == Constants.TEMP_HOD_ROLE) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodRequisitionListFragment()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_temphod);
                         nvDrawer.setCheckedItem(R.id.temp_approve);
@@ -143,14 +143,14 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_about:
                 AboutFragment aboutFragment = new AboutFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, aboutFragment).addToBackStack(null).commit();
                 break;
             case R.id.noti:
-                Notification notimain=new Notification();
+                Notification notimain = new Notification();
                 FragmentManager fragmentMg = getSupportFragmentManager();
                 fragmentMg.beginTransaction().replace(R.id.content_frame, notimain).addToBackStack(null).commit();
                 break;
@@ -257,7 +257,21 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-
-
-
+    // Getting the role in text
+    public String getRole(int role) {
+        switch (role) {
+            case Constants.CLERK_ROLE:
+                return Constants.CLERK;
+            case Constants.HOD_ROLE:
+                return Constants.HOD;
+            case Constants.EMP_ROLE:
+                return Constants.EMPLOYEE;
+            case Constants.DEP_REP_ROLE:
+                return Constants.DEP_REP;
+            case Constants.TEMP_HOD_ROLE:
+                return Constants.TEMP_HOD;
+            default:
+                return "";
+        }
+    }
 }
