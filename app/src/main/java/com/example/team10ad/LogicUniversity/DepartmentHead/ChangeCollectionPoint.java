@@ -131,7 +131,7 @@ public class ChangeCollectionPoint extends Fragment {
                         if(response.isSuccessful() && response.body() != null){
                             new AlertDialog.Builder(getContext())
                                     .setTitle("Change Collection Point")
-                                    .setMessage("Collection Point is changed successfully.")
+                                    .setMessage("Your request has been sent!")
                                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
