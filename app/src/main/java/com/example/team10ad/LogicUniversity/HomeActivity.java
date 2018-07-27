@@ -183,8 +183,8 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.inventory:
                     fragmentClass = InventoryFragment.class;
                     break;
-                case R.id.requisition:
-                    fragmentClass = RequisitionList.class;
+                case R.id.cpreq:
+                    fragmentClass = ClerkApproveCollectionPoint.class;
                     break;
                 case R.id.tracking:
                     fragmentClass = ClerkMapDeliveryPoint.class;

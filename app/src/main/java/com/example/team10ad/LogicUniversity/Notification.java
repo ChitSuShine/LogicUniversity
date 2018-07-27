@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
 import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
 import com.example.team10ad.LogicUniversity.Model.Noti;
 import com.example.team10ad.LogicUniversity.Model.User;
@@ -87,13 +89,6 @@ public class Notification extends Fragment {
                     notiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext())
-                                    .setSmallIcon(R.drawable.ic_notifications_black_24dp)
-                                    .setContentTitle("My notification")
-                                    .setContentText("Much longer text that cannot fit one line...")
-                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                            mBuilder.setSound(alarmSound);
                             final int notiType = notiadapter.getItems().get(i).getNotiType();
                             int notiId = notiadapter.getItems().get(i).getNotiID();
                             Call<Noti> callNoti = notiService.markAsRead(notiId);
@@ -107,6 +102,7 @@ public class Notification extends Fragment {
                                             case 1:
                                                 break;
                                             case 2:
+                                                //Requisition Approval
                                                 HodRequisitionListFragment hodapprej=new HodRequisitionListFragment();
                                                 FragmentManager fragmentManager=getFragmentManager();
                                                 fragmentManager.beginTransaction().replace(R.id.content_frame, hodapprej).commit();
@@ -118,14 +114,24 @@ public class Notification extends Fragment {
                                             case 5:
                                                 break;
                                             case 6:
+                                                //HOD Requisition Approved/Rejected Noti
                                                 break;
                                             case 7:
                                                 break;
                                             case 8:
+                                                //Approved Collection Point Change
+                                                ChangeCollectionPoint appcollect=new ChangeCollectionPoint();
+                                                FragmentTransaction fragmentTransaction8 = getActivity().getSupportFragmentManager().beginTransaction();
+                                                fragmentTransaction8.replace(R.id.content_frame, appcollect).commit();
                                                 break;
                                             case 9:
+                                                //Rejected Collection Point Change
+                                                ChangeCollectionPoint rejcollect=new ChangeCollectionPoint();
+                                                FragmentTransaction fragmentTransaction9 = getActivity().getSupportFragmentManager().beginTransaction();
+                                                fragmentTransaction9.replace(R.id.content_frame, rejcollect).commit();
                                                 break;
                                             case 10:
+                                                //Collection Point Change Request Approval
                                                 ClerkApproveCollectionPoint clerkapprovecp=new ClerkApproveCollectionPoint();
                                                 FragmentManager fragmentManager10=getFragmentManager();
                                                 fragmentManager10.beginTransaction().replace(R.id.content_frame, clerkapprovecp).commit();
@@ -133,8 +139,10 @@ public class Notification extends Fragment {
                                             case 11:
                                                 break;
                                             case 12:
+                                                //Authority Cancellation
                                                 break;
                                             case 13:
+                                                //Department Representative
                                                 break;
                                         }
                                     }
