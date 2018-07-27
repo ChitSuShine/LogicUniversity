@@ -13,9 +13,9 @@
             android:icon="@drawable/inventory"
             android:title="@string/inventory" />
         <item
-            android:id="@+id/requisition"
+            android:id="@+id/cpreq"
             android:icon="@drawable/request"
-            android:title="@string/disbursement" />
+            android:title="@string/app_rej_cp" />
         <item
             android:id="@+id/tracking"
             android:icon="@drawable/tracking"
