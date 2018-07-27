@@ -40,8 +40,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:text="Raised By:"
-                            android:textSize="15dp"
-                            android:textStyle="bold"/>
+                            android:textColor="@color/colorblack"
+                            android:textSize="15sp" />
 
                         <View
                             android:layout_width="48dp"
@@ -52,7 +52,10 @@
                             android:id="@+id/raisedBy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:textColor="@color/colorblack"
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -64,7 +67,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:text="Date:" />
+                            android:text="Date:"
+                            android:textColor="@color/colorblack"
+                            android:textSize="15sp" />
 
                         <View
                             android:layout_width="85dp"
@@ -75,7 +80,10 @@
                             android:id="@+id/raisedbydate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:textColor="@color/colorblack"
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -87,7 +95,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:text="Collection Point:" />
+                            android:text="Collection Point:"
+                            android:textColor="@color/colorblack"
+                            android:textSize="15sp" />
 
                         <View
                             android:layout_width="18dp"
@@ -99,7 +109,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Stationery Store" />
+                            android:textColor="@color/colorblack"
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -110,7 +122,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:text="Approved By:" />
+                            android:text="Approved By:"
+                            android:textColor="@color/colorblack"
+                            android:textSize="15sp" />
 
                         <View
                             android:layout_width="38dp"
@@ -121,7 +135,10 @@
                             android:id="@+id/apprBy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:textColor="@color/colorblack"
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -138,11 +155,11 @@
             app:spb_currentStateNumber="three"
             app:spb_maxStateNumber="four"
             app:spb_stateBackgroundColor="#BDBDBD"
-            app:spb_stateForegroundColor="@color/colorPrimaryDark"
+            app:spb_stateForegroundColor="@color/bg"
             app:spb_stateNumberBackgroundColor="#808080"
             app:spb_stateNumberForegroundColor="#eeeeee"
-            app:spb_currentStateDescriptionColor="#009688"
-            app:spb_stateDescriptionColor="#808080"
+            app:spb_currentStateDescriptionColor="@color/pinkaccent"
+            app:spb_stateDescriptionColor="@color/pinkaccent"
             app:spb_animateToCurrentProgressState="true"
             app:spb_checkStateCompleted="true"/>
         </LinearLayout>
@@ -166,8 +183,8 @@
                     android:gravity="center"
                     android:text="Item Name"
                     android:textColor="@color/bg"
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
             <LinearLayout
@@ -180,8 +197,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="Category"
-                    android:textSize="15dp"
                     android:textColor="@color/bg"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -196,8 +213,8 @@
                     android:gravity="center"
                     android:text="Quantity"
                     android:textColor="@color/bg"
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -210,9 +227,9 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="UOM"
-                    android:textSize="15dp"
                     android:textColor="@color/bg"
-                    android:textStyle="bold" />
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

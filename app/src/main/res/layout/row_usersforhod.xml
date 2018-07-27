@@ -18,7 +18,9 @@
             android:id="@+id/employeeName"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:textColor="@color/colorblack"
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/employeeRole"
@@ -26,6 +28,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:visibility="invisible"
+            android:textSize="15sp"
             android:text="Representative"
             android:textColor="@android:color/holo_orange_dark" />
     </LinearLayout>

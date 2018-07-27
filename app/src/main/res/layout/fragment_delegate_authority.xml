@@ -183,7 +183,7 @@
                         android:layout_weight="11"
                         android:divider="#eeeeee"
                         android:dividerHeight="1dp"
-                        android:textSize="13sp" />
+                        android:textSize="15sp" />
 
                 </RelativeLayout>
             </LinearLayout>

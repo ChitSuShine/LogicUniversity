@@ -24,7 +24,9 @@
                 android:id="@+id/tracking1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textColor="@color/colorblack"
+                android:textSize="15sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
@@ -35,7 +37,9 @@
                 android:id="@+id/tracking2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textColor="@color/colorblack"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -47,7 +51,9 @@
                 android:id="@+id/tracking3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textColor="@color/colorblack"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -60,7 +66,9 @@
                 android:id="@+id/tracking4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center" />
+                android:gravity="center"
+                android:textColor="@color/colorblack"
+                android:textSize="15sp" />
 
         </LinearLayout>
     </LinearLayout>

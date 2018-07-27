@@ -47,7 +47,7 @@ public class NotiAdapter extends ArrayAdapter<Noti>{
         notiTime.setText(noti.getDatetime());
 
         ImageView img=new ImageView(getContext());
-        img.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_message_black_24dp));
+        img.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.msg));
         LinearLayout lo = v.findViewById(R.id.msg);
         imgs.add(img);
         lo.addView(img);

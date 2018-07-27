@@ -76,7 +76,7 @@ public class Notification extends Fragment {
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
         final NotiService notiService= ServiceGenerator.createService(NotiService.class,token);
-        Call<List<Noti>> callnoti=notiService.getNotiByCondition(false,user.getDepId(),user.getRole());
+        Call<List<Noti>> callnoti=notiService.getNotiByCondition(true,user.getDepId(),user.getRole());
         callnoti.enqueue(new Callback<List<Noti>>() {
             @Override
             public void onResponse(Call<List<Noti>> call, Response<List<Noti>> response) {
