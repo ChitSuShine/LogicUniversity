@@ -9,7 +9,11 @@
     <dimen name="view_spacing_extra_small">4dp</dimen>
     <dimen name="heading">22dp</dimen>
     <dimen name="subheading">19dp</dimen>
+    <dimen name="btnsize">117dp</dimen>
 
     <!-- Selectable Items -->
     <dimen name="selectable_rounded_rect_corner_radius">3dp</dimen>
+
+    <!-- User Defined -->
+    <dimen name="title">18dp</dimen>
 </resources>

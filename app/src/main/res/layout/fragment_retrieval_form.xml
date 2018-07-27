@@ -1,4 +1,5 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,37 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:gravity="center"
             android:orientation="horizontal"
-            android:background="@color/background">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Shelf Location:"
-                android:textSize="20sp"
-                android:layout_gravity="left"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"/>
-
-            <TextView
-                android:id="@+id/inventoryID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="20sp"
-                android:text="A"
-                android:textColor="@color/colorPrimaryDark"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            >
+            android:weightSum="5">
 
             <!-- col 1 -->
 
@@ -57,7 +29,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
-                    android:text="Item Name:"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:text="Location"
                     android:textColor="@color/bg"
                     android:gravity="center"/>
 
@@ -76,7 +50,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
-                    android:text="Shelf Level:"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:text="Description"
                     android:textColor="@color/bg"
                     android:gravity="center"/>
 
@@ -85,6 +61,23 @@
             <!-- col 2 end -->
             <!-- col 3 -->
 
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:text="Category"
+                android:textColor="@color/bg"
+                android:gravity="center"/>
+
+        </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,7 +88,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
-                    android:text="Quantity"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:text="UOM"
+                    android:textColor="@color/bg"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:text="Qty"
                     android:textColor="@color/bg"
                     android:gravity="center"/>
 
@@ -107,7 +119,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:weightSum="10">
+            android:weightSum="10"
+            android:paddingBottom="@dimen/activity_vertical_margin">
 
         <ListView
             android:id="@+id/retrievallist"
@@ -115,14 +128,16 @@
             android:layout_height="0dp"
             android:layout_weight="9">
         </ListView>
-        <Button
-            android:id="@+id/itemcollect"
-            android:layout_width="200dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:text="Item Collect"
-            android:layout_weight="1"
-            android:background="@drawable/my_button_approve"/>
+
+            <Button
+                android:id="@+id/itemcollect"
+                android:layout_width="@dimen/btnsize"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@color/bg"
+                android:text="Item Collect"
+                android:textColor="@color/background" />
         </LinearLayout>
 
     </LinearLayout>

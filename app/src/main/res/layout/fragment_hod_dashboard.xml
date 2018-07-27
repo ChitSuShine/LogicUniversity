@@ -1,26 +1,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/background"
+    android:orientation="vertical"
     android:weightSum="10"
     tools:context="com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment">
 
     <LinearLayout
-        android:background="@color/background"
-        android:layout_weight="4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="4"
+        android:background="@color/background"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Recent Order History"
-            android:textStyle="bold|italic"
-            android:gravity="center"/>
+            android:textSize="@dimen/title"
+            android:textStyle="bold" />
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -30,24 +31,23 @@
                 android:id="@+id/recentorderhistory"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingBottom="5dp"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="5dp">
-            </ListView>
+                android:paddingRight="5dp"></ListView>
 
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
 
     <android.support.v7.widget.GridLayout
-        app:columnCount="2"
-        app:rowCount="1"
-        app:alignmentMode="alignMargins"
-        app:columnOrderPreserved="false"
-        android:layout_weight="6"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="14dp">
+        android:layout_weight="6"
+        android:padding="14dp"
+        app:alignmentMode="alignMargins"
+        app:columnCount="2"
+        app:columnOrderPreserved="false"
+        app:rowCount="1">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardapprove"
@@ -56,7 +56,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            app:cardBackgroundColor="@color/background"
+            app:cardBackgroundColor="@color/materialgreen"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1">
 
@@ -76,31 +76,32 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Approve"
                     android:layout_gravity="center_horizontal"
+                    android:text="Approve"
                     android:textAlignment="center"
-                    android:textColor="@color/bg"
+                    android:textColor="@color/background"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
         <android.support.v7.widget.CardView
             android:id="@+id/carddelegate"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_rowWeight="1"
-            app:layout_columnWeight="1"
-            app:cardBackgroundColor="@color/background"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
+            android:layout_marginRight="16dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1">
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="99dp"
@@ -111,31 +112,32 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Delegate"
                     android:layout_gravity="center_horizontal"
+                    android:text="Delegate"
                     android:textAlignment="center"
-                    android:textColor="@color/bg"
+                    android:textColor="@color/background"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
         <android.support.v7.widget.CardView
             android:id="@+id/cardcollect"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_rowWeight="1"
-            app:layout_columnWeight="1"
-            app:cardBackgroundColor="@color/background"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
+            android:layout_marginRight="16dp"
+            app:cardBackgroundColor="@color/pgreen"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1">
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="99dp"
@@ -146,31 +148,32 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Collection Point"
                     android:layout_gravity="center_horizontal"
+                    android:text="Collection Point"
                     android:textAlignment="center"
-                    android:textColor="@color/bg"
+                    android:textColor="@color/background"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
         <android.support.v7.widget.CardView
             android:id="@+id/cardtracking"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_rowWeight="1"
-            app:layout_columnWeight="1"
-            app:cardBackgroundColor="@color/background"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
+            android:layout_marginRight="16dp"
+            app:cardBackgroundColor="@color/selector_red_pressed"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1">
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="99dp"
@@ -181,16 +184,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tracking"
                     android:layout_gravity="center_horizontal"
+                    android:text="Tracking"
                     android:textAlignment="center"
-                    android:textColor="@color/bg"
+                    android:textColor="@color/background"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-
     </android.support.v7.widget.GridLayout>
-
 </LinearLayout>
