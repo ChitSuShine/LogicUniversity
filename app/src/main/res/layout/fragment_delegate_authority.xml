@@ -30,14 +30,15 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Current HOD: "
-                    android:textStyle="bold" />
+                   />
+
 
                 <TextView
                     android:id="@+id/currentEmployeeName"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textStyle="bold" />
+                    />
             </LinearLayout>
 
             <View
@@ -56,14 +57,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Start Date:"
-                    android:textStyle="bold" />
+                     />
 
                 <TextView
                     android:id="@+id/delegateStartDate"
-                    android:layout_width="0dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textStyle="bold" />
+                     />
 
             </LinearLayout>
 
@@ -79,15 +80,15 @@
 
                 <TextView
                     android:id="@+id/delegateEndDate"
-                    android:layout_width="125dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="End Date: "
-                    android:textStyle="bold" />
+                    />
 
                 <LinearLayout
                     android:id="@+id/dateLayout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">
@@ -174,16 +175,21 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:divider="#C0B283"
+                    android:dividerHeight="2dp">
 
                     <ListView
                         android:id="@+id/employeeListView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="11"
-                        android:divider="#eeeeee"
+                        android:divider="#C0B283"
                         android:dividerHeight="1dp"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        />
 
                 </RelativeLayout>
             </LinearLayout>
