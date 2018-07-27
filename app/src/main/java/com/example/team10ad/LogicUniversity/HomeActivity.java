@@ -231,7 +231,6 @@ public class HomeActivity extends AppCompatActivity {
             ft.replace(R.id.content_frame, fragment, menuItem.getItemId() + "");
             ft.addToBackStack(null).commit();
             menuItem.setChecked(true);
-            setTitle(menuItem.getTitle());
             drawerLayout.closeDrawers();
         }
     }
