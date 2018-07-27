@@ -3,6 +3,7 @@ package com.example.team10ad.LogicUniversity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.Typeface;
 import android.hardware.camera2.params.ColorSpaceTransform;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -166,14 +168,15 @@ public class DashboardFragment extends Fragment {
         PieDataSet pieDataSet=new PieDataSet(entries,"");
         pieDataSet.setColors(ColorTemplate.LIBERTY_COLORS);
         pieDataSet.setValueTextSize(14f);
-        chart.setDrawEntryLabels(false);
         setLegend(chart);
         PieData pieData=new PieData();
         pieData.setDataSet(pieDataSet);
         chart.setData(pieData);
         Description d = chart.getDescription();
         d.setText("Top 5 frequent ordered items in 2018");
+        d.setTypeface(Typeface.DEFAULT_BOLD);
         d.setTextSize(18f);
+        chart.setDrawEntryLabels(false);
         chart.animateX(1000);
         chart.invalidate();
     }
@@ -184,6 +187,5 @@ public class DashboardFragment extends Fragment {
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         l.setOrientation(Legend.LegendOrientation.VERTICAL);
         l.setDrawInside(false);
-        l.setTextSize(12f);
     }
 }
