@@ -2,9 +2,8 @@ package com.example.team10ad.LogicUniversity.Util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
+
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -13,15 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
 import com.example.team10ad.LogicUniversity.Model.DepartmentCollectionPoint;
 import com.example.team10ad.LogicUniversity.Service.CollectionPointService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.team10ad.R;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +74,6 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
             @Override
             public void onClick(View view){
                 dcp= getItem(position);
-
                 CollectionPointService cpService = ServiceGenerator.createService(CollectionPointService.class, token);
                 Call<DepartmentCollectionPoint> call = cpService.approveCollectionPoint(dcp);
                 call.enqueue(new Callback<DepartmentCollectionPoint>() {
@@ -84,6 +81,7 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
                     public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
                         if(response.isSuccessful()){
                             Toast.makeText(MyApp.getInstance(), "Approved", Toast.LENGTH_SHORT).show();
+
                         }
                         else {
                             Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();

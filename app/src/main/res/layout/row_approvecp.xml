@@ -16,14 +16,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Department Name:"/>
+            android:text="Department Name:"
+            android:textColor="@color/colorblack"/>
 
         <TextView
             android:id="@+id/CPdeptname"
             android:gravity="left"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textColor="@color/colorblack"/>
 
     </LinearLayout>
 
@@ -37,14 +39,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Collection Point Name:"/>
+            android:text="Collection Point Name:"
+            android:textColor="@color/colorblack"/>
 
         <TextView
             android:layout_weight="1"
             android:id="@+id/CPname"
             android:gravity="left"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorblack"/>
 
     </LinearLayout>
     <LinearLayout
@@ -57,14 +61,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Location:"/>
+            android:text="Location:"
+            android:textColor="@color/colorblack"/>
 
         <TextView
             android:gravity="left"
             android:layout_weight="1"
             android:id="@+id/CPlocation"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorblack"/>
 
     </LinearLayout>
     <LinearLayout
@@ -77,14 +83,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Status:"/>
+            android:text="Status:"
+            android:textColor="@color/colorblack"/>
 
         <TextView
             android:gravity="left"
             android:layout_weight="1"
             android:id="@+id/cpStatus"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorblack"/>
 
     </LinearLayout>
     <LinearLayout
