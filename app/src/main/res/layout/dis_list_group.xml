@@ -41,6 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="Deliver Item(s)"
+            android:background="@drawable/my_button_approve"
+            android:textColor="@color/background"
             android:focusable="false"/>
     </LinearLayout>
 
