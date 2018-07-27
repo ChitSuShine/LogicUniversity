@@ -64,9 +64,13 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
 
         Button app_btn = new Button(getContext());
         app_btn.setText("Approve");
+        app_btn.setTextColor(getContext().getResources().getColor( R.color.background));
+        app_btn.setBackgroundColor(getContext().getResources().getColor( R.color.bg));
 
         Button cancel_btn = new Button(getContext());
         cancel_btn.setText("Cancel");
+        cancel_btn.setTextColor(getContext().getResources().getColor( R.color.background));
+        cancel_btn.setBackgroundColor(getContext().getResources().getColor( R.color.bg));
 
         app_btn.setOnClickListener(new View.OnClickListener() {
             @Override
