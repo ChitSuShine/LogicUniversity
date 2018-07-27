@@ -52,6 +52,8 @@ public class HodReqListAdapter extends ArrayAdapter<Requisition> {
         hodreqlist2.setText(date);
         Button btn = new Button(getContext());
         btn.setText("Check");
+        btn.setTextColor(getContext().getResources().getColor( R.color.background));
+        btn.setBackground(getContext().getResources().getDrawable(R.drawable.my_button_approve));
         btn.setId(Integer.parseInt(hodreq.getReqID()));
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

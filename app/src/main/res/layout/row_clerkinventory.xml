@@ -2,16 +2,72 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="116dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Item Name:" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Category:" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Stock:" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="UOM:" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Shelf Location:" />
+        <TextView
+            android:id="@+id/label_currentStock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Stock: "
+            />
+        <TextView
+            android:id="@+id/label_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reason: "/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="2">
 
         <TextView
             android:id="@+id/inv1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            />
+
 
         <TextView
             android:id="@+id/inv2"
@@ -33,32 +89,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/label_currentStock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Current Stock: "
-            android:textColor="@android:color/holo_green_light" />
+
 
         <TextView
             android:id="@+id/currentStock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_green_light"/>
+            android:text="-"
+            />
 
-        <TextView
-            android:id="@+id/label_reason"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_green_light"
-            android:text="Reason: "/>
+
 
         <TextView
             android:id="@+id/reason"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_green_light"/>
+            android:text="-"
+            />
 
+    </LinearLayout>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -19,6 +19,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
+            android:textColor="@color/colorblack"
+            android:textSize="15sp"
             android:gravity="center"/>
 
         <TextView
@@ -27,6 +29,8 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:visibility="invisible"
+            android:textSize="15sp"
             android:text="Representative"
-            android:textColor="@android:color/holo_orange_dark" />
+            android:textColor="@android:color/holo_orange_dark"
+            android:gravity="center"/>
     </LinearLayout>

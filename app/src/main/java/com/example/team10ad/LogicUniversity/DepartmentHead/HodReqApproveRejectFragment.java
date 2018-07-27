@@ -89,8 +89,7 @@ public class HodReqApproveRejectFragment extends Fragment {
                     TextView tv2 = (TextView) view.findViewById(R.id.hodraisedate);
                     tv1.setText(result.getRasiedByname());
                     tv2.setText(result.getReqDate());
-                    TextView status=view.findViewById(R.id.hodstatus);
-                    status.setText(result.getStatus());
+
                     List<RequisitionDetail> details = result.getRequisitionDetails();
                     final HodTrackingAdapter adapter = new HodTrackingAdapter(getContext(),R.layout.row_hodtracking,details);
                     reqDetaillistview = (ListView) view.findViewById(R.id.hodreqlistdetaillist);

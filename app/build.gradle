@@ -44,5 +44,5 @@ dependencies {
     implementation 'me.sudar:zxing-orient:2.1.1'
     implementation 'com.sothree.slidinguppanel:library:3.4.0' //sliding up panel
     implementation 'com.github.ybq:Android-SpinKit:1.1.0' //loading
-    implementation 'com.eyalbira.loadingdots:loading-dots:1.0.2'
+    implementation 'com.eyalbira.loadingdots:loading-dots:1.0.2'//splash screen loading
 }

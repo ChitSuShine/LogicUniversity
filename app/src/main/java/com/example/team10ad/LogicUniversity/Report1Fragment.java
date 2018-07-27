@@ -40,21 +40,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Report1Fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Report1Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Report1Fragment extends Fragment implements OnChartValueSelectedListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -74,9 +64,7 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     float barSpace = 0.05f; // x4 DataSet
     float barWidth = 0.25f; // x4 DataSet
 
-    public Report1Fragment() {
-        // Required empty public constructor
-    }
+    public Report1Fragment() { }
 
     public static Report1Fragment newInstance(String param1, String param2) {
         Report1Fragment fragment = new Report1Fragment();
@@ -173,14 +161,10 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     }
 
     @Override
-    public void onValueSelected(Entry e, Highlight h) {
-
-    }
+    public void onValueSelected(Entry e, Highlight h) { }
 
     @Override
-    public void onNothingSelected() {
-
-    }
+    public void onNothingSelected() { }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);

@@ -17,7 +17,8 @@
             android:layout_weight="2"
             android:text="Please select one to assign as Department Representative"
             android:textStyle="bold"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textSize="15sp"/>
     </LinearLayout>
 
     <RelativeLayout
