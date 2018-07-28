@@ -49,6 +49,7 @@ public class Constants {
     public static final String DELEGATED_USER ="delegatedUser";
 
     // Constants for RepScanQRFragment
+    public static final String SCAN_QR = "Scan QR";
     public static final String REP_RES_NOT_FOUND = "Result Not Found!";
     public static final String REP_SCAN_ERROR_MSG = "Scan Error ";
     public static final String REP_COLLECTED_MSG = "Delivery is collected.";

@@ -97,15 +97,17 @@ public class RepScanQRFragment extends Fragment {
         repCardView = view.findViewById(R.id.rep_cardView);
         repMsg = view.findViewById(R.id.rep_warnMsg);
         // Initiating the qr code scan
-        new IntentIntegrator(getActivity()).initiateScan();
-        // new ZxingOrient(getActivity()).initiateScan();
+        IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
+        intentIntegrator.setPrompt(Constants.SCAN_QR);
+        intentIntegrator.initiateScan();
         Button scanBtn = view.findViewById(R.id.btn_scan);
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Initiating the qr code scan
-                new IntentIntegrator(getActivity()).initiateScan();
-                // new ZxingOrient(getActivity()).initiateScan();
+                IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
+                intentIntegrator.setPrompt(Constants.SCAN_QR);
+                intentIntegrator.initiateScan();
             }
         });
         return view;
