@@ -186,12 +186,6 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.cpreq:
                     fragmentClass = ClerkApproveCollectionPoint.class;
                     break;
-                case R.id.tracking:
-                    fragmentClass = ClerkMapDeliveryPoint.class;
-                    break;
-                case R.id.report:
-                    fragmentClass = ClerkReportFragment.class;
-                    break;
 
                 // Dep Rep & Employee
                 case R.id.scanRep:
