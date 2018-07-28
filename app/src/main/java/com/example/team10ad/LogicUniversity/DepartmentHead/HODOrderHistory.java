@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.OrderHistory;
@@ -37,6 +38,7 @@ public class HODOrderHistory extends Fragment {
 
     List<OrderHistory> result;
     ListView orderhistorylistview;
+    private OrderHistory orderHistory;
 
     public HODOrderHistory() { }
 
@@ -76,6 +78,11 @@ public class HODOrderHistory extends Fragment {
                     final OrderHistoryAdapter adapter = new OrderHistoryAdapter(getContext(),R.layout.row_orderhistory,result);
                     orderhistorylistview = (ListView) view.findViewById(R.id.orderhistorylistview);
                     orderhistorylistview.setAdapter(adapter);
+                    if(orderhistorylistview.getAdapter().getCount()==0) {
+                        TextView emptyText = view.findViewById(android.R.id.empty);
+                        orderhistorylistview.setEmptyView(emptyText);
+                    }
+
                 }
                 else{
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();

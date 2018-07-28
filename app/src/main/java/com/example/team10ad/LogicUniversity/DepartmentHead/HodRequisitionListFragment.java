@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.Requisition;
@@ -88,6 +89,10 @@ public class HodRequisitionListFragment extends Fragment {
                     final HodReqListAdapter adapter = new HodReqListAdapter(getContext(),R.layout.row_hodreqlist,filtered);
                     listView = (ListView) view.findViewById(R.id.hodtrackinglistview);
                     listView.setAdapter(adapter);
+                    if(listView.getAdapter().getCount()==0){
+                       TextView emptyText = view.findViewById(android.R.id.empty);
+                       listView.setEmptyView(emptyText);
+                    }
                 }
                 else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();

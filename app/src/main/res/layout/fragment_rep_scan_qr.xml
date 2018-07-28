@@ -9,17 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:orientation="vertical"
-        android:layout_marginTop="25dp">
-
-
-        <Button
-            android:id="@+id/btn_scan"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Scan QR"
-            android:background="@drawable/my_button_approve"
-            android:layout_gravity="center"/>
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/rep_warnMsg"
@@ -171,7 +161,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="#F5F5F5"
                 android:orientation="vertical">
 
                 <ListView
@@ -179,7 +168,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:background="@android:color/holo_blue_bright" />
+                    android:background="#F5F5F5"
+                     />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:padding="25dp"></View>
+
+                <Button
+                    android:id="@+id/btn_scan"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="Scan QR"
+                    android:background="@drawable/my_button_approve"
+                    android:layout_gravity="center"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

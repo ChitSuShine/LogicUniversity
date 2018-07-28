@@ -30,6 +30,7 @@ public class Constants {
     public static final String NETWORK_ERROR_MSG = "Cannot connect the network!";
     public static final String REQ_NO_SUCCESS = "Request is not successful!";
 
+
     // Constants for LoginActivity
     public static final String WARNING_MSG = "Warning Message";
 
@@ -71,4 +72,7 @@ public class Constants {
             "Complete",
             "Reject"
     };
+
+    //Constants for Approve Requisition
+    public static final String REQ_LIST="There is no Requisition List";
 }
