@@ -40,26 +40,26 @@ public class InventoryDetail {
     @SerializedName("Uom")
     private String Uom;
 
-    @SerializedName("RecommendedOrderQty")
-    private String RecommendedOrderQty;
+    @SerializedName("IsPending")
+    private boolean isPending;
 
 
     private String currentStock;
     private String reason;
-    public String getCurrentStock()
-    {
+
+    public String getCurrentStock() {
         return currentStock;
     }
-    public void setCurrentStock(String currentStock)
-    {
+
+    public void setCurrentStock(String currentStock) {
         this.currentStock = currentStock;
     }
-    public String getReason()
-    {
+
+    public String getReason() {
         return reason;
     }
-    public void setReason(String reason)
-    {
+
+    public void setReason(String reason) {
         this.reason = reason;
     }
 
@@ -159,11 +159,11 @@ public class InventoryDetail {
         Uom = uom;
     }
 
-    public String getRecommendedOrderQty() {
-        return RecommendedOrderQty;
+    public boolean getIsPending() {
+        return isPending;
     }
 
-    public void setRecommendedOrderQty(String recommendedOrderQty) {
-        RecommendedOrderQty = recommendedOrderQty;
+    public void setIsPending(boolean isPending) {
+        this.isPending = isPending;
     }
 }
