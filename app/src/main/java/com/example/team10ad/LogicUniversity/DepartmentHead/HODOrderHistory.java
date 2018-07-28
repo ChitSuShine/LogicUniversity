@@ -39,7 +39,6 @@ public class HODOrderHistory extends Fragment {
 
     List<Requisition> result;
     ListView orderhistorylistview;
-    private OrderHistory orderHistory;
 
     public HODOrderHistory() { }
 
