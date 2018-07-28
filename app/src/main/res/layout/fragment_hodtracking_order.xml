@@ -33,112 +33,108 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:text="Raised By:"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize"
+                            android:layout_weight="1"/>
 
-                        <View
-                            android:layout_width="48dp"
-                            android:layout_height="match_parent"
-                            android:padding="1dp"></View>
 
                         <TextView
                             android:id="@+id/raisedBy"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:gravity="left"
+                            android:layout_weight="1"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/textsize"
                             android:textStyle="bold"/>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:text="Date:"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize"
+                            android:layout_weight="1"/>
 
-                        <View
-                            android:layout_width="85dp"
-                            android:layout_height="match_parent"
-                            android:padding="1dp"></View>
 
                         <TextView
                             android:id="@+id/raisedbydate"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:gravity="left"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp"
-                            android:textStyle="bold"/>
+                            android:textSize="@dimen/textsize"
+                            android:textStyle="bold"
+                            android:layout_weight="1"/>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:text="Collection Point:"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize"
+                            android:layout_weight="1"/>
 
-                        <View
-                            android:layout_width="18dp"
-                            android:layout_height="match_parent"
-                            android:padding="25dp"></View>
 
                         <TextView
                             android:id="@+id/collectionpoint"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:gravity="left"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp"
-                            android:textStyle="bold"/>
+                            android:textSize="@dimen/textsize"
+                            android:textStyle="bold"
+                            android:layout_weight="1"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:text="Approved By:"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/textsize"
+                            android:layout_weight="1"/>
 
-                        <View
-                            android:layout_width="38dp"
-                            android:layout_height="match_parent"
-                            android:padding="25dp"></View>
 
                         <TextView
                             android:id="@+id/apprBy"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:gravity="left"
                             android:textColor="@color/colorblack"
-                            android:textSize="15sp"
-                            android:textStyle="bold"/>
+                            android:textSize="@dimen/textsize"
+                            android:textStyle="bold"
+                            android:layout_weight="1"/>
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
