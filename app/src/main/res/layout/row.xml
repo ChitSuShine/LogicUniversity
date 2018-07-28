@@ -2,8 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:minHeight="80dp"
+    android:layout_margin="@dimen/fab_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -16,15 +19,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Raised By:"
-                android:textSize="15sp" />
+                android:textSize="@dimen/textsize" />
 
             <TextView
                 android:id="@+id/req1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textColor="@color/colorblack"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/textsize"/>
 
         </LinearLayout>
 
@@ -39,15 +42,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Date:"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/textsize"/>
 
             <TextView
                 android:layout_weight="2"
                 android:id="@+id/req2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorblack"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/textsize"/>
 
         </LinearLayout>
         <LinearLayout
@@ -61,15 +64,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Status:"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/textsize"/>
 
             <TextView
                 android:layout_weight="2"
                 android:id="@+id/req3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/textsize"/>
 
         </LinearLayout>
     </LinearLayout>
