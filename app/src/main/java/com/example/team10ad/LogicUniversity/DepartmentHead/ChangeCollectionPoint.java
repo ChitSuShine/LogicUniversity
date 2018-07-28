@@ -98,17 +98,48 @@ public class ChangeCollectionPoint extends Fragment {
             public void onResponse(Call<List<DepartmentCollectionPoint>> call, Response<List<DepartmentCollectionPoint>> response) {
                 if(response.isSuccessful()){
                     List<DepartmentCollectionPoint> dcpList = response.body();
+                    DepartmentCollectionPoint pendingCp = new DepartmentCollectionPoint();
                     boolean isPending = false;
                     for (DepartmentCollectionPoint dcp : dcpList) {
                         if(dcp.getDeptId() == deptId){
                             isPending = true;
+                            pendingCp = dcp;
                             break;
                         }
                     }
                     if(isPending){
                         currentcp.setText("Your previous request is pending.");
-                        ((Button) view.findViewById(R.id.cpchange))
-                                .setEnabled(false);
+                        Button cancel = ((Button) view.findViewById(R.id.cpchange));
+                        cancel.setText("Cancel");
+                        TextView tv1=((TextView) view.findViewById(R.id.tvPendingName));
+                        tv1.setText("Location Name:");
+                        TextView tv2=((TextView) view.findViewById(R.id.tvPendingLoc));
+                        tv2.setText("Location:");
+                        ((TextView)view.findViewById(R.id.CpPendingName)).setText(pendingCp.getCpName());
+                        ((TextView)view.findViewById(R.id.CpPendingLoc)).setText(pendingCp.getCpLocation());
+                        final DepartmentCollectionPoint dcPoint = pendingCp;
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Call<DepartmentCollectionPoint> call = cpService.rejectCollectionPoint(dcPoint);
+                                call.enqueue(new Callback<DepartmentCollectionPoint>() {
+                                    @Override
+                                    public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
+                                        if (response.isSuccessful()) {
+                                            ChangeCollectionPoint changeCollectionPoint = new ChangeCollectionPoint();
+                                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                            ft.replace(R.id.content_frame, changeCollectionPoint).commit();
+                                        } else {
+                                            Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<DepartmentCollectionPoint> call, Throwable t) {
+                                        Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        });
                     } else {
                         loadData(cpService, radioGroup1, deptId);
                     }
@@ -121,6 +152,7 @@ public class ChangeCollectionPoint extends Fragment {
             }
         });
 
+        //Change Button
         Button btn = view.findViewById(R.id.cpchange);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,19 +165,6 @@ public class ChangeCollectionPoint extends Fragment {
                     @Override
                     public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
                         if(response.isSuccessful() && response.body() != null){
-                           /* new AlertDialog.Builder(getContext())
-                                    .setTitle("Change Collection Point")
-                                    .setMessage("Your request has been sent!")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            getFragmentManager().beginTransaction()
-                                                    .replace(R.id.content_frame, new HodDashboardFragment())
-                                                    .commit();
-                                        }
-                                    })
-                                    .show();*/
                             MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
                             dialogBuilder.setTitle(R.string.info_title);
                             dialogBuilder.setMessage(R.string.info_message);
@@ -153,12 +172,7 @@ public class ChangeCollectionPoint extends Fragment {
                             dialogBuilder.setPositiveButton(android.R.string.ok,  new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    FragmentTransaction ft =
-                                            ((FragmentActivity)getContext())
-                                                    .getSupportFragmentManager()
-                                                    .beginTransaction();
-                                    ft.replace(R.id.content_frame, new ChangeCollectionPoint())
-                                            .commit();
+
                                 }
                             });
                             MaterialDialog dialog = dialogBuilder.create();
@@ -166,6 +180,12 @@ public class ChangeCollectionPoint extends Fragment {
                             dialog.setMessageColor(Color.BLACK);
                             dialog.setButtonTextColor(Color.BLACK);
                             dialog.show();
+                            FragmentTransaction ft =
+                                    ((FragmentActivity)getContext())
+                                            .getSupportFragmentManager()
+                                            .beginTransaction();
+                            ft.replace(R.id.content_frame, new ChangeCollectionPoint())
+                                    .commit();
 
                         }
                     }
