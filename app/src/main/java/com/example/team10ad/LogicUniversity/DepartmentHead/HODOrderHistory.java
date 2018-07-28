@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.Model.OrderHistory;
+import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.OrderHistoryService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
@@ -20,6 +20,7 @@ import com.example.team10ad.LogicUniversity.Util.OrderHistoryAdapter;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,7 +36,7 @@ public class HODOrderHistory extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    List<OrderHistory> result;
+    List<Requisition> result;
     ListView orderhistorylistview;
 
     public HODOrderHistory() { }
@@ -63,17 +64,25 @@ public class HODOrderHistory extends Fragment {
                              Bundle savedInstanceState) {
         //converting json format to user model
         String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
-        User user = new Gson().fromJson(userInfo, User.class);
+        final User user = new Gson().fromJson(userInfo, User.class);
+
         final View view= inflater.inflate(R.layout.fragment_hodorder_history, container, false);
+
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         OrderHistoryService inventoryService= ServiceGenerator.createService(OrderHistoryService.class,token);
-        Call<List<OrderHistory>> call=inventoryService.getAllOrderHistory(user.getDepId());
-        call.enqueue(new Callback<List<OrderHistory>>() {
+        Call<List<Requisition>> call=inventoryService.getAllOrderHistory();
+        call.enqueue(new Callback<List<Requisition>>() {
             @Override
-            public void onResponse(Call<List<OrderHistory>> call, Response<List<OrderHistory>> response) {
+            public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
                 if(response.isSuccessful()){
                     result=response.body();
-                    final OrderHistoryAdapter adapter = new OrderHistoryAdapter(getContext(),R.layout.row_orderhistory,result);
+                    List<Requisition> depID = new ArrayList<Requisition>();
+                    for(Requisition rq: result){
+                        if(Integer.parseInt(rq.getDepID())==user.getDepId())
+                            depID.add(rq);
+                    }
+                    final OrderHistoryAdapter adapter = new OrderHistoryAdapter(getContext(),
+                            R.layout.row_orderhistory,depID);
                     orderhistorylistview = (ListView) view.findViewById(R.id.orderhistorylistview);
                     orderhistorylistview.setAdapter(adapter);
                 }
@@ -83,7 +92,7 @@ public class HODOrderHistory extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<OrderHistory>> call, Throwable t) {
+            public void onFailure(Call<List<Requisition>> call, Throwable t) {
                 Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
 
             }

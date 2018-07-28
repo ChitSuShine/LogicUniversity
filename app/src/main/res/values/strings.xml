@@ -24,6 +24,7 @@
     <string name="reject_message">You reject the change collection point request.</string>
     <string name="info_title">REQUESTED!</string>
     <string name="info_message">Your request has been send.</string>
+    <string name="remark_title">Remark:</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
