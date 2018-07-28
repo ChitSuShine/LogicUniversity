@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,7 +92,10 @@ public class InventoryFragment extends Fragment {
                     inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View viewClick, int i, long l) {
-                            showInputBox(i);
+                            if(!result.get(i).getIsPending())
+                            {
+                                showInputBox(i);
+                            }
                         }
                     });
                 }
@@ -109,7 +113,7 @@ public class InventoryFragment extends Fragment {
         Button updateInventory = view.findViewById(R.id.btn_updateInventory);
         updateInventory.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View clickView) {
                 processDiscrepency();
             }
         });
@@ -209,6 +213,12 @@ public class InventoryFragment extends Fragment {
                 if(response.isSuccessful())
                 {
                     Toast.makeText(MyApp.getInstance(), Constants.INVENTORY_SUCCESS_MSG, Toast.LENGTH_SHORT).show();
+                    // Reload the fragment
+                    Fragment fragment = getFragmentManager().findFragmentByTag(R.id.inventory + "");
+                    final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(fragment);
+                    ft.attach(fragment);
+                    ft.commit();
                 }
                 else
                 {
