@@ -184,6 +184,8 @@ public class DelegateDetailFragment extends Fragment {
                                 + (monthOfYear + 1) + "-" + dayOfMonth);
                     }
                 }, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+        datePickerDialog.setTitle("");
         datePickerDialog.show();
     }
 }
