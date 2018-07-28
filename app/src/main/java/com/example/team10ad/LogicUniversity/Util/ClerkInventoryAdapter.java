@@ -2,6 +2,7 @@ package com.example.team10ad.LogicUniversity.Util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -38,12 +39,19 @@ public class ClerkInventoryAdapter extends ArrayAdapter<InventoryDetail>{
         TextView inv3 = (TextView) v.findViewById(R.id.inv3);
         TextView inv4 = (TextView) v.findViewById(R.id.inv4);
         TextView inv5 = (TextView) v.findViewById(R.id.inv5);
+        TextView isPending = (TextView) v.findViewById(R.id.isPending);
         InventoryDetail inventoryDetail = items.get(position);
         inv1.setText(inventoryDetail.getItemDescription());
         inv2.setText(inventoryDetail.getCatName());
         inv3.setText(inventoryDetail.getStock());
         inv4.setText(inventoryDetail.getUom());
         inv5.setText(inventoryDetail.getShelfLocation()+inventoryDetail.getShelfLevel());
+
+        if (inventoryDetail.getIsPending())
+        {
+            isPending.setVisibility(View.VISIBLE);
+            v.setBackgroundColor(Color.parseColor("#e0e0e0"));
+        }
 
         TextView currentStock = v.findViewById(R.id.currentStock);
         TextView reason = v.findViewById(R.id.reason);

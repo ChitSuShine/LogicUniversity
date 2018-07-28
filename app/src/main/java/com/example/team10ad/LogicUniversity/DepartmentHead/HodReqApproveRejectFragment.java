@@ -1,20 +1,30 @@
 package com.example.team10ad.LogicUniversity.DepartmentHead;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.NetworkOnMainThreadException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.style.TtsSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Model.Noti;
 import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.LogicUniversity.Model.RequisitionDetail;
+import com.example.team10ad.LogicUniversity.Model.User;
+import com.example.team10ad.LogicUniversity.Service.NotiService;
 import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
@@ -23,10 +33,16 @@ import com.example.team10ad.LogicUniversity.Util.HodTrackingAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
+import com.google.gson.InstanceCreator;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import de.mrapp.android.dialog.MaterialDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,10 +60,11 @@ public class HodReqApproveRejectFragment extends Fragment {
     Requisition result;
     ListView reqDetaillistview;
     private String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+    String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
+    final User user = new Gson().fromJson(json, User.class);
+    final int deptId = user.getDepId();
 
-
-    public HodReqApproveRejectFragment() {
-    }
+    public HodReqApproveRejectFragment() { }
 
     public static HodReqApproveRejectFragment newInstance(String param1, String param2) {
         HodReqApproveRejectFragment fragment = new HodReqApproveRejectFragment();
@@ -72,12 +89,9 @@ public class HodReqApproveRejectFragment extends Fragment {
                              Bundle savedInstanceState) {
         Bundle b = getArguments();
         String id = b.getString("id");
-        final View view= inflater.inflate(R.layout.fragment_hod_req_approve_reject, container, false);
-        Gson gson = new Gson();
-        String json=MyApp.getInstance().getPreferenceManager().getString(REJECT_GSON);
-        final Requisition requisition=gson.fromJson(json,Requisition.class);
 
-        //String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+        final View view= inflater.inflate(R.layout.fragment_hod_req_approve_reject, container, false);
+
         final RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
         Call<Requisition> call = requisitionService.getReqById(id);
         call.enqueue(new Callback<Requisition>() {
@@ -109,30 +123,45 @@ public class HodReqApproveRejectFragment extends Fragment {
         appovebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                result.setStatus("1");
-                RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
-                Call<Requisition> rejcall = requisitionService.updateRequisition(result);
-                rejcall.enqueue(new Callback<Requisition>() {
+                MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
+                dialogBuilder.setTitle(R.string.remark_title);
+                final EditText input = new EditText(getContext());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                input.setLayoutParams(lp);
+                dialogBuilder.setView(input);
+                dialogBuilder.setIcon(R.drawable.ic_info);
+                dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onResponse(Call<Requisition> call, Response<Requisition> response) {
-                        if (response.isSuccessful()) {
-                            result=response.body();
-                            HodRequisitionListFragment hodRequisitionListFragment = new HodRequisitionListFragment();
-                            FragmentTransaction ft = getFragmentManager().beginTransaction();
-                            ft.detach(HodReqApproveRejectFragment.this);
-                            ft.add(R.id.content_frame, hodRequisitionListFragment).commit();
-                        }
-                        else {
-                            Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        result.setStatus("1");
+                        RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
+                        Call<Requisition> rejcall = requisitionService.updateRequisition(result);
+                        rejcall.enqueue(new Callback<Requisition>() {
+                            @Override
+                            public void onResponse(Call<Requisition> call, Response<Requisition> response) {
+                                if (response.isSuccessful()) {
+                                    result=response.body();
+                                    createNoti(input, response.body());
+                                }
+                                else {
+                                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                                }
+                            }
 
-                    @Override
-                    public void onFailure(Call<Requisition> call, Throwable t) {
-                        Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onFailure(Call<Requisition> call, Throwable t) {
+                                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
-
+                MaterialDialog dialog = dialogBuilder.create();
+                dialog.setTitleColor(Color.BLACK);
+                dialog.setMessageColor(Color.BLACK);
+                dialog.setButtonTextColor(Color.BLACK);
+                dialog.show();
             }
         });
         //reject
@@ -140,31 +169,44 @@ public class HodReqApproveRejectFragment extends Fragment {
         rejectreq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                result.setStatus("7");
-                RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
-                Call<Requisition> rejcall = requisitionService.updateRequisition(result);
-                rejcall.enqueue(new Callback<Requisition>() {
+                MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
+                dialogBuilder.setTitle(R.string.remark_title);
+                final EditText input = new EditText(getContext());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                input.setLayoutParams(lp);
+                dialogBuilder.setView(input);
+                dialogBuilder.setIcon(R.drawable.ic_info);
+                dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onResponse(Call<Requisition> call, Response<Requisition> response) {
-                        if (response.isSuccessful()) {
-                            result=response.body();
-                            HodRequisitionListFragment hodRequisitionListFragment = new HodRequisitionListFragment();
-                            FragmentTransaction ft = getFragmentManager().beginTransaction();
-                            ft.detach(HodReqApproveRejectFragment.this);
-                            ft.add(R.id.content_frame, new HodRequisitionListFragment());
-                            ft.commit();
-                        }
-                        else {
-                            Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Requisition> call, Throwable t) {
-                        Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        result.setStatus("7");
+                        RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
+                        Call<Requisition> rejcall = requisitionService.updateRequisition(result);
+                        rejcall.enqueue(new Callback<Requisition>() {
+                            @Override
+                            public void onResponse(Call<Requisition> call, Response<Requisition> response) {
+                                if (response.isSuccessful()) {
+                                    result=response.body();
+                                    createNoti(input, response.body());
+                                }
+                                else {
+                                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Requisition> call, Throwable t) {
+                                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
-
+                MaterialDialog dialog = dialogBuilder.create();
+                dialog.setTitleColor(Color.BLACK);
+                dialog.setMessageColor(Color.BLACK);
+                dialog.setButtonTextColor(Color.BLACK);
+                dialog.show();
             }
         });
 
@@ -185,6 +227,40 @@ public class HodReqApproveRejectFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private void createNoti(EditText input, Requisition res){
+        final String remark=input.getText().toString();
+        Noti notiremark=new Noti();
+        notiremark.setNotiType(6);
+        notiremark.setIsread(false);
+        notiremark.setRemark(remark);
+        notiremark.setDatetime(String.valueOf(java.util.Calendar.getInstance()));
+        notiremark.setRole(Constants.EMP_ROLE);
+        notiremark.setTitle("HOD Requisition");
+        notiremark.setNotiID(0);
+        notiremark.setDeptid(deptId);
+        notiremark.setResID(Integer.parseInt(res.getReqID()));
+        NotiService notiService=ServiceGenerator.createService(NotiService.class,token);
+        Call<Noti> call=notiService.noticreate(notiremark);
+        call.enqueue(new Callback<Noti>() {
+            @Override
+            public void onResponse(Call<Noti> call, Response<Noti> response) {
+                if(response.isSuccessful()){
+                    HodRequisitionListFragment hodRequisitionListFragment = new HodRequisitionListFragment();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(HodReqApproveRejectFragment.this);
+                    ft.add(R.id.content_frame, hodRequisitionListFragment).commit();
+                }
+                else{
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Noti> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public interface OnFragmentInteractionListener {

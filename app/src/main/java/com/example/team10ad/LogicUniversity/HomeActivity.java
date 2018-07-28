@@ -32,9 +32,9 @@ import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
-import me.sudar.zxingorient.ZxingOrient;
-import me.sudar.zxingorient.ZxingOrientResult;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -186,12 +186,6 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.cpreq:
                     fragmentClass = ClerkApproveCollectionPoint.class;
                     break;
-                case R.id.tracking:
-                    fragmentClass = ClerkMapDeliveryPoint.class;
-                    break;
-                case R.id.report:
-                    fragmentClass = ClerkReportFragment.class;
-                    break;
 
                 // Dep Rep & Employee
                 case R.id.scanRep:
@@ -237,7 +231,7 @@ public class HomeActivity extends AppCompatActivity {
 
     // Processing QR results
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ZxingOrientResult result = ZxingOrient.parseActivityResult(requestCode, resultCode, data);
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             // If qrcode has nothing in it
             if (result.getContents() == null) {

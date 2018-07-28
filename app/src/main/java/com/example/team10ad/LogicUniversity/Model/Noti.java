@@ -2,6 +2,8 @@ package com.example.team10ad.LogicUniversity.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Noti {
 
     @SerializedName("NotiID")
@@ -11,10 +13,10 @@ public class Noti {
     private String Datetime;
 
     @SerializedName("Deptid")
-    private String Deptid;
+    private int Deptid;
 
     @SerializedName("Role")
-    private String Role;
+    private int Role;
 
     @SerializedName("Title")
     private String Title;
@@ -23,10 +25,10 @@ public class Noti {
     private String Remark;
 
     @SerializedName("Isread")
-    private String Isread;
+    private boolean Isread;
 
     @SerializedName("ResID")
-    private String ResID;
+    private int ResID;
 
     @SerializedName("NotiType")
     private int NotiType;
@@ -47,19 +49,19 @@ public class Noti {
         Datetime = datetime;
     }
 
-    public String getDeptid() {
+    public int getDeptid() {
         return Deptid;
     }
 
-    public void setDeptid(String deptid) {
+    public void setDeptid(int deptid) {
         Deptid = deptid;
     }
 
-    public String getRole() {
+    public int getRole() {
         return Role;
     }
 
-    public void setRole(String role) {
+    public void setRole(int role) {
         Role = role;
     }
 
@@ -79,19 +81,19 @@ public class Noti {
         Remark = remark;
     }
 
-    public String getIsread() {
+    public boolean isIsread() {
         return Isread;
     }
 
-    public void setIsread(String isread) {
+    public void setIsread(boolean isread) {
         Isread = isread;
     }
 
-    public String getResID() {
+    public int getResID() {
         return ResID;
     }
 
-    public void setResID(String resID) {
+    public void setResID(int resID) {
         ResID = resID;
     }
 

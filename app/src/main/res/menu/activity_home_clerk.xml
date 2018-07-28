@@ -17,14 +17,6 @@
             android:icon="@drawable/request"
             android:title="@string/app_rej_cp" />
         <item
-            android:id="@+id/tracking"
-            android:icon="@drawable/tracking"
-            android:title="@string/tracking" />
-        <item
-            android:id="@+id/report"
-            android:icon="@drawable/report"
-            android:title="@string/report" />
-        <item
             android:id="@+id/logout"
             android:icon="@drawable/profile"
             android:title="@string/logout" />

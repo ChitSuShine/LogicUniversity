@@ -10,16 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.team10ad.LogicUniversity.Model.OrderHistory;
+import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.team10ad.R;
 
 import java.util.List;
 
-public class OrderHistoryAdapter extends ArrayAdapter<OrderHistory> {
+public class OrderHistoryAdapter extends ArrayAdapter<Requisition> {
     int resource;
-    private List<OrderHistory> items;
+    private List<Requisition> items;
 
-    public OrderHistoryAdapter(@NonNull Context context, int resource, @NonNull List<OrderHistory> items) {
+    public OrderHistoryAdapter(@NonNull Context context, int resource, @NonNull List<Requisition> items) {
         super(context, resource, items);
         this.resource = resource;
         this.items = items;
@@ -36,11 +36,11 @@ public class OrderHistoryAdapter extends ArrayAdapter<OrderHistory> {
         TextView orderhis3=(TextView) v.findViewById(R.id.orderhis3);
         TextView orderhis4=(TextView) v.findViewById(R.id.orderhis4);
 
-        OrderHistory orderhis=items.get(position);
+        Requisition orderhis=items.get(position);
 
-        orderhis1.setText(orderhis.getReqdate());
-        orderhis2.setText(orderhis.getRaisename());
-        orderhis3.setText(orderhis.getCpname());
+        orderhis1.setText(orderhis.getReqDate());
+        orderhis2.setText(orderhis.getRasiedByname());
+        orderhis3.setText(orderhis.getCpName());
         orderhis4.setText(orderhis.getStatus());
         return v;
     }

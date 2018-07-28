@@ -6,7 +6,9 @@ import com.example.team10ad.LogicUniversity.Notification;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface NotiService {
@@ -19,4 +21,9 @@ public interface NotiService {
 
     @GET("notification/updateasread/{id}")
     Call<Noti> markAsRead(@Path("id") int id);
+
+    @POST("notification/create")
+    Call<Noti> noticreate(@Body Noti noti);
+
+
 }

@@ -74,8 +74,10 @@ public class RetrievalFormFragment extends Fragment {
             public void onResponse(Call<List<StationaryRetrieval>> call, Response<List<StationaryRetrieval>> response) {
                 if(response.isSuccessful()){
                     result=response.body();
-                    if(result.size() < 1)
-                        ((Button) view.findViewById(R.id.itemcollect)).setEnabled(false);
+                    if(result.size() < 1) {
+                        Button btn = view.findViewById(R.id.itemcollect);
+                        btn.setEnabled(false);
+                    }
                     final RetrievalAdapter retrievalAdapter=new RetrievalAdapter(getContext(),R.layout.row_retrievallist,result);
                     retrievallist=(ListView)view.findViewById(R.id.retrievallist);
                     retrievallist.setAdapter(retrievalAdapter);

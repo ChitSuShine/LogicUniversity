@@ -30,14 +30,13 @@ import com.example.team10ad.LogicUniversity.Util.DisbDetailAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.sudar.zxingorient.ZxingOrient;
-import me.sudar.zxingorient.ZxingOrientResult;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -98,13 +97,15 @@ public class RepScanQRFragment extends Fragment {
         repCardView = view.findViewById(R.id.rep_cardView);
         repMsg = view.findViewById(R.id.rep_warnMsg);
         // Initiating the qr code scan
-        new ZxingOrient(getActivity()).initiateScan();
+        new IntentIntegrator(getActivity()).initiateScan();
+        // new ZxingOrient(getActivity()).initiateScan();
         Button scanBtn = view.findViewById(R.id.btn_scan);
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Initiating the qr code scan
-                new ZxingOrient(getActivity()).initiateScan();
+                new IntentIntegrator(getActivity()).initiateScan();
+                // new ZxingOrient(getActivity()).initiateScan();
             }
         });
         return view;
