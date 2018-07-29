@@ -24,7 +24,9 @@ import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,10 +40,15 @@ public class DelegateDetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String lastStoredDate;
 
+    private int mYear; //= calendar.get(Calendar.YEAR); // current year
+    private int mMonth;// = calendar.get(Calendar.MONTH); // current month
+    private int mDay;
     private OnFragmentInteractionListener mListener;
 
     Calendar c = Calendar.getInstance();
+
     private String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
     public DelegateDetailFragment() {
@@ -167,25 +174,35 @@ public class DelegateDetailFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+
+
     // Method for showing DatePicker Dialog
     public void showDatePicker(final TextView date) {
-        int mYear = c.get(Calendar.YEAR); // current year
-        int mMonth = c.get(Calendar.MONTH); // current month
-        int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-        // startDate picker dialog
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
-                new DatePickerDialog.OnDateSetListener() {
+           final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                    new DatePickerDialog.OnDateSetListener() {
 
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        // set day of month , month and year value in the edit text
-                        date.setText(year + "-"
-                                + (monthOfYear + 1) + "-" + dayOfMonth);
-                    }
-                }, mYear, mMonth, mDay);
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-        datePickerDialog.setTitle("");
-        datePickerDialog.show();
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+                            mYear=year;
+                            mMonth=monthOfYear;
+                            mDay=dayOfMonth;
+                            // set day of month , month and year value in the edit text
+                            date.setText(year + "-"
+                                    + (monthOfYear + 1) + "-" + dayOfMonth);
+                       }
+
+                    }, mYear, mMonth, mDay);
+            //datePickerDialog.getDatePicker().setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS);
+            //datePickerDialog.dismiss();
+           datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+           datePickerDialog.setTitle("");
+            datePickerDialog.show();
+
+
+
+
+
+
     }
 }
