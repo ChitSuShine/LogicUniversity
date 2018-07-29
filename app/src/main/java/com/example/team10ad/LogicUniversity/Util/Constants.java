@@ -1,6 +1,9 @@
 package com.example.team10ad.LogicUniversity.Util;
 
 public class Constants {
+    // Constants for Common Usage
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
+
     // Constants for API Requests
     public static final String GRANT_TYPE = "password";
     public static final String API_BASE_URL = "http://lussisadteam10api.azurewebsites.net/api/";
@@ -29,7 +32,6 @@ public class Constants {
     public static final String INVALID_INFO = "Invalid username and password!";
     public static final String NETWORK_ERROR_MSG = "Cannot connect the network!";
     public static final String REQ_NO_SUCCESS = "Request is not successful!";
-
 
     // Constants for LoginActivity
     public static final String WARNING_MSG = "Warning Message";
@@ -61,7 +63,8 @@ public class Constants {
     public static final int REP_OUTSTANDING = 5;
     public static final int REP_COMPLETE = 6;
 
-    //Constants for InventoryFragment
+    // Constants for InventoryFragment
+    public static final String INVENTORY_WARNING_MSG = "Please update quantity for current items.";
     public static final String INVENTORY_SUCCESS_MSG = "You have successfully updated inventory.";
     public static final String[] STATUS = {
             "Pending",
@@ -74,6 +77,6 @@ public class Constants {
             "Reject"
     };
 
-    //Constants for Approve Requisition
+    // Constants for Approve Requisition
     public static final String REQ_LIST="There is no Requisition List";
 }

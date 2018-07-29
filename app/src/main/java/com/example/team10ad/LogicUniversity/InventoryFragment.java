@@ -2,6 +2,7 @@ package com.example.team10ad.LogicUniversity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -144,7 +145,7 @@ public class InventoryFragment extends Fragment {
     public void showInputBox (final int position)
     {
         final Dialog dialog = new Dialog(getContext());
-        dialog.setTitle("Modify quantity");
+        dialog.setTitle("Update Current quantity");
         dialog.setContentView(R.layout.input_box);
         final EditText currentStock = dialog.findViewById(R.id.edit_currentStock);
         final EditText reason = dialog.findViewById(R.id.edit_reason);
@@ -189,47 +190,63 @@ public class InventoryFragment extends Fragment {
                 detailList.add(adjustmentDetail);
             }
         }
-        // Getting current user's info & store in shared preferences
-        Gson gson = new Gson();
-        String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
-        final User user = gson.fromJson(json, User.class);
+        if(detailList.size()>0)
+        {
+            // Getting current user's info & store in shared preferences
+            Gson gson = new Gson();
+            String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
+            final User user = gson.fromJson(json, User.class);
 
-        // Getting current date
-        Date todayDate = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String today = format.format(todayDate);
+            // Getting current date
+            Date todayDate = Calendar.getInstance().getTime();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String today = format.format(todayDate);
 
-        // Creating Adjustment object to post
-        Adjustment adjustment = new Adjustment();
-        adjustment.setRaisedBy(user.getUserId());
-        adjustment.setIssuedDate(today);
-        adjustment.setAdjDetails(detailList);
+            // Creating Adjustment object to post
+            Adjustment adjustment = new Adjustment();
+            adjustment.setRaisedBy(user.getUserId());
+            adjustment.setIssuedDate(today);
+            adjustment.setAdjDetails(detailList);
 
-        AdjustmentService adjustmentService = ServiceGenerator.createService(AdjustmentService.class, token);
-        Call<Adjustment> call = adjustmentService.createAdjustment(adjustment);
-        call.enqueue(new Callback<Adjustment>() {
-            @Override
-            public void onResponse(Call<Adjustment> call, Response<Adjustment> response) {
-                if(response.isSuccessful())
-                {
-                    Toast.makeText(MyApp.getInstance(), Constants.INVENTORY_SUCCESS_MSG, Toast.LENGTH_SHORT).show();
-                    // Reload the fragment
-                    Fragment fragment = getFragmentManager().findFragmentByTag(R.id.inventory + "");
-                    final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.detach(fragment);
-                    ft.attach(fragment);
-                    ft.commit();
+            AdjustmentService adjustmentService = ServiceGenerator.createService(AdjustmentService.class, token);
+            Call<Adjustment> call = adjustmentService.createAdjustment(adjustment);
+            call.enqueue(new Callback<Adjustment>() {
+                @Override
+                public void onResponse(Call<Adjustment> call, Response<Adjustment> response) {
+                    if(response.isSuccessful())
+                    {
+                        Toast.makeText(MyApp.getInstance(), Constants.INVENTORY_SUCCESS_MSG, Toast.LENGTH_SHORT).show();
+                        // Reload the fragment
+                        Fragment fragment = getFragmentManager().findFragmentByTag(R.id.inventory + "");
+                        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.detach(fragment);
+                        ft.attach(fragment);
+                        ft.commit();
+                    }
+                    else
+                    {
+                        Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else
-                {
-                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Adjustment> call, Throwable t) {
-                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<Adjustment> call, Throwable t) {
+                    Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else
+        {
+            new android.support.v7.app.AlertDialog.Builder(getContext())
+                    .setTitle(Constants.WARNING_MSG)
+                    .setMessage(Constants.INVENTORY_WARNING_MSG)
+                    .setPositiveButton(Constants.OK, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).setIcon(R.drawable.alert)
+                    .show();
+        }
     }
 }

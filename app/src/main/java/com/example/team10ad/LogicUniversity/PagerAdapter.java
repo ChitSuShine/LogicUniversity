@@ -20,8 +20,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 return new Report1Fragment();
             case 1:
                 return new Report2Fragment();
-            case 2:
-                return new Report3Fragment();
             default:
                 return null;
         }

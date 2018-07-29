@@ -50,7 +50,6 @@ public class HODReportFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.hodtabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Report 1"));
         tabLayout.addTab(tabLayout.newTab().setText("Report 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Report 3"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = view.findViewById(R.id.hodpager);
