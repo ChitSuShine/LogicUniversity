@@ -20,6 +20,7 @@
                 android:id="@+id/disbdetail1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/colorblack"
                 android:gravity="center" />
         </LinearLayout>
         <LinearLayout
@@ -31,6 +32,7 @@
                 android:id="@+id/disbdetail2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/colorblack"
                 android:gravity="center" />
         </LinearLayout>
 
@@ -43,6 +45,7 @@
                 android:id="@+id/disbdetail3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/colorblack"
                 android:gravity="center" />
 
         </LinearLayout>
@@ -56,6 +59,7 @@
                 android:id="@+id/disbdetail4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/colorblack"
                 android:gravity="center" />
 
         </LinearLayout>
