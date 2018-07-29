@@ -5,23 +5,28 @@
     android:layout_height="match_parent"
     tools:context="com.example.team10ad.LogicUniversity.DepartmentHead.HODOrderHistory">
 
-    <android.support.design.card.MaterialCardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
     <ListView
         android:id="@+id/orderhistorylistview"
         android:layout_width="match_parent"
         android:layout_height="fill_parent">
-    </ListView>
+     </ListView>
 
-        <TextView
+        <TextView android:id="@android:id/empty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="There is no Order History List"/>
+            android:text="There is no Order History List."
+            android:layout_marginBottom="200dp"
+            android:layout_marginTop="200dp"
+            android:gravity="center"
+            android:layout_gravity="center"/>
 
-
-    </android.support.design.card.MaterialCardView>
+    </LinearLayout>
 
 
 
