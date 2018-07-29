@@ -105,9 +105,10 @@ public class RepScanQRFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Initiating the qr code scan
-                IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
+                /*IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
                 intentIntegrator.setPrompt(Constants.SCAN_QR);
-                intentIntegrator.initiateScan();
+                intentIntegrator.initiateScan();*/
+               showData("167");
             }
         });
         return view;
