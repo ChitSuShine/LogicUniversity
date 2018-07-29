@@ -42,9 +42,13 @@ public class DelegateDetailFragment extends Fragment {
     private String mParam2;
     private String lastStoredDate;
 
-    private int mYear; //= calendar.get(Calendar.YEAR); // current year
-    private int mMonth;// = calendar.get(Calendar.MONTH); // current month
-    private int mDay;
+    private int smYear; //= calendar.get(Calendar.YEAR); // current year
+    private int smMonth;// = calendar.get(Calendar.MONTH); // current month
+    private int smDay;
+
+    private int emYear; //= calendar.get(Calendar.YEAR); // current year
+    private int emMonth;// = calendar.get(Calendar.MONTH); // current month
+    private int emDay;
     private OnFragmentInteractionListener mListener;
 
     Calendar c = Calendar.getInstance();
@@ -94,7 +98,7 @@ public class DelegateDetailFragment extends Fragment {
         startDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePicker(startDate);
+                startdateshowDatePicker(startDate);
             }
         });
 
@@ -106,7 +110,7 @@ public class DelegateDetailFragment extends Fragment {
         endDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePicker(endDate);
+                enddateshowDatePicker(endDate);
             }
         });
 
@@ -176,33 +180,53 @@ public class DelegateDetailFragment extends Fragment {
 
 
 
-    // Method for showing DatePicker Dialog
-    public void showDatePicker(final TextView date) {
+    // Method for showing StartDatePicker Dialog
+    public void startdateshowDatePicker(final TextView date) {
            final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                     new DatePickerDialog.OnDateSetListener() {
 
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
-                            mYear=year;
-                            mMonth=monthOfYear;
-                            mDay=dayOfMonth;
+                            smYear=year;
+                            smMonth=monthOfYear;
+                            smDay=dayOfMonth;
                             // set day of month , month and year value in the edit text
                             date.setText(year + "-"
                                     + (monthOfYear + 1) + "-" + dayOfMonth);
                        }
 
-                    }, mYear, mMonth, mDay);
+                    }, smYear, smMonth, smDay);
             //datePickerDialog.getDatePicker().setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS);
             //datePickerDialog.dismiss();
            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
            datePickerDialog.setTitle("");
             datePickerDialog.show();
 
+    }
 
+    // Method for showing EndDatePicker Dialog
+    public void enddateshowDatePicker(final TextView date) {
+        final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                new DatePickerDialog.OnDateSetListener() {
 
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        emYear=year;
+                        emMonth=monthOfYear;
+                        emDay=dayOfMonth;
+                        // set day of month , month and year value in the edit text
+                        date.setText(year + "-"
+                                + (monthOfYear + 1) + "-" + dayOfMonth);
+                    }
 
-
+                }, emYear, emMonth, emDay);
+        //datePickerDialog.getDatePicker().setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS);
+        //datePickerDialog.dismiss();
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+        datePickerDialog.setTitle("");
+        datePickerDialog.show();
 
     }
 }
