@@ -207,26 +207,52 @@ public class DelegateDetailFragment extends Fragment {
 
     // Method for showing EndDatePicker Dialog
     public void enddateshowDatePicker(final TextView date) {
-        final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
-                new DatePickerDialog.OnDateSetListener() {
+        final TextView startDate = (TextView) getActivity().findViewById(R.id.startDate);
+        if(startDate!=null){
+            final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                    new DatePickerDialog.OnDateSetListener() {
 
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        emYear=year;
-                        emMonth=monthOfYear;
-                        emDay=dayOfMonth;
-                        // set day of month , month and year value in the edit text
-                        date.setText(year + "-"
-                                + (monthOfYear + 1) + "-" + dayOfMonth);
-                    }
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
 
-                }, emYear, emMonth, emDay);
-        //datePickerDialog.getDatePicker().setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS);
-        //datePickerDialog.dismiss();
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-        datePickerDialog.setTitle("");
-        datePickerDialog.show();
+                            smYear=year;
+                            smMonth=monthOfYear;
+                            smDay=dayOfMonth;
+                            // set day of month , month and year value in the edit text
+                            date.setText(year + "-"
+                                    + (monthOfYear + 1) + "-" + dayOfMonth);
+                        }
+
+                    }, smYear, smMonth, smDay);
+            //datePickerDialog.getDatePicker().setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS);
+            //datePickerDialog.dismiss();
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+            datePickerDialog.setTitle("");
+            datePickerDialog.show();
+        }else {
+            final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                    new DatePickerDialog.OnDateSetListener() {
+
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+
+                            emYear = year;
+                            emMonth = monthOfYear;
+                            emDay = dayOfMonth;
+                            // set day of month , month and year value in the edit text
+                            date.setText(year + "-"
+                                    + (monthOfYear + 1) + "-" + dayOfMonth);
+                        }
+
+                    }, emYear, emMonth, emDay);
+            //datePickerDialog.getDatePicker().setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS);
+            //datePickerDialog.dismiss();
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+            datePickerDialog.setTitle("");
+            datePickerDialog.show();
+        }
 
     }
 }
