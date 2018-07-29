@@ -54,7 +54,7 @@ public class Constants {
     public static final String SCAN_QR = "Scan QR";
     public static final String REP_RES_NOT_FOUND = "Result Not Found!";
     public static final String REP_SCAN_ERROR_MSG = "Scan Error ";
-    public static final String REP_COLLECTED_MSG = "Delivery is collected.";
+    public static final String REP_COLLECTED_MSG = "Delivery List.";
     public static final String REP_MSG = "Collect Delivery";
     public static final String REP_OUTSTANDING_MSG = "Delivery is partially collected.";
     public static final String REP_COMPLETE_MSG = "Delivery is already collected.";
