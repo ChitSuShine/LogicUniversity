@@ -6,16 +6,19 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.DepartmentHead.HODOrderHistory;
 import com.example.team10ad.LogicUniversity.HomeActivity;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
@@ -59,6 +62,7 @@ public class RepScanQRFragment extends Fragment {
     private static TextView lockerName;
     private static ListView itemsList;
     private static CardView repCardView;
+    private static LinearLayout titleLayout;
 
     public RepScanQRFragment() {
         // Required empty public constructor
@@ -95,6 +99,7 @@ public class RepScanQRFragment extends Fragment {
         lockerName = view.findViewById(R.id.rep_lockerName);
         itemsList = view.findViewById(R.id.rep_itemListView);
         repCardView = view.findViewById(R.id.rep_cardView);
+        titleLayout = view.findViewById(R.id.titleLayout);
         repMsg = view.findViewById(R.id.rep_warnMsg);
         // Initiating the qr code scan
         IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
@@ -105,10 +110,18 @@ public class RepScanQRFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Initiating the qr code scan
-                /*IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
+                IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
                 intentIntegrator.setPrompt(Constants.SCAN_QR);
-                intentIntegrator.initiateScan();*/
-               showData("167");
+                intentIntegrator.initiateScan();
+            }
+        });
+        // Collect button
+        Button collectBtn = view.findViewById(R.id.btn_collect);
+        collectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HODOrderHistory history = new HODOrderHistory();
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, history).commit();
             }
         });
         return view;
@@ -155,6 +168,7 @@ public class RepScanQRFragment extends Fragment {
                     } else {
                         if (delivered == Constants.REP_DELIVER) {
                             repCardView.setVisibility(View.VISIBLE);
+                            titleLayout.setVisibility(View.VISIBLE);
                             repRaisedBy.setText(disbursement.getRasiedByname());
                             requestedDate.setText(disbursement.getReqDate());
                             collection.setText(disbursement.getCpName());
@@ -242,6 +256,7 @@ public class RepScanQRFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Disbursement disbursement = response.body();
                     repCardView.setVisibility(View.VISIBLE);
+                    titleLayout.setVisibility(View.VISIBLE);
                     repRaisedBy.setText(disbursement.getRasiedByname());
                     requestedDate.setText(disbursement.getReqDate());
                     collection.setText(disbursement.getCpName());
