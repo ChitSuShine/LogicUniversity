@@ -84,14 +84,14 @@ public class DelegateAuthorityFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_delegate_authority, container, false);
-
+        employeeDetailView = (ListView) view.findViewById(R.id.employeeListView);
         final TextView selectedEndDate = view.findViewById(R.id.selectedEndDate);
         ImageButton endDateButton = view.findViewById(R.id.btn_endDate);
         endDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //final Calendar c = Calendar.getInstance();
-               // int mYear = c.get(Calendar.YEAR); // current year
+                // int mYear = c.get(Calendar.YEAR); // current year
                 //int mMonth = c.get(Calendar.MONTH); // current month
                 //int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
                 // startDate picker dialog
@@ -105,9 +105,9 @@ public class DelegateAuthorityFragment extends Fragment {
                                                   int monthOfYear, int dayOfMonth) {
                                 //String date=delegation.getEndDate().toString();
 
-                                    mYear=year;
-                                    mMonth=monthOfYear;
-                                    mDay=dayOfMonth;
+                                mYear = year;
+                                mMonth = monthOfYear;
+                                mDay = dayOfMonth;
 
                                 // set day of month , month and year value in the edit text
                                 selectedEndDate.setText(year + "-"
@@ -120,7 +120,6 @@ public class DelegateAuthorityFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
-
 
 
         // Getting current user's info & store in shared preferences
@@ -138,7 +137,6 @@ public class DelegateAuthorityFragment extends Fragment {
                 if (response.isSuccessful()) {
                     resultedUsers = response.body();
                     final UserAdapter adapter = new UserAdapter(getContext(), R.layout.row_usersforhod, resultedUsers);
-                    employeeDetailView = (ListView) view.findViewById(R.id.employeeListView);
                     employeeDetailView.setAdapter(adapter);
                     employeeDetailView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -171,24 +169,49 @@ public class DelegateAuthorityFragment extends Fragment {
             @Override
             public void onClick(View viewClick) {
                 DelegationService delegationService = ServiceGenerator.createService(DelegationService.class, token);
-                delegation.setEndDate(selectedEndDate.getText().toString());
-                Call<Delegation> dCall = delegationService.updateDelegation(delegation);
-                dCall.enqueue(new Callback<Delegation>() {
-                    @Override
-                    public void onResponse(Call<Delegation> call, Response<Delegation> response) {
-                        if (response.isSuccessful()) {
-                            getPreviousAuthority(user, view);
-                            Toast.makeText(MyApp.getInstance(), Constants.DELEGATE_SUCCESS_MSG, Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                String extension = selectedEndDate.getText().toString();
+                if (extension.equals("")) {
+                    new android.support.v7.app.AlertDialog.Builder(getContext())
+                            .setTitle(Constants.DELEGATE_AUTHORITY)
+                            .setMessage(Constants.DELEGATION_NO_EXTENSION)
+                            .setPositiveButton(Constants.OK, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                } else if (extension.equals(delegation.getEndDate())) {
+                    new android.support.v7.app.AlertDialog.Builder(getContext())
+                            .setTitle(Constants.DELEGATE_AUTHORITY)
+                            .setMessage(Constants.DELEGATION_SAME_END_DATE)
+                            .setPositiveButton(Constants.OK, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                } else {
+                    delegation.setEndDate(selectedEndDate.getText().toString());
+                    Call<Delegation> dCall = delegationService.updateDelegation(delegation);
+                    dCall.enqueue(new Callback<Delegation>() {
+                        @Override
+                        public void onResponse(Call<Delegation> call, Response<Delegation> response) {
+                            if (response.isSuccessful()) {
+                                getPreviousAuthority(user, view);
+                                Toast.makeText(MyApp.getInstance(), Constants.DELEGATE_SUCCESS_MSG, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Delegation> call, Throwable t) {
-                        Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Delegation> call, Throwable t) {
+                            Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 
@@ -256,12 +279,15 @@ public class DelegateAuthorityFragment extends Fragment {
             public void onResponse(Call<Delegation> call, Response<Delegation> response) {
                 if (response.isSuccessful()) {
                     delegation = response.body();
+                    TextView warnMsg = view.findViewById(R.id.delegate_warnMsg);
                     TextView currentEmployeeName = view.findViewById(R.id.currentEmployeeName);
                     TextView startDate = view.findViewById(R.id.delegateStartDate);
                     TextView selectedEndDate = view.findViewById(R.id.selectedEndDate);
                     if (delegation.getActive() == 0) {
-                        currentEmployeeName.setText(Constants.NO_DELEGATION);
+                        warnMsg.setText(Constants.NO_DELEGATION);
+                        currentEmployeeName.setVisibility(View.INVISIBLE);
                         startDate.setVisibility(View.INVISIBLE);
+                        selectedEndDate.setText("");
                         selectedEndDate.setVisibility(View.INVISIBLE);
                         view.findViewById(R.id.delegateEndDate).setVisibility(View.INVISIBLE);
                         view.findViewById(R.id.dateLayout).setVisibility(View.INVISIBLE);

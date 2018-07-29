@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,16 +29,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Current HOD: "
-                   />
+                    android:text="Current HOD: " />
 
 
                 <TextView
                     android:id="@+id/currentEmployeeName"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <View
@@ -56,15 +54,13 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Start Date:"
-                     />
+                    android:text="Start Date:" />
 
                 <TextView
                     android:id="@+id/delegateStartDate"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                     />
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -83,8 +79,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="End Date: "
-                    />
+                    android:text="End Date: " />
 
                 <LinearLayout
                     android:id="@+id/dateLayout"
@@ -150,6 +145,14 @@
                     android:textColor="@color/background" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/delegate_warnMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="@dimen/textsize" />
         </LinearLayout>
 
         <LinearLayout
@@ -175,11 +178,11 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:divider="#C0B283"
-                    android:dividerHeight="2dp">
+                    android:dividerHeight="2dp"
+                    android:padding="10dp">
 
                     <ListView
                         android:id="@+id/employeeListView"

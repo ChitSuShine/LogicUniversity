@@ -164,7 +164,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/my_button_approve"
                             android:gravity="center"
-                            android:text="Collect"
+                            android:text=" Collect"
                             android:textColor="@color/background" />
                     </LinearLayout>
                 </LinearLayout>
