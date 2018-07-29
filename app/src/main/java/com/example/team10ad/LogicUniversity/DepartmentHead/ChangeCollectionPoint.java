@@ -171,9 +171,7 @@ public class ChangeCollectionPoint extends Fragment {
                             dialogBuilder.setIcon(R.drawable.ic_info);
                             dialogBuilder.setPositiveButton(android.R.string.ok,  new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-
-                                }
+                                public void onClick(DialogInterface dialogInterface, int i) { }
                             });
                             MaterialDialog dialog = dialogBuilder.create();
                             dialog.setTitleColor(Color.BLACK);
