@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.Requisition;
@@ -85,6 +86,11 @@ public class HodDashboardFragment extends Fragment {
                             R.layout.row_orderhistory, depID);
                     recentOrderHistory = (ListView) view.findViewById(R.id.recentorderhistory);
                     recentOrderHistory.setAdapter(adapter);
+                    if(recentOrderHistory.getAdapter().getCount()==0){
+                       TextView emptyText = view.findViewById(android.R.id.empty);
+                        recentOrderHistory.setEmptyView(emptyText);
+
+                    }
                 } else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                 }

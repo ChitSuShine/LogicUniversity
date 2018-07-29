@@ -90,8 +90,8 @@ public class HODOrderHistory extends Fragment {
                     if(orderhistorylistview.getAdapter().getCount()==0) {
                         TextView emptyText = view.findViewById(android.R.id.empty);
                         orderhistorylistview.setEmptyView(emptyText);
-                    }
 
+                    }
                 }
                 else{
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();

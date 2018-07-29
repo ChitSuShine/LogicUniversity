@@ -50,7 +50,7 @@ public class ClerkInventoryAdapter extends ArrayAdapter<InventoryDetail>{
         if (inventoryDetail.getIsPending())
         {
             isPending.setVisibility(View.VISIBLE);
-            v.setBackgroundColor(Color.parseColor("#e0e0e0"));
+            v.setBackgroundColor(getContext().getResources().getColor(R.color.lightgray));
         }
 
         TextView currentStock = v.findViewById(R.id.currentStock);

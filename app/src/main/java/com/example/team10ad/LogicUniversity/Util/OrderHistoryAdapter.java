@@ -34,14 +34,13 @@ public class OrderHistoryAdapter extends ArrayAdapter<Requisition> {
         TextView orderhis1=(TextView) v.findViewById(R.id.orderhis1);
         TextView orderhis2=(TextView) v.findViewById(R.id.orderhis2);
         TextView orderhis3=(TextView) v.findViewById(R.id.orderhis3);
-        TextView orderhis4=(TextView) v.findViewById(R.id.orderhis4);
+
 
         Requisition orderhis=items.get(position);
 
-        orderhis1.setText(orderhis.getReqDate());
-        orderhis2.setText(orderhis.getRasiedByname());
+        orderhis1.setText(orderhis.getRasiedByname());
+        orderhis2.setText(orderhis.getReqDate());
         orderhis3.setText(orderhis.getCpName());
-        orderhis4.setText(orderhis.getStatus());
         return v;
     }
 }
