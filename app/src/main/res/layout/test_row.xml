@@ -37,16 +37,13 @@
                         android:text="Item Name:"
                         android:textSize="@dimen/textsize" />
 
-                    <View
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"/>
 
                     <TextView
                         android:id="@+id/inv1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="left"
+                        android:gravity="center"
                         android:textSize="@dimen/textsize"
                         android:textColor="@color/colorblack"/>
                 </LinearLayout>
@@ -63,16 +60,13 @@
                         android:layout_weight="1"
                         android:text="Category:"
                         android:textSize="@dimen/textsize" />
-                    <View
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"/>
 
                     <TextView
                         android:id="@+id/inv2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="left"
+                        android:gravity="center"
                         android:textSize="@dimen/textsize"
                         android:textColor="@color/colorblack"/>
                 </LinearLayout>
@@ -89,16 +83,14 @@
                         android:gravity="right"
                         android:text="Stock:"
                         android:textSize="@dimen/textsize" />
-                    <View
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"/>
+
 
                     <TextView
                         android:id="@+id/inv3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="left"
+                        android:gravity="center"
                         android:textSize="@dimen/textsize"
                         android:textColor="@color/colorblack"/>
                 </LinearLayout>
@@ -115,15 +107,13 @@
                         android:layout_weight="1"
                         android:text="UOM:"
                         android:textSize="@dimen/textsize" />
-                    <View
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"/>
+
                     <TextView
                         android:id="@+id/inv4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="left"
+                        android:gravity="center"
                         android:textSize="@dimen/textsize"
                         android:textColor="@color/colorblack"/>
                 </LinearLayout>
@@ -141,15 +131,13 @@
                         android:text="Shelf Location:"
                         android:textSize="@dimen/textsize" />
 
-                    <View
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"/>
+
                     <TextView
                         android:id="@+id/inv5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="left"
+                        android:gravity="center"
                         android:textSize="@dimen/textsize"
                         android:textColor="@color/colorblack"/>
                 </LinearLayout>
@@ -167,15 +155,13 @@
                         android:layout_weight="1"
                         android:text="Current Stock:"
                         android:textSize="@dimen/textsize" />
-                    <View
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"/>
+
                     <TextView
                         android:id="@+id/currentStock"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="left"
+                        android:gravity="center"
                         android:text="-"
                         android:textSize="@dimen/textsize"
                         android:textColor="@color/colorblack"/>
@@ -195,16 +181,14 @@
                         android:text="Reason:"
                         android:textSize="@dimen/textsize" />
 
-                    <View
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"/>
+
                     <TextView
                         android:id="@+id/reason"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="-"
-                        android:gravity="left"
+                        android:gravity="center"
                         android:textSize="@dimen/textsize"
                         android:textColor="@color/colorblack"/>
                 </LinearLayout>
