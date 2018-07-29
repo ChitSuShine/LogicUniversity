@@ -60,8 +60,7 @@ public class InventoryFragment extends Fragment {
     Fragment fragment;
     String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
-    public InventoryFragment() {
-    }
+    public InventoryFragment() { }
 
     public static InventoryFragment newInstance(String param1, String param2) {
         InventoryFragment fragment = new InventoryFragment();
