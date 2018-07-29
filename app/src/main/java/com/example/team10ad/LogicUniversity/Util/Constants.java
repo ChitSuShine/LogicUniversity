@@ -49,6 +49,8 @@ public class Constants {
     public static final String DELEGATE_SUCCESS_MSG = "Your delegation is successful.";
     public static final String NO_DELEGATION = "There is no previous delegation.";
     public static final String DELEGATED_USER ="delegatedUser";
+    public static final String DELEGATION_NO_EXTENSION = "There is no employee to extend period.";
+    public static final String DELEGATION_SAME_END_DATE = "End date is same.";
 
     // Constants for RepScanQRFragment
     public static final String SCAN_QR = "Scan QR";
