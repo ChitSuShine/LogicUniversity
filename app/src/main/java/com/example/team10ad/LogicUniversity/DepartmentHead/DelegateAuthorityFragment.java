@@ -90,20 +90,25 @@ public class DelegateAuthorityFragment extends Fragment {
         endDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
+                //final Calendar c = Calendar.getInstance();
                // int mYear = c.get(Calendar.YEAR); // current year
                 //int mMonth = c.get(Calendar.MONTH); // current month
                 //int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
                 // startDate picker dialog
+
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
+
 
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-                                mYear=year;
-                                mMonth=monthOfYear;
-                                mDay=dayOfMonth;
+                                //String date=delegation.getEndDate().toString();
+
+                                    mYear=year;
+                                    mMonth=monthOfYear;
+                                    mDay=dayOfMonth;
+
                                 // set day of month , month and year value in the edit text
                                 selectedEndDate.setText(year + "-"
                                         + (monthOfYear + 1) + "-" + dayOfMonth);
