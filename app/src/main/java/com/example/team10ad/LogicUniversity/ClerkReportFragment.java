@@ -50,7 +50,6 @@ public class ClerkReportFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Report 1"));
         tabLayout.addTab(tabLayout.newTab().setText("Report 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Report 3"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = view.findViewById(R.id.pager);
@@ -66,14 +65,10 @@ public class ClerkReportFragment extends Fragment {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) { }
         });
         return view;
     }
@@ -96,7 +91,6 @@ public class ClerkReportFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
