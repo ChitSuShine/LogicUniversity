@@ -25,8 +25,10 @@
     <string name="info_title">REQUESTED!</string>
     <string name="info_message">Your request has been send.</string>
     <string name="remark_title">Remark:</string>
+    <string name="note">Notes:</string>
+    <string name="note_message">The new requisition!
+        You can process this requisition via LUSSIS website. </string>
+    <string name="note2_message">Your requisition is approved by store clerk. </string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -46,6 +46,9 @@ public class DelegateAuthorityFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     List<User> resultedUsers;
     ListView employeeDetailView;
+    private int mYear; //= calendar.get(Calendar.YEAR); // current year
+    private int mMonth;// = calendar.get(Calendar.MONTH); // current month
+    private int mDay;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -88,9 +91,9 @@ public class DelegateAuthorityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR); // current year
-                int mMonth = c.get(Calendar.MONTH); // current month
-                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+               // int mYear = c.get(Calendar.YEAR); // current year
+                //int mMonth = c.get(Calendar.MONTH); // current month
+                //int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
                 // startDate picker dialog
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
@@ -98,15 +101,22 @@ public class DelegateAuthorityFragment extends Fragment {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
+                                mYear=year;
+                                mMonth=monthOfYear;
+                                mDay=dayOfMonth;
                                 // set day of month , month and year value in the edit text
                                 selectedEndDate.setText(year + "-"
                                         + (monthOfYear + 1) + "-" + dayOfMonth);
 
                             }
                         }, mYear, mMonth, mDay);
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.setTitle("");
                 datePickerDialog.show();
             }
         });
+
+
 
         // Getting current user's info & store in shared preferences
         Gson gson = new Gson();

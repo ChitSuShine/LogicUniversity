@@ -1,6 +1,8 @@
 package com.example.team10ad.LogicUniversity;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,6 +32,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.mrapp.android.dialog.MaterialDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,6 +48,8 @@ public class Notification extends Fragment {
 
     ListView notiList;
     List<Noti> result;
+
+
 
     public Notification() { }
 
@@ -115,9 +120,47 @@ public class Notification extends Fragment {
                                                 break;
                                             case 6:
                                                 //HOD Requisition Approved/Rejected Noti
+                                                MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
+                                                dialogBuilder.setTitle(R.string.note);
+                                                dialogBuilder.setMessage(R.string.note_message);
+                                                dialogBuilder.setIcon(R.drawable.ic_info);
+                                                dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        Notification notimain = new Notification();
+                                                        FragmentManager fragmentMg = getFragmentManager();
+                                                        fragmentMg.beginTransaction().detach(Notification.this)
+                                                                .replace(R.id.content_frame, notimain).addToBackStack(null).commit();
+                                                    }
+                                                });
+                                                MaterialDialog dialog = dialogBuilder.create();
+                                                dialog.setTitleColor(Color.BLACK);
+                                                dialog.setMessageColor(getContext().getResources().getColor(R.color.bg));
+                                                dialog.setButtonTextColor(Color.BLACK);
+                                                dialog.show();
 
                                                 break;
                                             case 7:
+                                                MaterialDialog.Builder dialogBuilder2 = new MaterialDialog.Builder(getContext());
+                                                dialogBuilder2.setTitle(R.string.note);
+                                                dialogBuilder2.setMessage(R.string.note2_message);
+                                                dialogBuilder2.setIcon(R.drawable.ic_info);
+                                                dialogBuilder2.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        Notification notimain = new Notification();
+                                                        FragmentManager fragmentMg = getFragmentManager();
+                                                        fragmentMg.beginTransaction().detach(Notification.this)
+                                                                .replace(R.id.content_frame, notimain).addToBackStack(null).commit();
+                                                    }
+                                                });
+                                                MaterialDialog dialog2 = dialogBuilder2.create();
+                                                dialog2.setTitleColor(Color.BLACK);
+                                                dialog2.setMessageColor(getContext().getResources().getColor(R.color.bg));
+                                                dialog2.setButtonTextColor(Color.BLACK);
+                                                dialog2.show();
+
+
                                                 break;
                                             case 8:
                                                 //Approved Collection Point Change

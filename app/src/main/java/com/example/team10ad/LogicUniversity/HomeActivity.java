@@ -1,6 +1,7 @@
 package com.example.team10ad.LogicUniversity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -148,6 +150,13 @@ public class HomeActivity extends AppCompatActivity {
                 AboutFragment aboutFragment = new AboutFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, aboutFragment).addToBackStack(null).commit();
+                break;
+            case R.id.website:
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("http://lussisteam10.azurewebsites.net/account/login"));
+                startActivity(intent);
                 break;
             case R.id.noti:
                 Notification notimain = new Notification();
