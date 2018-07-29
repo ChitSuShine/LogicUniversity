@@ -44,8 +44,6 @@ public class ClerkApproveCollectionPoint extends Fragment {
 
     String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
-
-
     public ClerkApproveCollectionPoint() { }
 
     public static ClerkApproveCollectionPoint newInstance(String param1, String param2) {
