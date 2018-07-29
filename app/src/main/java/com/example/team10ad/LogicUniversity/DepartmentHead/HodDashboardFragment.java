@@ -66,43 +66,6 @@ public class HodDashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_hod_dashboard, container, false);
-        String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
-        final User user = new Gson().fromJson(userInfo, User.class);
-        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
-        OrderHistoryService inventoryService = ServiceGenerator.createService(OrderHistoryService.class, token);
-        Call<List<Requisition>> call = inventoryService.getAllOrderHistory();
-
-        call.enqueue(new Callback<List<Requisition>>() {
-            @Override
-            public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
-                if (response.isSuccessful()) {
-                    result = response.body();
-                    List<Requisition> depID = new ArrayList<Requisition>();
-                    for(Requisition rq: result){
-                        if(Integer.parseInt(rq.getDepID())==user.getDepId())
-                            depID.add(rq);
-                    }
-                    final OrderHistoryAdapter adapter = new OrderHistoryAdapter(getContext(),
-                            R.layout.row_orderhistory, depID);
-                    recentOrderHistory = (ListView) view.findViewById(R.id.recentorderhistory);
-                    recentOrderHistory.setAdapter(adapter);
-                    if(recentOrderHistory.getAdapter().getCount()==0){
-                       TextView emptyText = view.findViewById(android.R.id.empty);
-                        recentOrderHistory.setEmptyView(emptyText);
-
-                    }
-                } else {
-                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Requisition>> call, Throwable t) {
-                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
         // CardView for Approve or Reject requisitions
         CardView appRejCardView = (CardView) view.findViewById(R.id.cardapprove);
         appRejCardView.setOnClickListener(new View.OnClickListener() {
