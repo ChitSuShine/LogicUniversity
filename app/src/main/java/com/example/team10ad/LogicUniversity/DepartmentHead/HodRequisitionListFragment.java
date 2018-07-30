@@ -85,7 +85,8 @@ public class HodRequisitionListFragment extends Fragment {
                         if(rq.getStatus().equals("0")&& Integer.parseInt(rq.getDepID())==user.getDepId())
                             filtered.add(rq);
                     }
-                    final HodReqListAdapter adapter = new HodReqListAdapter(getContext(),R.layout.row_hodreqlist,filtered);
+                    final HodReqListAdapter adapter = new HodReqListAdapter
+                            (getContext(),R.layout.row_hodreqlist,filtered);
                     listView = (ListView) view.findViewById(R.id.hodtrackinglistview);
                     listView.setAdapter(adapter);
                     if(listView.getAdapter().getCount()==0){

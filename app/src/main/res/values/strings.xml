@@ -23,7 +23,7 @@
     <string name="reject_title">REJECTED!</string>
     <string name="reject_message">You reject the change collection point request.</string>
     <string name="info_title">REQUESTED!</string>
-    <string name="info_message">Your request has been send.</string>
+    <string name="info_message">Your request has been sent.</string>
     <string name="remark_title">Remark:</string>
     <string name="note">Notes:</string>
     <string name="note_message">The new requisition!
