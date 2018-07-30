@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -87,7 +88,6 @@ public class Notification extends Fragment {
             public void onResponse(Call<List<Noti>> call, Response<List<Noti>> response) {
                 if(response.isSuccessful()){
                     result=response.body();
-
                     final NotiAdapter notiadapter = new NotiAdapter(getContext(),R.layout.row_allnoti,result);
                     notiList = (ListView) view.findViewById(R.id.notiList);
                     notiList.setAdapter(notiadapter);
