@@ -5,15 +5,25 @@
     android:orientation="vertical"
     tools:context="com.example.team10ad.LogicUniversity.Notification">
 
-    <android.support.design.card.MaterialCardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
             <ListView
                 android:id="@+id/notiList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="fill_parent">
 
             </ListView>
-    </android.support.design.card.MaterialCardView>
+
+        <TextView android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="There is no Notification."
+            android:layout_marginBottom="200dp"
+            android:layout_marginTop="200dp"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+    </LinearLayout>
 </LinearLayout>

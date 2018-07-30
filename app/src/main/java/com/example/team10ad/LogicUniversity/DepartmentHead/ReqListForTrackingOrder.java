@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.Requisition;
@@ -92,6 +93,10 @@ public class ReqListForTrackingOrder extends Fragment {
                     final MyAdapter adapter = new MyAdapter(getContext(),R.layout.row,filtered);
                     listView = (ListView) view.findViewById(R.id.replistview);
                     listView.setAdapter(adapter);
+                    if(listView.getAdapter().getCount()==0){
+                        TextView emptyText = view.findViewById(android.R.id.empty);
+                        listView.setEmptyView(emptyText);
+                    }
 
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
