@@ -2,6 +2,7 @@ package com.example.team10ad.LogicUniversity.DepartmentHead;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +24,6 @@ import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,20 +39,17 @@ public class DelegateDetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private String lastStoredDate;
 
-    private int smYear; //= calendar.get(Calendar.YEAR); // current year
-    private int smMonth;// = calendar.get(Calendar.MONTH); // current month
-    private int smDay;
-
-    private int emYear; //= calendar.get(Calendar.YEAR); // current year
-    private int emMonth;// = calendar.get(Calendar.MONTH); // current month
-    private int emDay;
     private OnFragmentInteractionListener mListener;
 
-    Calendar c = Calendar.getInstance();
-
     private String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+    Calendar c = Calendar.getInstance();
+    private int smYear;
+    private int smMonth;
+    private int smDay;
+    private int emYear;
+    private int emMonth;
+    private int emDay;
 
     public DelegateDetailFragment() {
         // Required empty public constructor
@@ -94,23 +90,23 @@ public class DelegateDetailFragment extends Fragment {
         final TextView startDate = (TextView) view.findViewById(R.id.startDate);
         startDate.setText(c.get(Calendar.YEAR) + "-"
                 + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DAY_OF_MONTH));
-        final ImageButton startDateButton=view.findViewById(R.id.btn_startDate);
+        final ImageButton startDateButton = view.findViewById(R.id.btn_startDate);
         startDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startdateshowDatePicker(startDate);
+                showStartDatePicker(startDate);
             }
         });
 
         // Selecting End Date
         final TextView endDate = (TextView) view.findViewById(R.id.endDate);
         endDate.setText(c.get(Calendar.YEAR) + "-"
-                + (c.get(Calendar.MONTH) + 1) + "-" + (c.get(Calendar.DAY_OF_MONTH)+1));
-        final ImageButton endDateButton=view.findViewById(R.id.btn_endDate);
+                + (c.get(Calendar.MONTH) + 1) + "-" + (c.get(Calendar.DAY_OF_MONTH) + 1));
+        final ImageButton endDateButton = view.findViewById(R.id.btn_endDate);
         endDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enddateshowDatePicker(endDate);
+                showEndDatePicker(endDate);
             }
         });
 
@@ -119,37 +115,50 @@ public class DelegateDetailFragment extends Fragment {
         delegateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View clickView) {
-                Delegation createdDelegation = new Delegation();
+                long startTime = getTimeMills(smYear, smMonth, smDay);
+                long endTime = getTimeMills(emYear, emMonth, emDay);
+                if (endTime >= startTime) {
+                    TextView startDate = view.findViewById(R.id.startDate);
+                    TextView endDate = view.findViewById(R.id.endDate);
+                    Gson gson = new Gson();
+                    String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
+                    final User hod = gson.fromJson(json, User.class);
+                    Delegation createdDelegation = new Delegation();
+                    createdDelegation.setStartDate(startDate.getText().toString());
+                    createdDelegation.setEndDate(endDate.getText().toString());
+                    createdDelegation.setUserId(user.getUserId());
+                    createdDelegation.setAssignedBy(hod.getUserId());
 
-                TextView startDate = view.findViewById(R.id.startDate);
-                TextView endDate = view.findViewById(R.id.endDate);
-                Gson gson = new Gson();
-                String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
-                final User hod = gson.fromJson(json, User.class);
-
-                createdDelegation.setStartDate(startDate.getText().toString());
-                createdDelegation.setEndDate(endDate.getText().toString());
-                createdDelegation.setUserId(user.getUserId());
-                createdDelegation.setAssignedBy(hod.getUserId());
-
-                DelegationService delegationService = ServiceGenerator.createService(DelegationService.class, token);
-                Call<Delegation> dCall = delegationService.createDelegation(createdDelegation);
-                dCall.enqueue(new Callback<Delegation>() {
-                    @Override
-                    public void onResponse(Call<Delegation> call, Response<Delegation> response) {
-                        if (response.isSuccessful()) {
-                           DelegateAuthorityFragment authorityFragment = new DelegateAuthorityFragment();
-                            getFragmentManager().beginTransaction().replace(R.id.content_frame, authorityFragment).commit();
-                        } else {
-                            Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                    DelegationService delegationService = ServiceGenerator.createService(DelegationService.class, token);
+                    Call<Delegation> dCall = delegationService.createDelegation(createdDelegation);
+                    dCall.enqueue(new Callback<Delegation>() {
+                        @Override
+                        public void onResponse(Call<Delegation> call, Response<Delegation> response) {
+                            if (response.isSuccessful()) {
+                                DelegateAuthorityFragment authorityFragment = new DelegateAuthorityFragment();
+                                getFragmentManager().beginTransaction().replace(R.id.content_frame, authorityFragment).commit();
+                            } else {
+                                Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Delegation> call, Throwable t) {
-                        Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Delegation> call, Throwable t) {
+                            Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    new android.support.v7.app.AlertDialog.Builder(getContext())
+                            .setTitle(Constants.DELEGATE_AUTHORITY)
+                            .setMessage(Constants.DELEGATION_END_DATE)
+                            .setPositiveButton(Constants.OK, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
             }
         });
         return view;
@@ -179,80 +188,48 @@ public class DelegateDetailFragment extends Fragment {
     }
 
 
-
     // Method for showing StartDatePicker Dialog
-    public void startdateshowDatePicker(final TextView date) {
-           final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
-                    new DatePickerDialog.OnDateSetListener() {
-
-                        @Override
-                        public void onDateSet(DatePicker view, int year,
-                                              int monthOfYear, int dayOfMonth) {
-                            smYear=year;
-                            smMonth=monthOfYear;
-                            smDay=dayOfMonth;
-                            // set day of month , month and year value in the edit text
-                            date.setText(year + "-"
-                                    + (monthOfYear + 1) + "-" + dayOfMonth);
-                       }
-
-                    }, smYear, smMonth, smDay);
-            //datePickerDialog.getDatePicker().setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS);
-            //datePickerDialog.dismiss();
-           datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-           datePickerDialog.setTitle("");
-            datePickerDialog.show();
-
+    public void showStartDatePicker(final TextView date) {
+        final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        smYear = year;
+                        smMonth = monthOfYear;
+                        smDay = dayOfMonth;
+                        date.setText(smYear + "-"
+                                + (smMonth + 1) + "-" + smDay);
+                    }
+                }, smYear, smMonth, smDay);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+        datePickerDialog.setTitle("");
+        datePickerDialog.show();
     }
 
     // Method for showing EndDatePicker Dialog
-    public void enddateshowDatePicker(final TextView date) {
-        final TextView startDate = (TextView) getActivity().findViewById(R.id.startDate);
-        if(startDate!=null){
-            final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
-                    new DatePickerDialog.OnDateSetListener() {
+    public void showEndDatePicker(final TextView date) {
+        final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        emYear = year;
+                        emMonth = monthOfYear;
+                        emDay = dayOfMonth;
+                        // set day of month , month and year value in the edit text
+                        date.setText(emYear + "-"
+                                + (emMonth + 1) + "-" + emDay);
+                    }
+                }, emYear, emMonth, emDay);
+        datePickerDialog.getDatePicker().setMinDate(getTimeMills(smYear, smMonth, smDay));
+        datePickerDialog.setTitle("");
+        datePickerDialog.show();
+    }
 
-                        @Override
-                        public void onDateSet(DatePicker view, int year,
-                                              int monthOfYear, int dayOfMonth) {
-
-                            smYear=year;
-                            smMonth=monthOfYear;
-                            smDay=dayOfMonth;
-                            // set day of month , month and year value in the edit text
-                            date.setText(year + "-"
-                                    + (monthOfYear + 1) + "-" + dayOfMonth);
-                        }
-
-                    }, smYear, smMonth, smDay);
-            //datePickerDialog.getDatePicker().setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS);
-            //datePickerDialog.dismiss();
-            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-            datePickerDialog.setTitle("");
-            datePickerDialog.show();
-        }else {
-            final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
-                    new DatePickerDialog.OnDateSetListener() {
-
-                        @Override
-                        public void onDateSet(DatePicker view, int year,
-                                              int monthOfYear, int dayOfMonth) {
-
-                            emYear = year;
-                            emMonth = monthOfYear;
-                            emDay = dayOfMonth;
-                            // set day of month , month and year value in the edit text
-                            date.setText(year + "-"
-                                    + (monthOfYear + 1) + "-" + dayOfMonth);
-                        }
-
-                    }, emYear, emMonth, emDay);
-            //datePickerDialog.getDatePicker().setDescendantFocusability(DatePicker.FOCUS_BLOCK_DESCENDANTS);
-            //datePickerDialog.dismiss();
-            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-            datePickerDialog.setTitle("");
-            datePickerDialog.show();
-        }
-
+    public long getTimeMills(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        return calendar.getTimeInMillis();
     }
 }

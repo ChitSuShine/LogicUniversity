@@ -32,7 +32,10 @@ import com.example.team10ad.LogicUniversity.Util.UserAdapter;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -44,17 +47,20 @@ public class DelegateAuthorityFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    List<User> resultedUsers;
-    ListView employeeDetailView;
-    private int mYear; //= calendar.get(Calendar.YEAR); // current year
-    private int mMonth;// = calendar.get(Calendar.MONTH); // current month
-    private int mDay;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
     private OnFragmentInteractionListener mListener;
-    private Delegation delegation;
+
     private String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+    private Delegation delegation;
+    List<User> resultedUsers;
+    ListView employeeDetailView;
+    private int mYear;
+    private int mMonth;
+    private int mDay;
 
     public DelegateAuthorityFragment() {
         // Required empty public constructor
@@ -90,12 +96,6 @@ public class DelegateAuthorityFragment extends Fragment {
         endDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //final Calendar c = Calendar.getInstance();
-                // int mYear = c.get(Calendar.YEAR); // current year
-                //int mMonth = c.get(Calendar.MONTH); // current month
-                //int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
-                // startDate picker dialog
-
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
 
@@ -103,24 +103,25 @@ public class DelegateAuthorityFragment extends Fragment {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-                                //String date=delegation.getEndDate().toString();
-
                                 mYear = year;
                                 mMonth = monthOfYear;
                                 mDay = dayOfMonth;
-
                                 // set day of month , month and year value in the edit text
-                                selectedEndDate.setText(year + "-"
-                                        + (monthOfYear + 1) + "-" + dayOfMonth);
-
+                                selectedEndDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                             }
                         }, mYear, mMonth, mDay);
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-                datePickerDialog.setTitle("");
-                datePickerDialog.show();
+                TextView startDate = view.findViewById(R.id.delegateStartDate);
+                String sDate = startDate.getText().toString();
+                try {
+                    Date date = new SimpleDateFormat(Constants.DATE_FORMAT).parse(sDate);
+                    datePickerDialog.getDatePicker().setMinDate(date.getTime());
+                    datePickerDialog.setTitle("");
+                    datePickerDialog.show();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
-
 
         // Getting current user's info & store in shared preferences
         Gson gson = new Gson();

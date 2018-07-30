@@ -32,7 +32,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="3">
 
                         <TextView
                             android:layout_width="0dp"
@@ -42,13 +42,16 @@
                             android:text="Raised by:"
                             android:textSize="@dimen/textsize" />
 
+                        <View
+                            android:layout_width="20dp"
+                            android:layout_height="match_parent"/>
 
                         <TextView
                             android:id="@+id/hodrasiedby"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:gravity="left"
                             android:textSize="@dimen/textsize"
                             android:textColor="@color/colorblack"/>
                     </LinearLayout>
@@ -58,7 +61,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="3">
 
                         <TextView
                             android:layout_width="0dp"
@@ -67,13 +70,16 @@
                             android:layout_weight="1"
                             android:text="Date:"
                             android:textSize="@dimen/textsize" />
+                        <View
+                            android:layout_width="20dp"
+                            android:layout_height="match_parent"/>
 
                         <TextView
                             android:id="@+id/hodraisedate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:gravity="left"
                             android:textSize="@dimen/textsize"
                             android:textColor="@color/colorblack"/>
                     </LinearLayout>
