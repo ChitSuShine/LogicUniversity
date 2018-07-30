@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.DepartmentCollectionPoint;
@@ -83,6 +84,10 @@ public class ClerkApproveCollectionPoint extends Fragment {
                     ClerkApproveCPAdapter CPAdapter=new ClerkApproveCPAdapter(getContext(),R.layout.row_approvecp,result);
                     approveCPList=(ListView)view.findViewById(R.id.approveCPList);
                     approveCPList.setAdapter(CPAdapter);
+                    if(approveCPList.getAdapter().getCount()==0){
+                        TextView emptyText = view.findViewById(android.R.id.empty);
+                        approveCPList.setEmptyView(emptyText);
+                    }
                 }
                 else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
