@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
@@ -91,6 +92,10 @@ public class Notification extends Fragment {
                     final NotiAdapter notiadapter = new NotiAdapter(getContext(),R.layout.row_allnoti,result);
                     notiList = (ListView) view.findViewById(R.id.notiList);
                     notiList.setAdapter(notiadapter);
+                    if(notiList.getAdapter().getCount()==0){
+                        TextView emptyText = view.findViewById(android.R.id.empty);
+                        notiList.setEmptyView(emptyText);
+                    }
                     notiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
