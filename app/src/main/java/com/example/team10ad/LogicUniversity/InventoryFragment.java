@@ -59,6 +59,7 @@ public class InventoryFragment extends Fragment {
     ListView inventoryListView;
     Fragment fragment;
     String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
+    ArrayList<AdjustmentDetail> detailList = new ArrayList<AdjustmentDetail>();
 
     public InventoryFragment() { }
 
@@ -119,7 +120,7 @@ public class InventoryFragment extends Fragment {
         updateInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View clickView) {
-                processDiscrepency();
+                processDiscrepancy();
             }
         });
         return view;
@@ -158,9 +159,20 @@ public class InventoryFragment extends Fragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InventoryDetail detail = result.get(position);
-                detail.setCurrentStock(currentStock.getText().toString());
-                detail.setReason(reason.getText().toString());
+                InventoryDetail inventoryDetail = result.get(position);
+                inventoryDetail.setCurrentStock(currentStock.getText().toString());
+                inventoryDetail.setReason(reason.getText().toString());
+                if(inventoryDetail.getCurrentStock()!=null && !inventoryDetail.getCurrentStock().equals("")) {
+                    AdjustmentDetail adjustmentDetail = new AdjustmentDetail();
+                    adjustmentDetail.setItemId(Integer.parseInt(inventoryDetail.getItemid()));
+                    adjustmentDetail.setItemDescription(inventoryDetail.getItemDescription());
+                    adjustmentDetail.setCategoryName(inventoryDetail.getCatName());
+                    adjustmentDetail.setUom(inventoryDetail.getUom());
+                    int adjustedQty = Integer.parseInt(inventoryDetail.getCurrentStock()) - Integer.parseInt(inventoryDetail.getStock());
+                    adjustmentDetail.setAdjustedQty(adjustedQty);
+                    adjustmentDetail.setReason(inventoryDetail.getReason());
+                    detailList.add(adjustmentDetail);
+                }
                 dialog.dismiss();
             }
         });
@@ -178,24 +190,8 @@ public class InventoryFragment extends Fragment {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    public void processDiscrepency()
+    public void processDiscrepancy()
     {
-        ArrayList<AdjustmentDetail> detailList = new ArrayList<AdjustmentDetail>();
-        for(InventoryDetail inventoryDetail: result)
-        {
-            if(inventoryDetail.getCurrentStock()!=null && !inventoryDetail.getCurrentStock().equals(""))
-            {
-                AdjustmentDetail adjustmentDetail = new AdjustmentDetail();
-                adjustmentDetail.setItemId(Integer.parseInt(inventoryDetail.getItemid()));
-                adjustmentDetail.setItemDescription(inventoryDetail.getItemDescription());
-                adjustmentDetail.setCategoryName(inventoryDetail.getCatName());
-                adjustmentDetail.setUom(inventoryDetail.getUom());
-                int adjustedQty = Integer.parseInt(inventoryDetail.getCurrentStock()) - Integer.parseInt(inventoryDetail.getStock());
-                adjustmentDetail.setAdjustedQty(adjustedQty);
-                adjustmentDetail.setReason(inventoryDetail.getReason());
-                detailList.add(adjustmentDetail);
-            }
-        }
         if(detailList.size()>0)
         {
             // Getting current user's info & store in shared preferences
@@ -205,7 +201,7 @@ public class InventoryFragment extends Fragment {
 
             // Getting current date
             Date todayDate = Calendar.getInstance().getTime();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT);
             String today = format.format(todayDate);
 
             // Creating Adjustment object to post
@@ -222,6 +218,7 @@ public class InventoryFragment extends Fragment {
                     if(response.isSuccessful())
                     {
                         Toast.makeText(MyApp.getInstance(), Constants.INVENTORY_SUCCESS_MSG, Toast.LENGTH_SHORT).show();
+                        detailList.clear();
                         // Reload the fragment
                         Fragment fragment = getFragmentManager().findFragmentByTag(R.id.inventory + "");
                         final FragmentTransaction ft = getFragmentManager().beginTransaction();

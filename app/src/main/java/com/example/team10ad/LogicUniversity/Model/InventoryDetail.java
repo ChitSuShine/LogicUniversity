@@ -43,8 +43,10 @@ public class InventoryDetail {
     @SerializedName("IsPending")
     private boolean isPending;
 
-
+    @SerializedName("CurrentStock")
     private String currentStock;
+
+    @SerializedName("Reason")
     private String reason;
 
     public String getCurrentStock() {

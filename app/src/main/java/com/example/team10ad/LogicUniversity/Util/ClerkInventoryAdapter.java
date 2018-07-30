@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.team10ad.LogicUniversity.Model.Inventory;
@@ -50,7 +51,8 @@ public class ClerkInventoryAdapter extends ArrayAdapter<InventoryDetail>{
         if (inventoryDetail.getIsPending())
         {
             isPending.setVisibility(View.VISIBLE);
-            v.setBackgroundColor(getContext().getResources().getColor(R.color.lightgray));
+            LinearLayout linearLayout = v.findViewById(R.id.cardbg);
+            linearLayout.setBackgroundColor(getContext().getResources().getColor(R.color.lightgray));
         }
 
         TextView currentStock = v.findViewById(R.id.currentStock);
