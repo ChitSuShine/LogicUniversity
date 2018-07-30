@@ -149,7 +149,6 @@ public class InventoryFragment extends Fragment {
     public void showInputBox (final int position)
     {
         final Dialog dialog = new Dialog(getContext());
-        dialog.setTitle("Update Current quantity");
         dialog.setContentView(R.layout.input_box);
         final EditText currentStock = dialog.findViewById(R.id.edit_currentStock);
         final EditText reason = dialog.findViewById(R.id.edit_reason);
