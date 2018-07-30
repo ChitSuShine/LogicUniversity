@@ -88,7 +88,7 @@ public class ReqListForTrackingOrder extends Fragment {
                         if(Integer.parseInt(rq.getDepID())==user.getDepId())
                             filtered.add(rq);
                     }
-                    
+
                     final MyAdapter adapter = new MyAdapter(getContext(),R.layout.row,filtered);
                     listView = (ListView) view.findViewById(R.id.replistview);
                     listView.setAdapter(adapter);
