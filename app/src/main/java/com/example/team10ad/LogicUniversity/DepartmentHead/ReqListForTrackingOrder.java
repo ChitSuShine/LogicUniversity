@@ -14,12 +14,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.RequisitionService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +71,9 @@ public class ReqListForTrackingOrder extends Fragment {
 
         final View view= inflater.inflate(R.layout.fragment_req_list_for_tracking_order, container, false);
 
+        String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
+        final User user = new Gson().fromJson(userInfo, User.class);
+
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
         Call<List<Requisition>> call = requisitionService.getAllRequisitions();
@@ -77,7 +82,14 @@ public class ReqListForTrackingOrder extends Fragment {
             public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
                 if (response.isSuccessful()) {
                     result = response.body();
-                    final MyAdapter adapter = new MyAdapter(getContext(),R.layout.row,result);
+
+                    List<Requisition> filtered = new ArrayList<Requisition>();
+                    for(Requisition rq: result){
+                        if(Integer.parseInt(rq.getDepID())==user.getDepId())
+                            filtered.add(rq);
+                    }
+                    
+                    final MyAdapter adapter = new MyAdapter(getContext(),R.layout.row,filtered);
                     listView = (ListView) view.findViewById(R.id.replistview);
                     listView.setAdapter(adapter);
 
