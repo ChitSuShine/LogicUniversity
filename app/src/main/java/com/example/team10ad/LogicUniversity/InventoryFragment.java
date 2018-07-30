@@ -176,7 +176,7 @@ public class InventoryFragment extends Fragment {
         dialog.show();
         Window window = dialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG);
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     public void processDiscrepency()
