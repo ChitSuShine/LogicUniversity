@@ -1,24 +1,45 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/background"
     android:orientation="vertical"
     android:weightSum="17">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Representative: "
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/currentRepName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/employeeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_weight="2"
-            android:text="Please select one to assign as Department Representative"
-            android:textStyle="bold"
             android:gravity="center"
-            android:textSize="15sp"/>
+            android:text="Please select one to assign as Department Representative"
+            android:textSize="15sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <RelativeLayout
@@ -26,19 +47,17 @@
         android:layout_height="match_parent"
         android:layout_marginTop="10dp">
 
-    <android.support.design.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background">
-
-        <ListView
-            android:id="@+id/repListView"
+        <android.support.design.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="15"
-            android:background="@color/background"/>
-    </android.support.design.card.MaterialCardView>
+            android:background="@color/background">
+
+            <ListView
+                android:id="@+id/repListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="15"
+                android:background="@color/background" />
+        </android.support.design.card.MaterialCardView>
     </RelativeLayout>
-
-
-    </LinearLayout>
+</LinearLayout>

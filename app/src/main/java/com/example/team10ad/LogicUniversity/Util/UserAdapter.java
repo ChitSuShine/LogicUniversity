@@ -26,23 +26,16 @@ public class UserAdapter extends ArrayAdapter<User> {
         this.resource = resource;
         this.items = items;
     }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(resource, null);
-
-
         TextView employeeName = (TextView) view.findViewById(R.id.employeeName);
         User user = items.get(position);
         employeeName.setText(user.getFullName());
-
-        if(user.getRole()==Constants.DEP_REP_ROLE)
-        {
-            view.findViewById(R.id.employeeRole).setVisibility(View.VISIBLE);
-        }
-
         return view;
     }
 }

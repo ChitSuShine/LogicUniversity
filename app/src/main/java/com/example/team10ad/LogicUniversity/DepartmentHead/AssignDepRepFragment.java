@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.Delegation;
@@ -75,6 +76,26 @@ public class AssignDepRepFragment extends Fragment {
         final User user = gson.fromJson(json, User.class);
 
         final UserService userService = ServiceGenerator.createService(UserService.class, token);
+        // Showing current Dep Rep
+        Call<List<User>> repCall = userService.getRepByDeptId(Constants.DEP_REP_ROLE, user.getDepId());
+        repCall.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful()) {
+                    TextView currentRepName = view.findViewById(R.id.currentRepName);
+                    currentRepName.setText(response.body().get(0).getFullName());
+                } else {
+                    Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         Call<List<User>> call = userService.getUsersByDeptId(user.getDepId());
         call.enqueue(new Callback<List<User>>() {
             @Override

@@ -18,6 +18,9 @@ public interface UserService {
     @GET("user/hod/{id}")
     Call<List<User>> getUsersByDeptId(@Path("id") int id);
 
+    @GET("user/role/{role}/{id}")
+    Call<List<User>> getRepByDeptId(@Path("role") int role, @Path("id") int id);
+
     @POST("user/assign/{id}")
     Call<User> assignDepRep(@Path("id") int id);
 }
