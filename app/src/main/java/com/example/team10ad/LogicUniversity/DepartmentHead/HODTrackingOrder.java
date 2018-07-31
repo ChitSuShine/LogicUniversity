@@ -38,7 +38,7 @@ public class HODTrackingOrder extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private static final String[] STATE = {"ONE", "ONE", "ONE", "TWO", "THREE", "FOUR", "FOUR", "ONE"};
+    private static final String[] STATE = {"ONE", "ONE", "ONE", "TWO", "THREE", "FOUR", "THREE", "ONE"};
 
     private OnFragmentInteractionListener mListener;
     Requisition result;
