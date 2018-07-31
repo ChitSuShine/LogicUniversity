@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.FreqentlyItem;
+import com.example.team10ad.LogicUniversity.Model.FrequentItemHod;
+import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.ReportService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
@@ -28,6 +30,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +54,7 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
 
     // Bar data
     private BarChart mChart;
-    private List<FreqentlyItem> result;
+    private List<FrequentItemHod> result;
     private ArrayList<BarEntry> barEntries;
     private BarDataSet dataSet;
     private BarData barData;
@@ -87,14 +90,17 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
         final View view= inflater.inflate(R.layout.fragment_hodreport, container, false);
         final String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         ReportService service = ServiceGenerator.createService(ReportService.class, token);
-        Call<List<FreqentlyItem>> call = service.frequentlyOrderedItemList();
-        call.enqueue(new Callback<List<FreqentlyItem>>() {
+        String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
+        User user = new Gson().fromJson(userInfo, User.class);
+
+        Call<List<FrequentItemHod>> call = service.getFrequentItemListHod(user.getDepId());
+        call.enqueue(new Callback<List<FrequentItemHod>>() {
             @Override
-            public void onResponse(Call<List<FreqentlyItem>> call, Response<List<FreqentlyItem>> response) {
+            public void onResponse(Call<List<FrequentItemHod>> call, Response<List<FrequentItemHod>> response) {
                 if(response.isSuccessful()){
                     result = response.body();
                     int i = 0;
-                    for(FreqentlyItem item: result){
+                    for(FrequentItemHod item: result){
                         barEntries = new ArrayList<>();
                         barEntries.add(new BarEntry(i, item.getQty()));
                         xVals.add(item.getDescription());
@@ -117,8 +123,8 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
             }
 
             @Override
-            public void onFailure(Call<List<FreqentlyItem>> call, Throwable t) {
-                Toast.makeText(getContext(), "Connection Error !", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<FrequentItemHod>> call, Throwable t) {
+
             }
         });
 
@@ -175,7 +181,7 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         //xAxis.setDrawLabels(false);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(lbls));
-        xAxis.setLabelRotationAngle(270);
+        xAxis.setLabelRotationAngle(360-90);
         return chart;
     }
 

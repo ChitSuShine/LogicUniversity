@@ -41,8 +41,7 @@ public class HodDashboardFragment extends Fragment {
     List<Requisition> result;
     ListView recentOrderHistory;
 
-    public HodDashboardFragment() {
-    }
+    public HodDashboardFragment() { }
 
     public static HodDashboardFragment newInstance(String param1, String param2) {
         HodDashboardFragment fragment = new HodDashboardFragment();
