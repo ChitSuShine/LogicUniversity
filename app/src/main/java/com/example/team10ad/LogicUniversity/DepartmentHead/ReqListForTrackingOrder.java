@@ -84,7 +84,7 @@ public class ReqListForTrackingOrder extends Fragment {
                 if (response.isSuccessful()) {
                     result = response.body();
 
-                    List<Requisition> filtered = new ArrayList<Requisition>();
+                    final List<Requisition> filtered = new ArrayList<Requisition>();
                     for(Requisition rq: result){
                         if(Integer.parseInt(rq.getDepID())==user.getDepId())
                             filtered.add(rq);
@@ -103,7 +103,7 @@ public class ReqListForTrackingOrder extends Fragment {
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             HODTrackingOrder hodTrackingOrder=new HODTrackingOrder();
                             Bundle b = new Bundle();
-                            b.putString("id", result.get(i).getReqID());
+                            b.putString("id", filtered.get(i).getReqID());
                             hodTrackingOrder.setArguments(b);
                             FragmentManager fragmentManager=getFragmentManager();
                             fragmentManager.beginTransaction().replace(R.id.content_frame, hodTrackingOrder).commit();
