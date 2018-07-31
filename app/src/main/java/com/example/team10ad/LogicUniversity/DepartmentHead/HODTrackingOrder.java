@@ -23,6 +23,7 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -44,7 +45,7 @@ public class HODTrackingOrder extends Fragment {
     Requisition result;
     ListView reqDetaillistview;
 
-    String[] descriptionData = {"Pending", "Preparing", "RtC", "Completed"};
+    String[] descriptionData = {"Req Pending", "Prepare", "Ready-to-collect", "Complete"};
 
     public HODTrackingOrder() { }
 
@@ -82,10 +83,12 @@ public class HODTrackingOrder extends Fragment {
             public void onResponse(Call<Requisition> call, Response<Requisition> response) {
                 if(response.isSuccessful()){
                     result = response.body();
+
                     TextView tv1 = (TextView) view.findViewById(R.id.raisedBy);
                     TextView tv2 = (TextView) view.findViewById(R.id.raisedbydate);
                     TextView tv3 = (TextView) view.findViewById(R.id.collectionpoint);
                     TextView tv4 = (TextView) view.findViewById(R.id.apprBy);
+
                     tv1.setText(result.getRasiedByname());
                     tv2.setText(result.getReqDate());
                     tv3.setText(result.getCpName());

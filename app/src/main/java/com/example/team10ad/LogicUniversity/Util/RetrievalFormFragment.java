@@ -103,9 +103,7 @@ public class RetrievalFormFragment extends Fragment {
                 call.enqueue(new Callback<List<Disbursement>>() {
                     @Override
                     public void onResponse(Call<List<Disbursement>> call, Response<List<Disbursement>> response) {
-                        if(response.isSuccessful()){
-                            Toast.makeText(getActivity(),"Items Collected!",Toast.LENGTH_LONG).show();
-                        }
+                        if(response.isSuccessful()){ }
                         ClerkMapDeliveryPoint cpMap=new ClerkMapDeliveryPoint();
                         FragmentManager fm=getFragmentManager();
                         fm.beginTransaction().replace(R.id.content_frame,cpMap).commit();

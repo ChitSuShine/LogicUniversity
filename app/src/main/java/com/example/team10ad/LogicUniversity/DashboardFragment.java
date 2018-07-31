@@ -166,16 +166,19 @@ public class DashboardFragment extends Fragment {
     // Set pie chart in dashboard
     private void setupPieChart(PieChart chart, List<PieEntry> entries) {
         PieDataSet pieDataSet=new PieDataSet(entries,"");
-        pieDataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+        int[] colors = {Color.parseColor("#80c9be"),Color.parseColor("#f2e2cd")
+                ,Color.parseColor("#e99790"),Color.parseColor("#d7d2cb"),
+                Color.parseColor("#6d8ebc")};
+        pieDataSet.setColors(colors);
         pieDataSet.setValueTextSize(14f);
         setLegend(chart);
         PieData pieData=new PieData();
         pieData.setDataSet(pieDataSet);
         chart.setData(pieData);
         Description d = chart.getDescription();
-        d.setText("Top 5 frequent ordered items in 2018");
+        d.setText("Top 5 frequent ordered items in past 3 months");
         d.setTypeface(Typeface.DEFAULT_BOLD);
-        d.setTextSize(18f);
+        d.setTextSize(16f);
         chart.setDrawEntryLabels(false);
         chart.animateX(1000);
         chart.invalidate();

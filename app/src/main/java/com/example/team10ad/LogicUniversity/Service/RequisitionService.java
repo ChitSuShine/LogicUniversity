@@ -1,6 +1,7 @@
 package com.example.team10ad.LogicUniversity.Service;
 
 import com.example.team10ad.LogicUniversity.Model.Requisition;
+import com.example.team10ad.LogicUniversity.Model.RequisitionDetail;
 
 import java.util.List;
 
@@ -16,6 +17,9 @@ public interface RequisitionService {
 
     @GET("requisition/reqid/{id}")
     Call<Requisition> getReqById(@Path("id") String id);
+
+    @GET("requisition/reqid/{id}")
+    Call<RequisitionDetail> getReqdetailById(@Path("id") String id);
 
     @POST("requisition/update")
     Call<Requisition> updateRequisition(@Body Requisition requisition);

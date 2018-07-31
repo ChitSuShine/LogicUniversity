@@ -4,14 +4,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.internal.TextScale;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.Model.ItemUsageClerk;
+import com.example.team10ad.LogicUniversity.Model.ItemTrend;
 import com.example.team10ad.LogicUniversity.Service.ReportService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
@@ -30,10 +30,12 @@ import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
-import java.text.SimpleDateFormat;
+import org.w3c.dom.Text;
+
+import java.text.DateFormatSymbols;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -53,16 +55,11 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     ArrayList<BarEntry> barValues2;
     ArrayList<BarEntry> barValues3;
 
-    ArrayList<Integer> sup1;
-    ArrayList<Integer> sup2;
-    ArrayList<Integer> sup3;
-
-
     private OnFragmentInteractionListener mListener;
 
-    float groupSpace = 0.1f;
-    float barSpace = 0.05f; // x4 DataSet
-    float barWidth = 0.25f; // x4 DataSet
+    float groupSpace = 0.18f;
+    float barSpace = 0.04f;
+    float barWidth = 0.30f;
 
     public Report1Fragment() { }
 
@@ -87,15 +84,9 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        sup1 = new ArrayList<>();
-        sup2 = new ArrayList<>();
-        sup3 = new ArrayList<>();
         barValues1 = new ArrayList<BarEntry>();
         barValues2 = new ArrayList<BarEntry>();
         barValues3 = new ArrayList<BarEntry>();
-        Calendar today = Calendar.getInstance();
-        final int month = today.get(Calendar.MONTH);
-        final int year = today.get(Calendar.YEAR);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_report1, container, false);
 
@@ -103,38 +94,24 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
 
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         ReportService service = ServiceGenerator.createService(ReportService.class, token);
-        Call<List<ItemUsageClerk>> call = service.getItemUsageClerk();
-        call.enqueue(new Callback<List<ItemUsageClerk>>() {
+        Call<List<ItemTrend>> call = service.getItemTrend();
+        call.enqueue(new Callback<List<ItemTrend>>() {
             @Override
-            public void onResponse(Call<List<ItemUsageClerk>> call, Response<List<ItemUsageClerk>> response) {
+            public void onResponse(Call<List<ItemTrend>> call, Response<List<ItemTrend>> response) {
                 if (response.isSuccessful()) {
-                    sup1 = new ArrayList<>();
-                    sup2 = new ArrayList<>();
-                    sup3 = new ArrayList<>();
-                    for (ItemUsageClerk item : response.body()) {
-                        if (item.getSupId() == 11)
-                            sup1.add(item.getQty());
-                        else if (item.getSupId() == 12)
-                            sup2.add(item.getQty());
-                        else if (item.getSupId() == 13)
-                            sup3.add(item.getQty());
+                    int i = 1;
+                    for (ItemTrend item : response.body()) {
+                        barValues1.add(new BarEntry(i, i+1));
+                        barValues2.add(new BarEntry(i, i+2));
+                        barValues3.add(new BarEntry(i, i+3));
+                        i++;
                     }
-                }
-                for (int i = 0; i < 3; i++) {
-                    sup1.add(0);
-                    sup2.add(0);
-                    sup3.add(0);
-                }
-                for (int i = 0; i < 3; i++) {
-                    barValues1.add(new BarEntry(1, sup1.get(i)));
-                    barValues2.add(new BarEntry(2, sup2.get(i)));
-                    barValues3.add(new BarEntry(3, sup3.get(i)));
                 }
                 setUpChart();
             }
 
             @Override
-            public void onFailure(Call<List<ItemUsageClerk>> call, Throwable t) {
+            public void onFailure(Call<List<ItemTrend>> call, Throwable t) {
                 Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -177,49 +154,13 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         mChart.setPinchZoom(false);
         mChart.setDrawBarShadow(false);
         mChart.setDrawGridBackground(false);
-        BarDataSet set1, set2, set3;
 
-        set1 = new BarDataSet(barValues1, "Sup 1");
-        set1.setColor(Color.argb(85,104,241,175));
-        set1.setBarBorderColor(Color.rgb(104,241,175));
-        set1.setBarBorderWidth(1.5f);
-        set2 = new BarDataSet(barValues2, "Sup 2");
-        set2.setColor(Color.argb(85,164, 228, 251));
-        set2.setBarBorderColor(Color.rgb(164, 228, 251));
-        set2.setBarBorderWidth(1.5f);
-        set3 = new BarDataSet(barValues3, "Sup 3");
-        set3.setColor(Color.argb(85,242, 247, 158));
-        set3.setBarBorderColor(Color.rgb(242, 247, 158));
-        set3.setBarBorderWidth(1.5f);
+        setBarData();
 
-        BarData data = new BarData(set1, set2, set3);
-        data.setValueFormatter(new LargeValueFormatter());
-
-        mChart.setData(data);
         mChart.animateY(1000);
 
-        Legend l = mChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(true);
-        l.setYOffset(0f);
-        l.setXOffset(10f);
-        l.setYEntrySpace(0f);
-        l.setTextSize(12f);
-
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setDrawGridLines(false);
-        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-
-        XAxis xAxis = mChart.getXAxis();
-        mChart.getAxisLeft().setAxisMinimum(0);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"ONE", "TWO", "THREE"}));
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setGranularityEnabled(true);
-
-        mChart.getAxisRight().setEnabled(false);
+        setLegend(mChart);
+        xAndYAxis(mChart);
 
         mChart.getBarData().setBarWidth(barWidth);
 
@@ -230,5 +171,62 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         mChart.getXAxis().setAxisMaximum(0 + mChart.getBarData().getGroupWidth(groupSpace, barSpace) * 3);
         mChart.groupBars(0, groupSpace, barSpace);
         mChart.invalidate();
+    }
+
+    private void setBarData(){
+        Calendar today = Calendar.getInstance();
+        int month = today.get(Calendar.MONTH);
+        String[] months = new DateFormatSymbols().getMonths();
+        BarDataSet set1, set2, set3;
+        set1 = new BarDataSet(barValues1, months[month-2]);
+        set1.setColor(Color.argb(85,128,201,190));
+        set1.setBarBorderColor(Color.rgb(128,201,190));
+        set1.setBarBorderWidth(1.5f);
+        set2 = new BarDataSet(barValues2, months[month-1]);
+        set2.setColor(Color.argb(85,242,226,205));
+        set2.setBarBorderColor(Color.rgb(242,226,205));
+        set2.setBarBorderWidth(1.5f);
+        set3 = new BarDataSet(barValues3, months[month]);
+        set3.setColor(Color.argb(85,233,151,144));
+        set3.setBarBorderColor(Color.rgb(233,151,144));
+        set3.setBarBorderWidth(1.5f);
+        set1.setValueTextSize(13);
+        set2.setValueTextSize(13);
+        set3.setValueTextSize(13);
+
+        BarData data = new BarData(set1, set2, set3);
+        data.setValueFormatter(new LargeValueFormatter());
+
+        mChart.setData(data);
+    }
+
+    private void setLegend(BarChart chart){
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(true);
+        l.setYOffset(0f);
+        l.setXOffset(10f);
+        l.setYEntrySpace(0f);
+        l.setTextSize(16f);
+    }
+
+    private void xAndYAxis(BarChart chart){
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        leftAxis.setTextSize(13f);
+
+        XAxis xAxis = chart.getXAxis();
+        chart.getAxisLeft().setAxisMinimum(0);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"ONE", "TWO", "THREE"}));
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setGranularity(1.18f);
+        xAxis.setDrawGridLines(false);
+        xAxis.setTextSize(14f);
+
+        chart.getAxisRight().setEnabled(false);
     }
 }

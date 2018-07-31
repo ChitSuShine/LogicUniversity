@@ -15,7 +15,7 @@ public interface UserService {
     @GET("user")
     Call<User> getLoginUser();
 
-    @GET("user/hod/{id}")
+    @GET("user/assigndepreplist/{id}")
     Call<List<User>> getUsersByDeptId(@Path("id") int id);
 
     @GET("user/role/{role}/{id}")

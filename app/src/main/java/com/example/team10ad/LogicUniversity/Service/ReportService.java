@@ -28,6 +28,6 @@ public interface ReportService {
     @GET("ItemUsageByClerk")
     Call<List<ItemUsageClerk>> getItemUsageClerk();
 
-    @GET("ItemTrendAnalysis")
+    @GET("itemtrendanalysis/6/1/3/1")
     Call<List<ItemTrend>> getItemTrend();
 }
