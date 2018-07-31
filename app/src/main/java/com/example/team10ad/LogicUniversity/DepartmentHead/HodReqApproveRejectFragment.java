@@ -135,6 +135,7 @@ public class HodReqApproveRejectFragment extends Fragment {
                 dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        result.setApprovedBy(String.valueOf(user.getUserId()));
                         result.setStatus("1");
                         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
                         Call<Requisition> rejcall = requisitionService.updateRequisition(result);
@@ -181,6 +182,7 @@ public class HodReqApproveRejectFragment extends Fragment {
                 dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        result.setApprovedBy(String.valueOf(user.getUserId()));
                         result.setStatus("7");
                         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
                         Call<Requisition> rejcall = requisitionService.updateRequisition(result);
