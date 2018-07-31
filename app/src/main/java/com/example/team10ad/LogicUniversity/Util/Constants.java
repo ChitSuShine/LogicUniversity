@@ -50,7 +50,7 @@ public class Constants {
     public static final String NO_DELEGATION = "There is no previous delegation.";
     public static final String DELEGATED_USER ="delegatedUser";
     public static final String DELEGATION_NO_EXTENSION = "There is no employee to extend period.";
-    public static final String DELEGATION_SAME_END_DATE = "End date is same.";
+    public static final String DELEGATION_SAME_END_DATE = "End date is same with current one.";
     public static final String DELEGATION_END_DATE = "End date must be greater than start date.";
 
     // Constants for RepScanQRFragment

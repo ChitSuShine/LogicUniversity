@@ -44,12 +44,12 @@ public class DelegateDetailFragment extends Fragment {
 
     private String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
     Calendar c = Calendar.getInstance();
-    private int smYear;
-    private int smMonth;
-    private int smDay;
-    private int emYear;
-    private int emMonth;
-    private int emDay;
+    private int smYear = c.get(Calendar.YEAR);
+    private int smMonth = c.get(Calendar.MONTH);
+    private int smDay = c.get(Calendar.DAY_OF_MONTH);
+    private int emYear = c.get(Calendar.YEAR);
+    private int emMonth = c.get(Calendar.MONTH);
+    private int emDay = c.get(Calendar.DAY_OF_MONTH);
 
     public DelegateDetailFragment() {
         // Required empty public constructor
@@ -101,7 +101,7 @@ public class DelegateDetailFragment extends Fragment {
         // Selecting End Date
         final TextView endDate = (TextView) view.findViewById(R.id.endDate);
         endDate.setText(c.get(Calendar.YEAR) + "-"
-                + (c.get(Calendar.MONTH) + 1) + "-" + (c.get(Calendar.DAY_OF_MONTH) + 1));
+                + (c.get(Calendar.MONTH) + 1) + "-" + (c.get(Calendar.DAY_OF_MONTH)));
         final ImageButton endDateButton = view.findViewById(R.id.btn_endDate);
         endDateButton.setOnClickListener(new View.OnClickListener() {
             @Override

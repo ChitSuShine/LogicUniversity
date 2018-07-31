@@ -166,6 +166,7 @@ public class RepScanQRFragment extends Fragment {
                     if (!disbursement.getDepID().equals(Integer.toString(user.getDepId()))) {
                         repMsg.setText(Constants.REP_WRONG_DEP);
                     } else {
+                        repMsg.setText("");
                         if (delivered == Constants.REP_DELIVER) {
                             repCardView.setVisibility(View.VISIBLE);
                             titleLayout.setVisibility(View.VISIBLE);

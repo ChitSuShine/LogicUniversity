@@ -45,7 +45,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChangeCollectionPoint extends Fragment {
+public class ChangeCollectionPoint extends Fragment implements RadioGroup.OnCheckedChangeListener{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -195,7 +195,7 @@ public class ChangeCollectionPoint extends Fragment {
                 });
             }
         });
-
+        radioGroup1.setOnCheckedChangeListener(this);
         return view;
     }
     public void onButtonPressed(Uri uri) {
@@ -215,6 +215,15 @@ public class ChangeCollectionPoint extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        if(radioGroup.getCheckedRadioButtonId() == (int) radioGroup.getTag()){
+            getView().findViewById(R.id.cpchange).setEnabled(false);
+        }else {
+            getView().findViewById(R.id.cpchange).setEnabled(true);
+        }
+    }
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
@@ -226,10 +235,11 @@ public class ChangeCollectionPoint extends Fragment {
             @Override
             public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
                 if(response.isSuccessful()){
-                    DepartmentCollectionPoint temp = response.body();
+                    final DepartmentCollectionPoint temp = response.body();
                     populateCpRadioBtns(cpService, radioGroup, temp.getCpId());
                     currentcp.setText(new StringBuilder("Current collection point is ")
                             .append(temp.getCpName()));
+                    radioGroup.setTag(temp.getCpId());
                 }
             }
 
