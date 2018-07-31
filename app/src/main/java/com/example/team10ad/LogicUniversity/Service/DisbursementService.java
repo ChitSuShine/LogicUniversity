@@ -14,7 +14,7 @@ import retrofit2.http.Path;
 
 public interface DisbursementService {
     @GET("requisition/updatetopreparing")
-    Call<List<Disbursement>> collectAllItems();
+    Call<List<Disbursement>> collectAllItems(@Body Disbursement disbursement);
 
     @GET("requisitions/preparing")
     Call<List<Disbursement>> getAllDisbursements();
