@@ -1,6 +1,7 @@
 package com.example.team10ad.LogicUniversity.Service;
 
 import com.example.team10ad.LogicUniversity.Model.FreqentlyItem;
+import com.example.team10ad.LogicUniversity.Model.FrequentItemHod;
 import com.example.team10ad.LogicUniversity.Model.ItemTrend;
 import com.example.team10ad.LogicUniversity.Model.ItemUsageClerk;
 import com.example.team10ad.LogicUniversity.Model.ItemUsageHod;
@@ -32,4 +33,7 @@ public interface ReportService {
     @GET("itemtrendanalysis/{d1}/{d2}/{d3}/{cat}")
     Call<List<ItemTrend>> getItemTrend(@Path("d1") int d1, @Path("d2") int d2,
                                        @Path("d3") int d3, @Path("cat") int cat);
+
+    @GET("frequentlyordered5hod/{id}")
+    Call<List<FrequentItemHod>> getFrequentItemListHod(@Path("id") int deptid);
 }

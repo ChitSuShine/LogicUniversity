@@ -41,8 +41,7 @@ public class RetrievalFormFragment extends Fragment {
     Disbursement res;
     String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
-    public RetrievalFormFragment() {
-    }
+    public RetrievalFormFragment() { }
     public static RetrievalFormFragment newInstance(String param1, String param2) {
         RetrievalFormFragment fragment = new RetrievalFormFragment();
         Bundle args = new Bundle();
@@ -98,8 +97,9 @@ public class RetrievalFormFragment extends Fragment {
         itemcollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                res.setStatus(3);
                 DisbursementService dService = ServiceGenerator.createService(DisbursementService.class,token);
-                Call<List<Disbursement>> call = dService.collectAllItems();
+                Call<List<Disbursement>> call = dService.collectAllItems(res);
                 call.enqueue(new Callback<List<Disbursement>>() {
                     @Override
                     public void onResponse(Call<List<Disbursement>> call, Response<List<Disbursement>> response) {
@@ -110,7 +110,7 @@ public class RetrievalFormFragment extends Fragment {
                     }
                     @Override
                     public void onFailure(Call<List<Disbursement>> call, Throwable t) {
-                        Toast.makeText(getActivity(),"CONNECTION ERROR!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),Constants.NETWORK_ERROR_MSG,Toast.LENGTH_LONG).show();
                     }
                 });
             }

@@ -41,8 +41,7 @@ public class HodDashboardFragment extends Fragment {
     List<Requisition> result;
     ListView recentOrderHistory;
 
-    public HodDashboardFragment() {
-    }
+    public HodDashboardFragment() { }
 
     public static HodDashboardFragment newInstance(String param1, String param2) {
         HodDashboardFragment fragment = new HodDashboardFragment();
@@ -101,6 +100,15 @@ public class HodDashboardFragment extends Fragment {
             public void onClick(View view) {
                 ReqListForTrackingOrder hodTracking = new ReqListForTrackingOrder();
                 getFragmentManager().beginTransaction().replace(R.id.content_frame, hodTracking).addToBackStack(null).commit();
+            }
+        });
+        // Report
+        CardView reportCardView = (CardView) view.findViewById(R.id.cardreport);
+        reportCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HODReportFragment hodReport= new HODReportFragment();
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, hodReport).addToBackStack(null).commit();
             }
         });
         return view;

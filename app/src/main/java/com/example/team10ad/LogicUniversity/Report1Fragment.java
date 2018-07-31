@@ -56,6 +56,7 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     ArrayList<Integer> deptId = new ArrayList<>();
     ArrayList<Integer> catId = new ArrayList<>();
     private BarChart mChart;
+    List<ItemTrend> result;
     ArrayList<BarEntry> barValues1;
     ArrayList<BarEntry> barValues2;
     ArrayList<BarEntry> barValues3;
@@ -66,8 +67,7 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     float barSpace = 0.04f;
     float barWidth = 0.30f;
 
-    public Report1Fragment() {
-    }
+    public Report1Fragment() { }
 
     public static Report1Fragment newInstance(String param1, String param2) {
         Report1Fragment fragment = new Report1Fragment();
@@ -125,7 +125,7 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
                                 dept3Spin.getSelectedItem().toString()
                         }
                 ));
-                mChart.getXAxis().setLabelRotationAngle(360-15);
+                mChart.getXAxis().setLabelRotationAngle(360 - 15);
                 requestData(d1, d2, d3, cat);
             }
         });
@@ -152,12 +152,10 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     }
 
     @Override
-    public void onValueSelected(Entry e, Highlight h) {
-    }
+    public void onValueSelected(Entry e, Highlight h) { }
 
     @Override
-    public void onNothingSelected() {
-    }
+    public void onNothingSelected() { }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
@@ -189,8 +187,8 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         set1.setBarBorderColor(Color.rgb(128, 201, 190));
         set1.setBarBorderWidth(1.5f);
         set2 = new BarDataSet(barValues2, months[month - 1]);
-        set2.setColor(Color.argb(85, 72,105,127));
-        set2.setBarBorderColor(Color.rgb(72,105,127));
+        set2.setColor(Color.argb(85, 72, 105, 127));
+        set2.setBarBorderColor(Color.rgb(72, 105, 127));
         set2.setBarBorderWidth(1.5f);
         set3 = new BarDataSet(barValues3, months[month]);
         set3.setColor(Color.argb(85, 233, 151, 144));
@@ -235,7 +233,7 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         chart.getAxisRight().setEnabled(false);
     }
 
-    private void updateChart(){
+    private void updateChart() {
         mChart.getBarData().setBarWidth(barWidth);
         mChart.animateY(1000);
 
@@ -248,15 +246,15 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         mChart.invalidate();
     }
 
-    private void setCatSpinner(final Spinner spin){
+    private void setCatSpinner(final Spinner spin) {
         InventoryService service = ServiceGenerator.createService(InventoryService.class, token);
         Call<List<Category>> call = service.getAllCategories();
         call.enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     ArrayList<String> temp = new ArrayList<>();
-                    for(Category c : response.body()){
+                    for (Category c : response.body()) {
                         catId.add(c.getCatId());
                         temp.add(c.getName());
                     }
@@ -274,13 +272,13 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         });
     }
 
-    private void setDeptSpinners(final Spinner spin1, final Spinner spin2, final Spinner spin3){
+    private void setDeptSpinners(final Spinner spin1, final Spinner spin2, final Spinner spin3) {
         DepartmentService service = ServiceGenerator.createService(DepartmentService.class, token);
         Call<List<Department>> call = service.getAllDepartments();
         call.enqueue(new Callback<List<Department>>() {
             @Override
             public void onResponse(Call<List<Department>> call, Response<List<Department>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     ArrayList<String> temp = new ArrayList<>();
                     for (Department d : response.body()) {
                         deptId.add(d.getDeptId());
@@ -303,23 +301,26 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         });
     }
 
-    private void requestData(int d1, int d2, int d3, int cat){
+    private void requestData(int d1, int d2, int d3, int cat) {
         ReportService service = ServiceGenerator.createService(ReportService.class, token);
         Call<List<ItemTrend>> call = service.getItemTrend(d1, d2, d3, cat);
         call.enqueue(new Callback<List<ItemTrend>>() {
             @Override
             public void onResponse(Call<List<ItemTrend>> call, Response<List<ItemTrend>> response) {
                 if (response.isSuccessful()) {
+                    result = response.body();
                     barValues1 = new ArrayList<>();
                     barValues2 = new ArrayList<>();
                     barValues3 = new ArrayList<>();
-                    int i = 1;
-                    for (ItemTrend item : response.body()) {
-                        barValues1.add(new BarEntry(i, item.getDept1()));
-                        barValues2.add(new BarEntry(i, item.getDept2()));
-                        barValues3.add(new BarEntry(i, item.getDept3()));
-                        i++;
-                    }
+                    barValues1.add(new BarEntry(1, result.get(2).getDept1()));
+                    barValues2.add(new BarEntry(1, result.get(1).getDept1()));
+                    barValues3.add(new BarEntry(1, result.get(0).getDept1()));
+                    barValues1.add(new BarEntry(2, result.get(2).getDept2()));
+                    barValues2.add(new BarEntry(2, result.get(1).getDept2()));
+                    barValues3.add(new BarEntry(2, result.get(0).getDept2()));
+                    barValues1.add(new BarEntry(3, result.get(2).getDept3()));
+                    barValues2.add(new BarEntry(3, result.get(1).getDept3()));
+                    barValues3.add(new BarEntry(3, result.get(0).getDept3()));
                 }
                 setUpChart();
             }
