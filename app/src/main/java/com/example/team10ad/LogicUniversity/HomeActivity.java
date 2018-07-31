@@ -225,9 +225,6 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.orderhishod:
                     fragmentClass = HODOrderHistory.class;
                     break;
-                case R.id.reportHod:
-                    fragmentClass = HODReportFragment.class;
-                    break;
                 default:
                     fragmentClass = DashboardFragment.class;
             }
