@@ -103,6 +103,15 @@ public class HodDashboardFragment extends Fragment {
                 getFragmentManager().beginTransaction().replace(R.id.content_frame, hodTracking).addToBackStack(null).commit();
             }
         });
+        // Report
+        CardView reportCardView = (CardView) view.findViewById(R.id.cardreport);
+        reportCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HODReportFragment hodReport= new HODReportFragment();
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, hodReport).addToBackStack(null).commit();
+            }
+        });
         return view;
     }
 
