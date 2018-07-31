@@ -4,14 +4,19 @@ import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.internal.TextScale;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Model.Category;
+import com.example.team10ad.LogicUniversity.Model.Department;
 import com.example.team10ad.LogicUniversity.Model.ItemTrend;
+import com.example.team10ad.LogicUniversity.Service.DepartmentService;
+import com.example.team10ad.LogicUniversity.Service.InventoryService;
 import com.example.team10ad.LogicUniversity.Service.ReportService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
@@ -30,10 +35,7 @@ import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
-import org.w3c.dom.Text;
-
 import java.text.DateFormatSymbols;
-import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -50,6 +52,9 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     private String mParam1;
     private String mParam2;
 
+    String token;
+    ArrayList<Integer> deptId = new ArrayList<>();
+    ArrayList<Integer> catId = new ArrayList<>();
     private BarChart mChart;
     ArrayList<BarEntry> barValues1;
     ArrayList<BarEntry> barValues2;
@@ -61,7 +66,8 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     float barSpace = 0.04f;
     float barWidth = 0.30f;
 
-    public Report1Fragment() { }
+    public Report1Fragment() {
+    }
 
     public static Report1Fragment newInstance(String param1, String param2) {
         Report1Fragment fragment = new Report1Fragment();
@@ -91,28 +97,36 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         View view = inflater.inflate(R.layout.fragment_report1, container, false);
 
         mChart = view.findViewById(R.id.barChart);
+        final Spinner catSpin = view.findViewById(R.id.catSpin);
+        final Spinner dept1Spin = view.findViewById(R.id.dept1);
+        final Spinner dept2Spin = view.findViewById(R.id.dept2);
+        final Spinner dept3Spin = view.findViewById(R.id.dept3);
 
-        String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
-        ReportService service = ServiceGenerator.createService(ReportService.class, token);
-        Call<List<ItemTrend>> call = service.getItemTrend();
-        call.enqueue(new Callback<List<ItemTrend>>() {
-            @Override
-            public void onResponse(Call<List<ItemTrend>> call, Response<List<ItemTrend>> response) {
-                if (response.isSuccessful()) {
-                    int i = 1;
-                    for (ItemTrend item : response.body()) {
-                        barValues1.add(new BarEntry(i, i+1));
-                        barValues2.add(new BarEntry(i, i+2));
-                        barValues3.add(new BarEntry(i, i+3));
-                        i++;
-                    }
-                }
-                setUpChart();
-            }
+        token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
+        setUpChart();
+        mChart.getXAxis().setDrawLabels(false);
+        setCatSpinner(catSpin);
+        setDeptSpinners(dept1Spin, dept2Spin, dept3Spin);
+
+        Button btnGen = view.findViewById(R.id.reportBtn);
+        btnGen.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFailure(Call<List<ItemTrend>> call, Throwable t) {
-                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                int d1 = deptId.get(dept1Spin.getSelectedItemPosition());
+                int d2 = deptId.get(dept2Spin.getSelectedItemPosition());
+                int d3 = deptId.get(dept3Spin.getSelectedItemPosition());
+                int cat = catId.get(catSpin.getSelectedItemPosition());
+                mChart.getXAxis().setDrawLabels(true);
+                mChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(
+                        new String[]{
+                                dept1Spin.getSelectedItem().toString(),
+                                dept2Spin.getSelectedItem().toString(),
+                                dept3Spin.getSelectedItem().toString()
+                        }
+                ));
+                mChart.getXAxis().setLabelRotationAngle(360-15);
+                requestData(d1, d2, d3, cat);
             }
         });
 
@@ -138,10 +152,12 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     }
 
     @Override
-    public void onValueSelected(Entry e, Highlight h) { }
+    public void onValueSelected(Entry e, Highlight h) {
+    }
 
     @Override
-    public void onNothingSelected() { }
+    public void onNothingSelected() {
+    }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
@@ -157,38 +173,28 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
 
         setBarData();
 
-        mChart.animateY(1000);
-
         setLegend(mChart);
         xAndYAxis(mChart);
 
-        mChart.getBarData().setBarWidth(barWidth);
-
-        // restrict the x-axis range
-        mChart.getXAxis().setAxisMinimum(0);
-
-        // barData.getGroupWith(...) is a helper that calculates the width each group needs based on the provided parameters
-        mChart.getXAxis().setAxisMaximum(0 + mChart.getBarData().getGroupWidth(groupSpace, barSpace) * 3);
-        mChart.groupBars(0, groupSpace, barSpace);
-        mChart.invalidate();
+        updateChart();
     }
 
-    private void setBarData(){
+    private void setBarData() {
         Calendar today = Calendar.getInstance();
         int month = today.get(Calendar.MONTH);
         String[] months = new DateFormatSymbols().getMonths();
         BarDataSet set1, set2, set3;
-        set1 = new BarDataSet(barValues1, months[month-2]);
-        set1.setColor(Color.argb(85,128,201,190));
-        set1.setBarBorderColor(Color.rgb(128,201,190));
+        set1 = new BarDataSet(barValues1, months[month - 2]);
+        set1.setColor(Color.argb(85, 128, 201, 190));
+        set1.setBarBorderColor(Color.rgb(128, 201, 190));
         set1.setBarBorderWidth(1.5f);
-        set2 = new BarDataSet(barValues2, months[month-1]);
-        set2.setColor(Color.argb(85,242,226,205));
-        set2.setBarBorderColor(Color.rgb(242,226,205));
+        set2 = new BarDataSet(barValues2, months[month - 1]);
+        set2.setColor(Color.argb(85, 72,105,127));
+        set2.setBarBorderColor(Color.rgb(72,105,127));
         set2.setBarBorderWidth(1.5f);
         set3 = new BarDataSet(barValues3, months[month]);
-        set3.setColor(Color.argb(85,233,151,144));
-        set3.setBarBorderColor(Color.rgb(233,151,144));
+        set3.setColor(Color.argb(85, 233, 151, 144));
+        set3.setBarBorderColor(Color.rgb(233, 151, 144));
         set3.setBarBorderWidth(1.5f);
         set1.setValueTextSize(13);
         set2.setValueTextSize(13);
@@ -200,7 +206,7 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         mChart.setData(data);
     }
 
-    private void setLegend(BarChart chart){
+    private void setLegend(BarChart chart) {
         Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
@@ -212,14 +218,13 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         l.setTextSize(16f);
     }
 
-    private void xAndYAxis(BarChart chart){
+    private void xAndYAxis(BarChart chart) {
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
         leftAxis.setTextSize(13f);
 
         XAxis xAxis = chart.getXAxis();
         chart.getAxisLeft().setAxisMinimum(0);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"ONE", "TWO", "THREE"}));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setCenterAxisLabels(true);
         xAxis.setGranularityEnabled(true);
@@ -228,5 +233,101 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         xAxis.setTextSize(14f);
 
         chart.getAxisRight().setEnabled(false);
+    }
+
+    private void updateChart(){
+        mChart.getBarData().setBarWidth(barWidth);
+        mChart.animateY(1000);
+
+        // restrict the x-axis range
+        mChart.getXAxis().setAxisMinimum(0);
+
+        // barData.getGroupWith(...) is a helper that calculates the width each group needs based on the provided parameters
+        mChart.getXAxis().setAxisMaximum(0 + mChart.getBarData().getGroupWidth(groupSpace, barSpace) * 3);
+        mChart.groupBars(0, groupSpace, barSpace);
+        mChart.invalidate();
+    }
+
+    private void setCatSpinner(final Spinner spin){
+        InventoryService service = ServiceGenerator.createService(InventoryService.class, token);
+        Call<List<Category>> call = service.getAllCategories();
+        call.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if(response.isSuccessful()){
+                    ArrayList<String> temp = new ArrayList<>();
+                    for(Category c : response.body()){
+                        catId.add(c.getCatId());
+                        temp.add(c.getName());
+                    }
+                    android.widget.ArrayAdapter<String> dataAdapter =
+                            new android.widget.ArrayAdapter<String>(getContext(),
+                                    android.R.layout.simple_spinner_dropdown_item, temp);
+                    spin.setAdapter(dataAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setDeptSpinners(final Spinner spin1, final Spinner spin2, final Spinner spin3){
+        DepartmentService service = ServiceGenerator.createService(DepartmentService.class, token);
+        Call<List<Department>> call = service.getAllDepartments();
+        call.enqueue(new Callback<List<Department>>() {
+            @Override
+            public void onResponse(Call<List<Department>> call, Response<List<Department>> response) {
+                if(response.isSuccessful()){
+                    ArrayList<String> temp = new ArrayList<>();
+                    for (Department d : response.body()) {
+                        deptId.add(d.getDeptId());
+                        temp.add(d.getDeptName());
+                    }
+                    android.widget.ArrayAdapter<String> dataAdapter =
+                            new android.widget.ArrayAdapter<String>(getContext(),
+                                    android.R.layout.simple_spinner_dropdown_item, temp);
+                    // attaching data adapter to spinner
+                    spin1.setAdapter(dataAdapter);
+                    spin2.setAdapter(dataAdapter);
+                    spin3.setAdapter(dataAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Department>> call, Throwable t) {
+                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void requestData(int d1, int d2, int d3, int cat){
+        ReportService service = ServiceGenerator.createService(ReportService.class, token);
+        Call<List<ItemTrend>> call = service.getItemTrend(d1, d2, d3, cat);
+        call.enqueue(new Callback<List<ItemTrend>>() {
+            @Override
+            public void onResponse(Call<List<ItemTrend>> call, Response<List<ItemTrend>> response) {
+                if (response.isSuccessful()) {
+                    barValues1 = new ArrayList<>();
+                    barValues2 = new ArrayList<>();
+                    barValues3 = new ArrayList<>();
+                    int i = 1;
+                    for (ItemTrend item : response.body()) {
+                        barValues1.add(new BarEntry(i, item.getDept1()));
+                        barValues2.add(new BarEntry(i, item.getDept2()));
+                        barValues3.add(new BarEntry(i, item.getDept3()));
+                        i++;
+                    }
+                }
+                setUpChart();
+            }
+
+            @Override
+            public void onFailure(Call<List<ItemTrend>> call, Throwable t) {
+                Toast.makeText(getContext(), "CONNECTION ERROR!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

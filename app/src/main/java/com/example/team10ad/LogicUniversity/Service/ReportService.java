@@ -11,6 +11,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface ReportService {
     @GET("FrequentlyItemList")
@@ -28,6 +29,7 @@ public interface ReportService {
     @GET("ItemUsageByClerk")
     Call<List<ItemUsageClerk>> getItemUsageClerk();
 
-    @GET("itemtrendanalysis/6/1/3/1")
-    Call<List<ItemTrend>> getItemTrend();
+    @GET("itemtrendanalysis/{d1}/{d2}/{d3}/{cat}")
+    Call<List<ItemTrend>> getItemTrend(@Path("d1") int d1, @Path("d2") int d2,
+                                       @Path("d3") int d3, @Path("cat") int cat);
 }

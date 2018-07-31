@@ -30,5 +30,15 @@
         You can process this requisition via LUSSIS website. </string>
     <string name="note2_message">Your requisition is approved by store clerk. </string>
 
+    <!--spinner texts-->
+    <string name="sup1">1st Supplier</string>
+    <string name="sup2">2nd Supplier</string>
+    <string name="sup3">3rd Supplier</string>
+    <string name="dept1">1st Department</string>
+    <string name="dept2">2nd Department</string>
+    <string name="dept3">3rd Department</string>
+    <string name="item">Item</string>
+    <string name="category">Category</string>
+
 
 </resources>
