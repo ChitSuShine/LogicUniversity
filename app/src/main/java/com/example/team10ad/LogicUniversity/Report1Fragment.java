@@ -199,9 +199,9 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         set3.setColor(Color.argb(85, 233, 151, 144));
         set3.setBarBorderColor(Color.rgb(233, 151, 144));
         set3.setBarBorderWidth(1.5f);
-        set1.setValueTextSize(13);
-        set2.setValueTextSize(13);
-        set3.setValueTextSize(13);
+        set1.setValueTextSize(11);
+        set2.setValueTextSize(11);
+        set3.setValueTextSize(11);
 
         BarData data = new BarData(set1, set2, set3);
         data.setValueFormatter(new IValueFormatter() {

@@ -3,69 +3,47 @@ package com.example.team10ad.LogicUniversity.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class ItemUsageClerk {
-    @SerializedName("Description")
-    private String description;
+    @SerializedName("Month")
+    private String month;
 
-    @SerializedName("Qty")
-    private int qty;
+    @SerializedName("Sup1Data")
+    private int sup1;
 
-    @SerializedName("Podate")
-    private int month;
+    @SerializedName("Sup2Data")
+    private int sup2;
 
-    @SerializedName("Year")
-    private int year;
+    @SerializedName("Sup3Data")
+    private int sup3;
 
-    @SerializedName("Supname")
-    private String supName;
-
-    @SerializedName("Supid")
-    private int supId;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getQty() {
-        return qty;
-    }
-
-    public void setQty(int qty) {
-        this.qty = qty;
-    }
-
-    public int getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public void setMonth(int month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 
-    public int getYear() {
-        return year;
+    public int getSup1() {
+        return sup1;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setSup1(int sup1) {
+        this.sup1 = sup1;
     }
 
-    public String getSupName() {
-        return supName;
+    public int getSup2() {
+        return sup2;
     }
 
-    public void setSupName(String supName) {
-        this.supName = supName;
+    public void setSup2(int sup2) {
+        this.sup2 = sup2;
     }
 
-    public int getSupId() {
-        return supId;
+    public int getSup3() {
+        return sup3;
     }
 
-    public void setSupId(int supId) {
-        this.supId = supId;
+    public void setSup3(int sup3) {
+        this.sup3 = sup3;
     }
 }

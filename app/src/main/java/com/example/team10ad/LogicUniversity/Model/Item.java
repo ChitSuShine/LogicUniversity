@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 public class Item {
 
     @SerializedName("Itemid")
-    private String Itemid;
+    private int Itemid;
 
     @SerializedName("Catid")
-    private String Catid;
+    private int Catid;
 
     @SerializedName("CatName")
     private String CatName;
@@ -19,19 +19,19 @@ public class Item {
     @SerializedName("Uom")
     private String Uom;
 
-    public String getItemid() {
+    public int getItemid() {
         return Itemid;
     }
 
-    public void setItemid(String itemid) {
+    public void setItemid(int itemid) {
         Itemid = itemid;
     }
 
-    public String getCatid() {
+    public int getCatid() {
         return Catid;
     }
 
-    public void setCatid(String catid) {
+    public void setCatid(int catid) {
         Catid = catid;
     }
 

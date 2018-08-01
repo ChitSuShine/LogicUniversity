@@ -2,6 +2,8 @@ package com.example.team10ad.LogicUniversity.Service;
 
 import com.example.team10ad.LogicUniversity.Model.Category;
 import com.example.team10ad.LogicUniversity.Model.Inventory;
+import com.example.team10ad.LogicUniversity.Model.Item;
+import com.example.team10ad.LogicUniversity.Model.Supplier;
 
 import java.util.List;
 
@@ -14,4 +16,10 @@ public interface InventoryService {
 
     @GET("categories")
     Call<List<Category>> getAllCategories();
+
+    @GET("suppliers")
+    Call<List<Supplier>> getAllSuppliers();
+
+    @GET("items")
+    Call<List<Item>> getAllItems();
 }
