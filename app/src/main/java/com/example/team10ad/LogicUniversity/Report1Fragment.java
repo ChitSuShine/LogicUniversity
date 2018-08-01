@@ -30,12 +30,15 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DateFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -97,6 +100,7 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         View view = inflater.inflate(R.layout.fragment_report1, container, false);
 
         mChart = view.findViewById(R.id.barChart);
+        mChart.setVisibility(View.INVISIBLE);
         final Spinner catSpin = view.findViewById(R.id.catSpin);
         final Spinner dept1Spin = view.findViewById(R.id.dept1);
         final Spinner dept2Spin = view.findViewById(R.id.dept2);
@@ -113,6 +117,7 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         btnGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mChart.setVisibility(View.VISIBLE);
                 int d1 = deptId.get(dept1Spin.getSelectedItemPosition());
                 int d2 = deptId.get(dept2Spin.getSelectedItemPosition());
                 int d3 = deptId.get(dept3Spin.getSelectedItemPosition());
@@ -199,7 +204,16 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         set3.setValueTextSize(13);
 
         BarData data = new BarData(set1, set2, set3);
-        data.setValueFormatter(new LargeValueFormatter());
+        data.setValueFormatter(new IValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                if(value > 0) {
+                    return NumberFormat.getNumberInstance().format(value);
+                } else {
+                    return "";
+                }
+            }
+        });
 
         mChart.setData(data);
     }
@@ -227,7 +241,7 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
         xAxis.setCenterAxisLabels(true);
         xAxis.setGranularityEnabled(true);
         xAxis.setGranularity(1.18f);
-        xAxis.setDrawGridLines(false);
+        xAxis.setDrawGridLines(true);
         xAxis.setTextSize(14f);
 
         chart.getAxisRight().setEnabled(false);
