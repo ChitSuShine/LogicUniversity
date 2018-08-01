@@ -6,7 +6,7 @@ public class Constants {
 
     // Constants for API Requests
     public static final String GRANT_TYPE = "password";
-    public static final String API_BASE_URL = "http://lussisadteam10api.azurewebsites.net/api/";
+    public static final String API_BASE_URL = "http://172.27.249.107/lussis/API/";
     public static final String BEARER = "bearer ";
     public static final String KEY_ACCESS_TOKEN = "access_token";
     public static final String AUTHORIZATION = "Authorization";

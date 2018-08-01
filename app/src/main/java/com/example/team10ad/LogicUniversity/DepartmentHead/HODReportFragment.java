@@ -49,7 +49,6 @@ public class HODReportFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_hod_report, container, false);
         TabLayout tabLayout = view.findViewById(R.id.hodtabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Report 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Report 2"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = view.findViewById(R.id.hodpager);
@@ -65,14 +64,10 @@ public class HODReportFragment extends Fragment {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) { }
         });
         return view;
     }

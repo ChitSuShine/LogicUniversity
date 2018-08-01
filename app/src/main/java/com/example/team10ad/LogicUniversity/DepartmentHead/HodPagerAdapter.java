@@ -19,7 +19,6 @@ public class HodPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new HODReport();
             case 1:
-                return new HODReport2();
             default:
                 return null;
         }

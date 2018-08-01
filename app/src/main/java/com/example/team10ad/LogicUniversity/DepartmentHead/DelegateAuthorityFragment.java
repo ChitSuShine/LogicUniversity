@@ -114,7 +114,12 @@ public class DelegateAuthorityFragment extends Fragment {
                 String sDate = startDate.getText().toString();
                 try {
                     Date date = new SimpleDateFormat(Constants.DATE_FORMAT).parse(sDate);
-                    datePickerDialog.getDatePicker().setMinDate(date.getTime());
+                    Date today = new Date();
+                    if (date.before(today)) {
+                        datePickerDialog.getDatePicker().setMinDate(today.getTime());
+                    } else {
+                        datePickerDialog.getDatePicker().setMinDate(date.getTime());
+                    }
                     datePickerDialog.setTitle("");
                     datePickerDialog.show();
                 } catch (ParseException e) {
