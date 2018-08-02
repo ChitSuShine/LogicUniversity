@@ -48,7 +48,7 @@ public class HODReportFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_hod_report, container, false);
         TabLayout tabLayout = view.findViewById(R.id.hodtabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Report 1"));
+        tabLayout.addTab(tabLayout.newTab().setText("Frequently Ordered Items"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = view.findViewById(R.id.hodpager);
