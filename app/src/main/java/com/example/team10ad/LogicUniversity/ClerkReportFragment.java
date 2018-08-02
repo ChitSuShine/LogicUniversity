@@ -49,7 +49,7 @@ public class ClerkReportFragment extends Fragment {
        View view = inflater.inflate(R.layout.fragment_clerk_report, container, false);
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Trend Analysis"));
-        tabLayout.addTab(tabLayout.newTab().setText("Purchasing Analysis"));
+        tabLayout.addTab(tabLayout.newTab().setText("Purchase Orders Analysis"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = view.findViewById(R.id.pager);
