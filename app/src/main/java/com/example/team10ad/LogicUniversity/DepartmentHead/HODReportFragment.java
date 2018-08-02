@@ -53,7 +53,7 @@ public class HODReportFragment extends Fragment {
 
         final ViewPager viewPager = view.findViewById(R.id.hodpager);
         final HodPagerAdapter adapter = new HodPagerAdapter
-                (getFragmentManager(), tabLayout.getTabCount());
+                (getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
