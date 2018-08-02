@@ -6,7 +6,7 @@
     <string name="your_string_id"></string>
     <string name="inventory">Inventory</string>
     <string name="app_rej_cp">Collection Point Request</string>
-    <string name="tracking">Delivery Point</string>
+    <string name="tracking">Collection Point</string>
     <string name="report">Report</string>
     <string name="logout">Logout</string>
     <string name="title_activity_reports">ReportsActivity</string>
