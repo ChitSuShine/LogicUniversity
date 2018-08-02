@@ -163,7 +163,7 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("http://lussisteam10.azurewebsites.net/account/login"));
+                intent.setData(Uri.parse("http://172.27.249.107/logicuniversity/account/login"));
                 startActivity(intent);
                 break;
             case R.id.noti:
