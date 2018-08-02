@@ -109,6 +109,7 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
                         dataSet.setBarBorderColor(Color.rgb( reds[i], greens[i], blues[i]));
                         dataSet.setBarBorderWidth(1.5f);
                         barData.addDataSet(dataSet);
+                        barData.setValueTextSize(11);
                         i++;
                     }
                     mChart = view.findViewById(R.id.frequentlyItemChart);
@@ -176,6 +177,7 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
         xAxis.setAxisMinimum(-1f);
         xAxis.setAxisMaximum(5f);
         xAxis.setDrawAxisLine(true);
+        xAxis.setTextSize(13);
         xAxis.setEnabled(true);
         xAxis.setDrawGridLines(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -188,7 +190,8 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
     // bar chart styling y axis
     private BarChart yAxisSetting(BarChart chart){
         YAxis leftAxis = chart.getAxisLeft();
-        leftAxis.setDrawGridLines(false);
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setTextSize(12);
         leftAxis.setValueFormatter(new LargeValueFormatter());
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
         return chart;
