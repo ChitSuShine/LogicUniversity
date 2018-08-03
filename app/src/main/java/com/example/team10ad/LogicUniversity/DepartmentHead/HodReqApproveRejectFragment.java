@@ -138,8 +138,8 @@ public class HodReqApproveRejectFragment extends Fragment {
                         result.setApprovedBy(String.valueOf(user.getUserId()));
                         result.setStatus("1");
                         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
-                        Call<Requisition> rejcall = requisitionService.updateRequisition(result);
-                        rejcall.enqueue(new Callback<Requisition>() {
+                        Call<Requisition> apprCall = requisitionService.updateRequisition(result);
+                        apprCall.enqueue(new Callback<Requisition>() {
                             @Override
                             public void onResponse(Call<Requisition> call, Response<Requisition> response) {
                                 if (response.isSuccessful()) {
@@ -195,7 +195,7 @@ public class HodReqApproveRejectFragment extends Fragment {
                             public void onResponse(Call<Requisition> call, Response<Requisition> response) {
                                 if (response.isSuccessful()) {
                                     result=response.body();
-                                    createNoti(input, response.body(),5);
+                                    createNoti(input, response.body(),5, "Requisition rejected!");
 
                                 }
                                 else {
@@ -236,15 +236,15 @@ public class HodReqApproveRejectFragment extends Fragment {
         super.onDetach();
     }
 
-    private void createNoti(EditText input, Requisition res,int notitype){
+    private void createNoti(EditText input, Requisition res,int notiType, String title){
         final String remark=input.getText().toString();
         Noti notiremark=new Noti();
-        notiremark.setNotiType(notitype);
+        notiremark.setNotiType(notiType);
         notiremark.setIsread(false);
         notiremark.setRemark(remark);
         notiremark.setDatetime(String.valueOf(java.util.Calendar.getInstance()));
         notiremark.setRole(Constants.EMP_ROLE);
-        notiremark.setTitle("HOD Requisition");
+        notiremark.setTitle(title);
         notiremark.setNotiID(0);
         notiremark.setDeptid(deptId);
         notiremark.setResID(Integer.parseInt(res.getReqID()));
