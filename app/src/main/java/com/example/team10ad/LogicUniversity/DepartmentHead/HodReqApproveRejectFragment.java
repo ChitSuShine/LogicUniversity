@@ -144,7 +144,11 @@ public class HodReqApproveRejectFragment extends Fragment {
                             public void onResponse(Call<Requisition> call, Response<Requisition> response) {
                                 if (response.isSuccessful()) {
                                     result=response.body();
-                                    createNoti(input, response.body());
+                                    HodRequisitionListFragment hodRequisitionListFragment = new HodRequisitionListFragment();
+                                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                    ft.detach(HodReqApproveRejectFragment.this);
+                                    ft.add(R.id.content_frame, hodRequisitionListFragment).commit();
+                                   //createNoti(input, response.body(),6);
                                 }
                                 else {
                                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
@@ -191,7 +195,8 @@ public class HodReqApproveRejectFragment extends Fragment {
                             public void onResponse(Call<Requisition> call, Response<Requisition> response) {
                                 if (response.isSuccessful()) {
                                     result=response.body();
-                                    createNoti(input, response.body());
+                                    createNoti(input, response.body(),5);
+
                                 }
                                 else {
                                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
@@ -231,10 +236,10 @@ public class HodReqApproveRejectFragment extends Fragment {
         super.onDetach();
     }
 
-    private void createNoti(EditText input, Requisition res){
+    private void createNoti(EditText input, Requisition res,int notitype){
         final String remark=input.getText().toString();
         Noti notiremark=new Noti();
-        notiremark.setNotiType(6);
+        notiremark.setNotiType(notitype);
         notiremark.setIsread(false);
         notiremark.setRemark(remark);
         notiremark.setDatetime(String.valueOf(java.util.Calendar.getInstance()));
@@ -264,6 +269,7 @@ public class HodReqApproveRejectFragment extends Fragment {
             }
         });
     }
+
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
