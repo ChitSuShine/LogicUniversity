@@ -1,7 +1,6 @@
 package com.example.team10ad.LogicUniversity.Service;
 
 import com.example.team10ad.LogicUniversity.Model.Noti;
-import com.example.team10ad.LogicUniversity.Notification;
 
 import java.util.List;
 

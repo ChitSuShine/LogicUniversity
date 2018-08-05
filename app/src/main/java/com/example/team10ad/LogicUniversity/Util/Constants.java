@@ -37,13 +37,13 @@ public class Constants {
     // Constants for LoginActivity
     public static final String WARNING_MSG = "Warning Message";
 
-    // Constants for AssignDepRepFragment
+    // Constants for AssignDepRep
     public static final String ASSIGN_DEP_REP = "Assign Department Representative";
     public static final String ASSIGN_WARNING_MSG = "This is current representative and you cannot assign.";
     public static final String ASSIGN_CONFIRM_MSG = "Are you sure to assign authority?";
     public static final String ASSIGN_SUCCESS_MSG = "Your assign is successful.";
 
-    // Constants for DelegateAuthorityFragment
+    // Constants for DelegateAuthority
     public static final String DELEGATE_AUTHORITY = "Delegate Authority";
     public static final String DELEGATE_CONFIRM_MSG = "Are you sure to remove authority?";
     public static final String DELEGATE_WARNING_MSG = "There is no employee to cancel authority.";
@@ -67,7 +67,7 @@ public class Constants {
     public static final int REP_OUTSTANDING = 5;
     public static final int REP_COMPLETE = 6;
 
-    // Constants for InventoryFragment
+    // Constants for Inventory
     public static final String INVENTORY_WARNING_MSG = "Please update quantity for current items.";
     public static final String INVENTORY_SUCCESS_MSG = "You have successfully updated inventory.";
     public static final String[] STATUS = {

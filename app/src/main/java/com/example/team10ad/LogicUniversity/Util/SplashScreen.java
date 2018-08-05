@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.team10ad.LogicUniversity.LoginActivity;
+import com.example.team10ad.LogicUniversity.Common.LoginActivity;
 import com.example.team10ad.team10ad.R;
 
 public class SplashScreen extends AppCompatActivity {

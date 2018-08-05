@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">Logic University</string>
-
     <string name="dashboard">Dashboard</string>
     <string name="reqdetail_name">Requisition Detail</string>
-    <string name="your_string_id"></string>
-    <string name="inventory">Inventory</string>
+    <string name="inventory">Inventory Check</string>
     <string name="app_rej_cp">Collection Point Request</string>
     <string name="tracking">Collection Point</string>
     <string name="report">Report</string>
@@ -12,8 +10,6 @@
     <string name="title_activity_reports">ReportsActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="about">About</string>
     <string name="title_activity_home">HomeActivity</string>
@@ -30,7 +26,7 @@
         You can process this requisition via LUSSIS website. </string>
     <string name="note2_message">Your requisition is approved by store clerk. </string>
 
-    <!--spinner texts-->
+    <!--Spinner texts-->
     <string name="sup1">1st Supplier</string>
     <string name="sup2">2nd Supplier</string>
     <string name="sup3">3rd Supplier</string>
@@ -39,6 +35,4 @@
     <string name="dept3">3rd Department</string>
     <string name="item">Item</string>
     <string name="category">Category</string>
-
-
 </resources>

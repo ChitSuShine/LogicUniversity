@@ -6,10 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.transition.Slide;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.team10ad.LogicUniversity.DepartmentHead.HodReqApproveRejectFragment;
-import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HodReqApproveReject;
 import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.team10ad.R;
 
@@ -59,7 +56,7 @@ public class HodReqListAdapter extends ArrayAdapter<Requisition> {
             @Override
             public void onClick(View view) {
                 AppCompatActivity act = (AppCompatActivity) getContext();
-                HodReqApproveRejectFragment hodReqApproveRejectFragment = new HodReqApproveRejectFragment();
+                HodReqApproveReject hodReqApproveRejectFragment = new HodReqApproveReject();
                 Bundle b = new Bundle();
                 b.putString("id", String.valueOf(view.getId()));
                 hodReqApproveRejectFragment.setArguments(b);

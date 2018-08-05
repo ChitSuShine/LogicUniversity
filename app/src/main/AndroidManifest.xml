@@ -11,12 +11,12 @@
     <application
         android:name="com.example.team10ad.LogicUniversity.Util.MyApp"
         android:allowBackup="true"
-        tools:replace="android:icon"
         android:icon="@drawable/lussis"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:replace="android:icon">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -24,26 +24,26 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCfl152Y4rKnXC3v8Tat2JhgKdkNb8Kwi8" />
 
-        <activity android:name="com.example.team10ad.LogicUniversity.LoginActivity"
-            android:screenOrientation="portrait">
-        </activity>
         <activity
-            android:name="com.example.team10ad.LogicUniversity.HomeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.example.team10ad.LogicUniversity.Util.SplashScreen"
+            android:name="com.example.team10ad.LogicUniversity.Common.LoginActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.example.team10ad.LogicUniversity.Common.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name="com.example.team10ad.LogicUniversity.Util.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
-            tools:replace="android:screenOrientation"
-            android:stateNotNeeded="true"/>
+            android:stateNotNeeded="true"
+            tools:replace="android:screenOrientation" />
     </application>
 
 </manifest>

@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.ClerkApproveCollectionPoint;
+import com.example.team10ad.LogicUniversity.Clerk.ApproveCollectionPoint;
 import com.example.team10ad.LogicUniversity.Model.DepartmentCollectionPoint;
 import com.example.team10ad.LogicUniversity.Service.CollectionPointService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.team10ad.R;
-import com.google.android.gms.common.internal.DialogRedirect;
 
 
 import java.util.ArrayList;
@@ -91,7 +88,7 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
                                 ((FragmentActivity)getContext())
                                 .getSupportFragmentManager()
                                 .beginTransaction();
-                        ft.replace(R.id.content_frame, new ClerkApproveCollectionPoint())
+                        ft.replace(R.id.content_frame, new ApproveCollectionPoint())
                                 .commit();
                     }
                 });
@@ -134,7 +131,7 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
                                 ((FragmentActivity)getContext())
                                         .getSupportFragmentManager()
                                         .beginTransaction();
-                        ft.replace(R.id.content_frame, new ClerkApproveCollectionPoint())
+                        ft.replace(R.id.content_frame, new ApproveCollectionPoint())
                                 .commit();
                     }
                 });

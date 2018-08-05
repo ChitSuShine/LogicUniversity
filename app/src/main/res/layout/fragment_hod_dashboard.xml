@@ -6,7 +6,7 @@
     android:background="@color/background"
     android:orientation="vertical"
     android:weightSum="3"
-    tools:context="com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment">
+    tools:context="com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboard">
 
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"

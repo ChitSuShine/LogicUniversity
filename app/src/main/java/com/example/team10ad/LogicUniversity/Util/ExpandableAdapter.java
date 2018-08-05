@@ -3,10 +3,8 @@ package com.example.team10ad.LogicUniversity.Util;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -14,20 +12,18 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
 import com.example.team10ad.LogicUniversity.Model.Requisition;
-import com.example.team10ad.LogicUniversity.RequisitionList;
+import com.example.team10ad.LogicUniversity.Clerk.RequisitionList;
 import com.example.team10ad.LogicUniversity.Service.DisbursementService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.team10ad.R;
 
 import retrofit2.Call;
