@@ -1,14 +1,17 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.Clerk;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class PagerAdapter extends FragmentPagerAdapter {
+import com.example.team10ad.LogicUniversity.Clerk.TrendAnalysis;
+import com.example.team10ad.LogicUniversity.Clerk.PurchaseOrderAnalysis;
+
+public class ClerkPagerAdapter extends FragmentPagerAdapter {
 
     int numOfTabs;
 
-    public PagerAdapter(FragmentManager fm, int numOfTabs) {
+    public ClerkPagerAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
         this.numOfTabs = numOfTabs;
     }
@@ -17,9 +20,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         switch (i) {
             case 0:
-                return new Report1Fragment();
+                return new TrendAnalysis();
             case 1:
-                return new Report2Fragment();
+                return new PurchaseOrderAnalysis();
             default:
                 return null;
         }

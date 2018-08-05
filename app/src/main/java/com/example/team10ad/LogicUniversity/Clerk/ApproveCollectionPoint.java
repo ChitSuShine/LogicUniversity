@@ -1,4 +1,4 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.Clerk;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,22 +7,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.DepartmentCollectionPoint;
-import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.CollectionPointService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.ClerkApproveCPAdapter;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
-import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -30,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ClerkApproveCollectionPoint extends Fragment {
+public class ApproveCollectionPoint extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -45,10 +40,10 @@ public class ClerkApproveCollectionPoint extends Fragment {
 
     String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
-    public ClerkApproveCollectionPoint() { }
+    public ApproveCollectionPoint() { }
 
-    public static ClerkApproveCollectionPoint newInstance(String param1, String param2) {
-        ClerkApproveCollectionPoint fragment = new ClerkApproveCollectionPoint();
+    public static ApproveCollectionPoint newInstance(String param1, String param2) {
+        ApproveCollectionPoint fragment = new ApproveCollectionPoint();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

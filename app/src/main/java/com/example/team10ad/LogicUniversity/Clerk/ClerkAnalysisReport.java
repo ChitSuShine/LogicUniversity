@@ -1,4 +1,4 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.Clerk;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.team10ad.team10ad.R;
 
-public class ClerkReportFragment extends Fragment {
+public class ClerkAnalysisReport extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -22,10 +22,10 @@ public class ClerkReportFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ClerkReportFragment() { }
+    public ClerkAnalysisReport() { }
 
-    public static ClerkReportFragment newInstance(String param1, String param2) {
-        ClerkReportFragment fragment = new ClerkReportFragment();
+    public static ClerkAnalysisReport newInstance(String param1, String param2) {
+        ClerkAnalysisReport fragment = new ClerkAnalysisReport();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -53,7 +53,7 @@ public class ClerkReportFragment extends Fragment {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = view.findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter
+        final ClerkPagerAdapter adapter = new ClerkPagerAdapter
                 (getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
 

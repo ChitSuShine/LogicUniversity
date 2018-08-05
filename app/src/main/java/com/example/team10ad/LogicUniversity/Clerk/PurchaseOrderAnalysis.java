@@ -1,4 +1,4 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.Clerk;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,14 +12,12 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.Model.Category;
-import com.example.team10ad.LogicUniversity.Model.Department;
 import com.example.team10ad.LogicUniversity.Model.Item;
 import com.example.team10ad.LogicUniversity.Model.ItemUsageClerk;
 import com.example.team10ad.LogicUniversity.Model.Supplier;
 import com.example.team10ad.LogicUniversity.Service.InventoryService;
 import com.example.team10ad.LogicUniversity.Service.ReportService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
@@ -48,7 +46,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class Report2Fragment extends Fragment implements OnChartValueSelectedListener {
+public class PurchaseOrderAnalysis extends Fragment implements OnChartValueSelectedListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -71,11 +69,11 @@ public class Report2Fragment extends Fragment implements OnChartValueSelectedLis
     float barSpace = 0.04f;
     float barWidth = 0.30f;
 
-    public Report2Fragment() {
+    public PurchaseOrderAnalysis() {
     }
 
-    public static Report2Fragment newInstance(String param1, String param2) {
-        Report2Fragment fragment = new Report2Fragment();
+    public static PurchaseOrderAnalysis newInstance(String param1, String param2) {
+        PurchaseOrderAnalysis fragment = new PurchaseOrderAnalysis();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

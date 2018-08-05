@@ -1,4 +1,4 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.Clerk;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -18,7 +18,7 @@ import com.example.team10ad.LogicUniversity.Model.ItemTrend;
 import com.example.team10ad.LogicUniversity.Service.DepartmentService;
 import com.example.team10ad.LogicUniversity.Service.InventoryService;
 import com.example.team10ad.LogicUniversity.Service.ReportService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
@@ -32,7 +32,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
@@ -47,7 +46,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Report1Fragment extends Fragment implements OnChartValueSelectedListener {
+public class TrendAnalysis extends Fragment implements OnChartValueSelectedListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -70,10 +69,10 @@ public class Report1Fragment extends Fragment implements OnChartValueSelectedLis
     float barSpace = 0.04f;
     float barWidth = 0.30f;
 
-    public Report1Fragment() { }
+    public TrendAnalysis() { }
 
-    public static Report1Fragment newInstance(String param1, String param2) {
-        Report1Fragment fragment = new Report1Fragment();
+    public static TrendAnalysis newInstance(String param1, String param2) {
+        TrendAnalysis fragment = new TrendAnalysis();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

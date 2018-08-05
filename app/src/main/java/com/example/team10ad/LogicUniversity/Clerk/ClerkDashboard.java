@@ -1,10 +1,8 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.Clerk;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.Typeface;
-import android.hardware.camera2.params.ColorSpaceTransform;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,16 +10,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.FreqentlyItem;
 import com.example.team10ad.LogicUniversity.Service.ReportService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
-import com.example.team10ad.LogicUniversity.Util.RetrievalFormFragment;
 import com.example.team10ad.team10ad.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -29,8 +25,6 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.ColorFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DashboardFragment extends Fragment {
+public class ClerkDashboard extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -54,10 +48,10 @@ public class DashboardFragment extends Fragment {
 
     private View currentView;
 
-    public DashboardFragment() {
+    public ClerkDashboard() {
     }
-    public static DashboardFragment newInstance(String param1, String param2) {
-        DashboardFragment fragment = new DashboardFragment();
+    public static ClerkDashboard newInstance(String param1, String param2) {
+        ClerkDashboard fragment = new ClerkDashboard();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -107,7 +101,7 @@ public class DashboardFragment extends Fragment {
         inv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RetrievalFormFragment retrieval=new RetrievalFormFragment();
+                RetrievalForm retrieval=new RetrievalForm();
                 FragmentTransaction reqFragment=getActivity().getSupportFragmentManager().beginTransaction();
                 reqFragment.replace(R.id.content_frame,retrieval);
                 reqFragment.addToBackStack(null);
@@ -119,7 +113,7 @@ public class DashboardFragment extends Fragment {
         req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClerkMapDeliveryPoint deliveryList=new ClerkMapDeliveryPoint();
+                MapDeliveryPoint deliveryList=new MapDeliveryPoint();
                 FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
                 fm.replace(R.id.content_frame,deliveryList);
                 fm.addToBackStack(null);
@@ -131,7 +125,7 @@ public class DashboardFragment extends Fragment {
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClerkReportFragment reportList=new ClerkReportFragment();
+                ClerkAnalysisReport reportList=new ClerkAnalysisReport();
                 FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
                 fm.replace(R.id.content_frame,reportList);
                 fm.addToBackStack(null);

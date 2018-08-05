@@ -1,15 +1,12 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.Clerk;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +25,7 @@ import com.example.team10ad.LogicUniversity.Model.InventoryDetail;
 import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.AdjustmentService;
 import com.example.team10ad.LogicUniversity.Service.InventoryDetailService;
-import com.example.team10ad.LogicUniversity.Service.InventoryService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.ClerkInventoryAdapter;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
@@ -42,12 +38,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import de.mrapp.android.dialog.MaterialDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InventoryFragment extends Fragment {
+public class Inventory extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -61,10 +56,10 @@ public class InventoryFragment extends Fragment {
     String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
     ArrayList<AdjustmentDetail> detailList = new ArrayList<AdjustmentDetail>();
 
-    public InventoryFragment() { }
+    public Inventory() { }
 
-    public static InventoryFragment newInstance(String param1, String param2) {
-        InventoryFragment fragment = new InventoryFragment();
+    public static Inventory newInstance(String param1, String param2) {
+        Inventory fragment = new Inventory();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

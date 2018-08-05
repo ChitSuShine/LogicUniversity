@@ -1,4 +1,4 @@
-package com.example.team10ad.LogicUniversity.Util;
+package com.example.team10ad.LogicUniversity.Clerk;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,13 +12,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.ClerkMapDeliveryPoint;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Model.StationaryRetrieval;
-import com.example.team10ad.LogicUniversity.RequisitionList;
 import com.example.team10ad.LogicUniversity.Service.DisbursementService;
-import com.example.team10ad.LogicUniversity.Service.RequisitionService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Util.Constants;
+import com.example.team10ad.LogicUniversity.Util.MyApp;
+import com.example.team10ad.LogicUniversity.Util.RetrievalAdapter;
 import com.example.team10ad.team10ad.R;
 
 import java.util.List;
@@ -28,7 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class RetrievalFormFragment extends Fragment {
+public class RetrievalForm extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -41,9 +41,9 @@ public class RetrievalFormFragment extends Fragment {
     Disbursement res;
     String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
-    public RetrievalFormFragment() { }
-    public static RetrievalFormFragment newInstance(String param1, String param2) {
-        RetrievalFormFragment fragment = new RetrievalFormFragment();
+    public RetrievalForm() { }
+    public static RetrievalForm newInstance(String param1, String param2) {
+        RetrievalForm fragment = new RetrievalForm();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -104,7 +104,7 @@ public class RetrievalFormFragment extends Fragment {
                     @Override
                     public void onResponse(Call<List<Disbursement>> call, Response<List<Disbursement>> response) {
                         if(response.isSuccessful()){ }
-                        ClerkMapDeliveryPoint cpMap=new ClerkMapDeliveryPoint();
+                        MapDeliveryPoint cpMap=new MapDeliveryPoint();
                         FragmentManager fm=getFragmentManager();
                         fm.beginTransaction().replace(R.id.content_frame,cpMap).commit();
                     }
