@@ -42,6 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Author: Chit Su Shine
 public class Inventory extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -56,7 +57,8 @@ public class Inventory extends Fragment {
     String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
     ArrayList<AdjustmentDetail> detailList = new ArrayList<AdjustmentDetail>();
 
-    public Inventory() { }
+    public Inventory() {
+    }
 
     public static Inventory newInstance(String param1, String param2) {
         Inventory fragment = new Inventory();
@@ -79,29 +81,26 @@ public class Inventory extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view= inflater.inflate(R.layout.fragment_inventory, container, false);
-        InventoryDetailService inventoryService=ServiceGenerator.createService(InventoryDetailService.class,token);
-        Call<List<InventoryDetail>> call=inventoryService.getAllInventoryDetails();
+        final View view = inflater.inflate(R.layout.fragment_inventory, container, false);
+        InventoryDetailService inventoryService = ServiceGenerator.createService(InventoryDetailService.class, token);
+        Call<List<InventoryDetail>> call = inventoryService.getAllInventoryDetails();
         call.enqueue(new Callback<List<InventoryDetail>>() {
             @Override
             public void onResponse(Call<List<InventoryDetail>> call, Response<List<InventoryDetail>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     result = response.body();
-                    final ClerkInventoryAdapter adapter = new ClerkInventoryAdapter(getContext(),R.layout.row_clerkinventory,result);
+                    final ClerkInventoryAdapter adapter = new ClerkInventoryAdapter(getContext(), R.layout.row_clerkinventory, result);
                     inventoryListView = (ListView) view.findViewById(R.id.inventorylistview);
                     inventoryListView.setAdapter(adapter);
                     inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View viewClick, int i, long l) {
-                            if(!result.get(i).getIsPending())
-                            {
+                            if (!result.get(i).getIsPending()) {
                                 showInputBox(i);
                             }
                         }
                     });
-                }
-                else
-                {
+                } else {
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -142,8 +141,7 @@ public class Inventory extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void showInputBox (final int position)
-    {
+    public void showInputBox(final int position) {
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.input_box);
         final EditText currentStock = dialog.findViewById(R.id.edit_currentStock);
@@ -157,7 +155,7 @@ public class Inventory extends Fragment {
                 InventoryDetail inventoryDetail = result.get(position);
                 inventoryDetail.setCurrentStock(currentStock.getText().toString());
                 inventoryDetail.setReason(reason.getText().toString());
-                if(inventoryDetail.getCurrentStock()!=null && !inventoryDetail.getCurrentStock().equals("")) {
+                if (inventoryDetail.getCurrentStock() != null && !inventoryDetail.getCurrentStock().equals("")) {
                     AdjustmentDetail adjustmentDetail = new AdjustmentDetail();
                     adjustmentDetail.setItemId(Integer.parseInt(inventoryDetail.getItemid()));
                     adjustmentDetail.setItemDescription(inventoryDetail.getItemDescription());
@@ -185,10 +183,8 @@ public class Inventory extends Fragment {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    public void processDiscrepancy()
-    {
-        if(detailList.size()>0)
-        {
+    public void processDiscrepancy() {
+        if (detailList.size() > 0) {
             // Getting current user's info & store in shared preferences
             Gson gson = new Gson();
             String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
@@ -210,8 +206,7 @@ public class Inventory extends Fragment {
             call.enqueue(new Callback<Adjustment>() {
                 @Override
                 public void onResponse(Call<Adjustment> call, Response<Adjustment> response) {
-                    if(response.isSuccessful())
-                    {
+                    if (response.isSuccessful()) {
                         Toast.makeText(MyApp.getInstance(), Constants.INVENTORY_SUCCESS_MSG, Toast.LENGTH_SHORT).show();
                         detailList.clear();
                         // Reload the fragment
@@ -220,9 +215,7 @@ public class Inventory extends Fragment {
                         ft.detach(fragment);
                         ft.attach(fragment);
                         ft.commit();
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -232,9 +225,7 @@ public class Inventory extends Fragment {
                     Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
                 }
             });
-        }
-        else
-        {
+        } else {
             new android.support.v7.app.AlertDialog.Builder(getContext())
                     .setTitle(Constants.WARNING_MSG)
                     .setMessage(Constants.INVENTORY_WARNING_MSG)

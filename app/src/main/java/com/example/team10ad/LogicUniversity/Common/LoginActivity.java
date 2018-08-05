@@ -23,6 +23,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+// Author: Chit Su Shine
 public class LoginActivity extends AppCompatActivity {
 
     @Override
@@ -44,10 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-
                 EditText userName = findViewById(R.id.input_username);
                 EditText password = findViewById(R.id.input_password);
-
                 // To get Access Token for each user
                 getAccessToken(userName.getText().toString(), password.getText().toString());
             }

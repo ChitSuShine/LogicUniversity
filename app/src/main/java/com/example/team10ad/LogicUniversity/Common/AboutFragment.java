@@ -10,9 +10,10 @@ import android.view.ViewGroup;
 
 import com.example.team10ad.team10ad.R;
 
+// Author: Chit Su Shine
+
 public class AboutFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 

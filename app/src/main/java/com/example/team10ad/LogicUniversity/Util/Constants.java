@@ -1,13 +1,15 @@
 package com.example.team10ad.LogicUniversity.Util;
 
+// Author: Chit Su Shine, Wint Yadanat Htet, Khaing Myat, Htet Wai Yan
 public class Constants {
     // Constants for Common Usage
     public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     // Constants for API Requests
     public static final String GRANT_TYPE = "password";
+    public static final String WEB_VER_URL = "http://172.27.249.107/logicuniversity/account/login";
     public static final String API_BASE_URL = "http://172.27.249.107/lussis/API/";
-    //public static final String API_BASE_URL = "http://lussisadteam10api.azurewebsites.net/API/";
+    // public static final String API_BASE_URL = "http://lussisadteam10api.azurewebsites.net/API/";
     public static final String BEARER = "bearer ";
     public static final String KEY_ACCESS_TOKEN = "access_token";
     public static final String AUTHORIZATION = "Authorization";

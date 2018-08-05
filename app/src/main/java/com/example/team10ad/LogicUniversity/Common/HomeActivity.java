@@ -42,12 +42,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Author: Chit Su Shine, Wint Yadanat Htet, Khaing Myat, Htet Wai Yan
 public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     FragmentManager fragmentManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +143,6 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.about, menu);
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
@@ -158,13 +157,13 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("http://172.27.249.107/logicuniversity/account/login"));
+                intent.setData(Uri.parse(Constants.WEB_VER_URL));
                 startActivity(intent);
                 break;
             case R.id.noti:
-                Notification notimain = new Notification();
+                Notification notification = new Notification();
                 FragmentManager fragmentMg = getSupportFragmentManager();
-                fragmentMg.beginTransaction().replace(R.id.content_frame, notimain).addToBackStack(null).commit();
+                fragmentMg.beginTransaction().replace(R.id.content_frame, notification).addToBackStack(null).commit();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -242,11 +241,11 @@ public class HomeActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
-            // If qrcode has nothing in it
+            // If QR code has nothing in it
             if (result.getContents() == null) {
                 Toast.makeText(MyApp.getInstance(), Constants.REP_RES_NOT_FOUND, Toast.LENGTH_LONG).show();
             } else {
-                // If qr contains data
+                // If QR contains data
                 try {
                     String qrCode = result.getContents().toString();
                     RepScanQRFragment.showData(qrCode);
@@ -277,6 +276,4 @@ public class HomeActivity extends AppCompatActivity {
                 return "";
         }
     }
-
-
 }

@@ -10,5 +10,4 @@ import retrofit2.http.GET;
 public interface OrderHistoryService {
     @GET("requisition/status/6")
     Call<List<Requisition>> getAllOrderHistory();
-
 }

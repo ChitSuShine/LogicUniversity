@@ -11,7 +11,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface NotiService {
-
     @GET("notis")
     Call<List<Noti>> getNoti();
 
@@ -23,6 +22,4 @@ public interface NotiService {
 
     @POST("notification/create")
     Call<Noti> noticreate(@Body Noti noti);
-
-
 }

@@ -2,7 +2,7 @@ package com.example.team10ad.LogicUniversity.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Itembydepartment {
+public class ItemByDepartment {
 
     @SerializedName("Quantity")
     private int Quantity;
