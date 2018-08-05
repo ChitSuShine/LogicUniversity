@@ -12,10 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.DepartmentHead.HODTrackingOrder;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HodTrackingOrder;
 import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.LogicUniversity.Service.RequisitionService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
@@ -79,7 +79,7 @@ public class RepReqListForTrackingOrder extends Fragment {
                     replistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            HODTrackingOrder hodTrackingOrder=new HODTrackingOrder();
+                            HodTrackingOrder hodTrackingOrder=new HodTrackingOrder();
                             Bundle b = new Bundle();
                             b.putString("id", result.get(i).getReqID());
                             hodTrackingOrder.setArguments(b);

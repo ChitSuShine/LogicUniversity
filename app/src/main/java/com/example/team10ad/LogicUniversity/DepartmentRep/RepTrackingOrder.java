@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.LogicUniversity.Model.RequisitionDetail;
 import com.example.team10ad.LogicUniversity.Service.RequisitionService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.HodTrackingAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
