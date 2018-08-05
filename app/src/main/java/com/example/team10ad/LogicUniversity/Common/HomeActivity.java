@@ -1,9 +1,6 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.Common;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -16,25 +13,23 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRepFragment;
-import com.example.team10ad.LogicUniversity.DepartmentHead.HODOrderHistory;
-import com.example.team10ad.LogicUniversity.DepartmentHead.HODReportFragment;
-import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboardFragment;
+import com.example.team10ad.LogicUniversity.Clerk.ApproveCollectionPoint;
+import com.example.team10ad.LogicUniversity.Clerk.ClerkDashboard;
+import com.example.team10ad.LogicUniversity.Clerk.Inventory;
+import com.example.team10ad.LogicUniversity.DepartmentHead.AssignDepRep;
+import com.example.team10ad.LogicUniversity.DepartmentHead.OrderHistory;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HodDashboard;
 //import com.example.team10ad.LogicUniversity.DepartmentHead.HodReportFragment;
-import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionList;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ReqListForTrackingOrder;
 import com.example.team10ad.LogicUniversity.DepartmentRep.RepScanQRFragment;
 import com.example.team10ad.LogicUniversity.Model.User;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Service.UserService;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
@@ -82,11 +77,11 @@ public class HomeActivity extends AppCompatActivity {
                     MyApp.getInstance().getPreferenceManager().putString(Constants.USER_GSON, json);
                     // Navigating related menus
                     if (user.getRole() == Constants.CLERK_ROLE) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new DashboardFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new ClerkDashboard()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_clerk);
                         nvDrawer.setCheckedItem(R.id.dashboard);
                     } else if (user.getRole() == Constants.HOD_ROLE) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodDashboardFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodDashboard()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_hod);
                         nvDrawer.setCheckedItem(R.id.dashboardHod);
                     } else if (user.getRole() == Constants.DEP_REP_ROLE) {
@@ -98,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
                         nvDrawer.inflateMenu(R.menu.activity_home_emp);
                         nvDrawer.setCheckedItem(R.id.trackRep);
                     } else if (user.getRole() == Constants.TEMP_HOD_ROLE) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodRequisitionListFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new HodRequisitionList()).commit();
                         nvDrawer.inflateMenu(R.menu.activity_home_temphod);
                         nvDrawer.setCheckedItem(R.id.temp_approve);
                     }
@@ -190,18 +185,18 @@ public class HomeActivity extends AppCompatActivity {
             switch (id) {
                 // Temporary HOD
                 case R.id.temp_approve:
-                    fragmentClass = HodRequisitionListFragment.class;
+                    fragmentClass = HodRequisitionList.class;
                     break;
 
                 // Clerk
                 case R.id.dashboard:
-                    fragmentClass = DashboardFragment.class;
+                    fragmentClass = ClerkDashboard.class;
                     break;
                 case R.id.inventory:
-                    fragmentClass = InventoryFragment.class;
+                    fragmentClass = Inventory.class;
                     break;
                 case R.id.cpreq:
-                    fragmentClass = ClerkApproveCollectionPoint.class;
+                    fragmentClass = ApproveCollectionPoint.class;
                     break;
 
                 // Dep Rep & Employee
@@ -212,21 +207,21 @@ public class HomeActivity extends AppCompatActivity {
                     fragmentClass = ReqListForTrackingOrder.class;
                     break;
                 case R.id.orderHisRep:
-                    fragmentClass = HODOrderHistory.class;
+                    fragmentClass = OrderHistory.class;
                     break;
 
                 // HOD
                 case R.id.dashboardHod:
-                    fragmentClass = HodDashboardFragment.class;
+                    fragmentClass = HodDashboard.class;
                     break;
                 case R.id.assignDeptRep:
-                    fragmentClass = AssignDepRepFragment.class;
+                    fragmentClass = AssignDepRep.class;
                     break;
                 case R.id.orderhishod:
-                    fragmentClass = HODOrderHistory.class;
+                    fragmentClass = OrderHistory.class;
                     break;
                 default:
-                    fragmentClass = DashboardFragment.class;
+                    fragmentClass = ClerkDashboard.class;
             }
             try {
                 fragment = (Fragment) fragmentClass.newInstance();

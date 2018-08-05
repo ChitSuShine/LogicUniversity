@@ -1,4 +1,4 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.Common;
 
 import android.content.Context;
 import android.net.Uri;

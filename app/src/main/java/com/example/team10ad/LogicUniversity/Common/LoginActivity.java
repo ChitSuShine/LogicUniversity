@@ -1,11 +1,10 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.Common;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;

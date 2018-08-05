@@ -1,37 +1,34 @@
-package com.example.team10ad.LogicUniversity;
+package com.example.team10ad.LogicUniversity.Common;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.team10ad.LogicUniversity.Clerk.ApproveCollectionPoint;
 import com.example.team10ad.LogicUniversity.DepartmentHead.ChangeCollectionPoint;
-import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionListFragment;
+import com.example.team10ad.LogicUniversity.DepartmentHead.HodRequisitionList;
 import com.example.team10ad.LogicUniversity.Model.Noti;
 import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.NotiService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.LogicUniversity.Util.NotiAdapter;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.mrapp.android.dialog.MaterialDialog;
@@ -113,7 +110,7 @@ public class Notification extends Fragment {
                                                 break;
                                             case 2:
                                                 //Requisition Approval
-                                                HodRequisitionListFragment hodapprej=new HodRequisitionListFragment();
+                                                HodRequisitionList hodapprej=new HodRequisitionList();
                                                 FragmentManager fragmentManager=getFragmentManager();
                                                 fragmentManager.beginTransaction().replace(R.id.content_frame, hodapprej).commit();
                                                 break;
@@ -181,7 +178,7 @@ public class Notification extends Fragment {
                                                 break;
                                             case 10:
                                                 //Collection Point Change Request Approval
-                                                ClerkApproveCollectionPoint clerkapprovecp=new ClerkApproveCollectionPoint();
+                                                ApproveCollectionPoint clerkapprovecp=new ApproveCollectionPoint();
                                                 FragmentManager fragmentManager10=getFragmentManager();
                                                 fragmentManager10.beginTransaction().replace(R.id.content_frame, clerkapprovecp).commit();
                                                 break;
