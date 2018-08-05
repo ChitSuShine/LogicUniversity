@@ -174,6 +174,7 @@ public class HodReqApproveReject extends Fragment {
                 dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        // updating status of requisition
                         result.setApprovedBy(String.valueOf(user.getUserId()));
                         result.setStatus("7");
                         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
@@ -223,7 +224,7 @@ public class HodReqApproveReject extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
+    // notify associated user
     private void createNoti(EditText input, Requisition res,int notiType, String title){
         final String remark=input.getText().toString();
         Noti notiremark=new Noti();

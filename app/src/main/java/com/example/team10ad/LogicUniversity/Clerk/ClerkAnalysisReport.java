@@ -49,14 +49,14 @@ public class ClerkAnalysisReport extends Fragment {
        View view = inflater.inflate(R.layout.fragment_clerk_report, container, false);
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Trend Analysis"));
-        tabLayout.addTab(tabLayout.newTab().setText("Purchase Orders Analysis"));
+        tabLayout.addTab(tabLayout.newTab().setText("Item Usage Analysis"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = view.findViewById(R.id.pager);
         final ClerkPagerAdapter adapter = new ClerkPagerAdapter
                 (getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
-
+        // assigning fragments in tabs
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

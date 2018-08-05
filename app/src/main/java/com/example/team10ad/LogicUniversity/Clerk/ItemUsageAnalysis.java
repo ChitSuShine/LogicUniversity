@@ -46,7 +46,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class PurchaseOrderAnalysis extends Fragment implements OnChartValueSelectedListener {
+public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -69,11 +69,11 @@ public class PurchaseOrderAnalysis extends Fragment implements OnChartValueSelec
     float barSpace = 0.04f;
     float barWidth = 0.30f;
 
-    public PurchaseOrderAnalysis() {
+    public ItemUsageAnalysis() {
     }
 
-    public static PurchaseOrderAnalysis newInstance(String param1, String param2) {
-        PurchaseOrderAnalysis fragment = new PurchaseOrderAnalysis();
+    public static ItemUsageAnalysis newInstance(String param1, String param2) {
+        ItemUsageAnalysis fragment = new ItemUsageAnalysis();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

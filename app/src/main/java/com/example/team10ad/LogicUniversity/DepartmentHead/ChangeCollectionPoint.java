@@ -42,9 +42,8 @@ public class ChangeCollectionPoint extends Fragment implements RadioGroup.OnChec
 
     private String mParam1;
     private String mParam2;
-
-    private CollectionPoint current = new CollectionPoint();
-    private TextView currentcp;
+    // text view for current collection point
+    private TextView currentCp;
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,14 +72,14 @@ public class ChangeCollectionPoint extends Fragment implements RadioGroup.OnChec
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_change_collection_point, container, false);
-        currentcp=(TextView)view.findViewById(R.id.currentcp);
+        currentCp =(TextView)view.findViewById(R.id.currentcp);
         final RadioGroup radioGroup1 = (RadioGroup)view.findViewById(R.id.changeRadioGroup);
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
-
+        // getting department Id from shared preference
         String json = MyApp.getInstance().getPreferenceManager().getString(Constants.USER_GSON);
         final User user = new Gson().fromJson(json, User.class);
         final int deptId = user.getDepId();
-
+        // getting pending collection points
         final CollectionPointService cpService = ServiceGenerator.createService(CollectionPointService.class, token);
         Call<List<DepartmentCollectionPoint>> call = cpService.getPendingCollectionPoints();
         call.enqueue(new Callback<List<DepartmentCollectionPoint>>() {
@@ -89,6 +88,7 @@ public class ChangeCollectionPoint extends Fragment implements RadioGroup.OnChec
                 if(response.isSuccessful()){
                     List<DepartmentCollectionPoint> dcpList = response.body();
                     DepartmentCollectionPoint pendingCp = new DepartmentCollectionPoint();
+                    // checking if current department includes in pending list
                     boolean isPending = false;
                     for (DepartmentCollectionPoint dcp : dcpList) {
                         if(dcp.getDeptId() == deptId){
@@ -97,8 +97,9 @@ public class ChangeCollectionPoint extends Fragment implements RadioGroup.OnChec
                             break;
                         }
                     }
+                    // if pending, setting up the screen to let the user cancel the previous one
                     if(isPending){
-                        currentcp.setText("Your previous request is pending.");
+                        currentCp.setText("Your previous request is pending.");
                         Button cancel = ((Button) view.findViewById(R.id.cpchange));
                         cancel.setText("Cancel");
                         TextView tv1=((TextView) view.findViewById(R.id.tvPendingName));
@@ -168,6 +169,7 @@ public class ChangeCollectionPoint extends Fragment implements RadioGroup.OnChec
                             dialog.setMessageColor(Color.BLACK);
                             dialog.setButtonTextColor(Color.BLACK);
                             dialog.show();
+                            // refresh screen
                             FragmentTransaction ft =
                                     ((FragmentActivity)getContext())
                                             .getSupportFragmentManager()
@@ -217,7 +219,7 @@ public class ChangeCollectionPoint extends Fragment implements RadioGroup.OnChec
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
-
+    // populating collection points in radio buttons
     private void loadData(final CollectionPointService cpService,
                           final RadioGroup radioGroup, int deptId){
         Call<DepartmentCollectionPoint> call = cpService.getActiveCollectionPoint(deptId);
@@ -226,8 +228,9 @@ public class ChangeCollectionPoint extends Fragment implements RadioGroup.OnChec
             public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
                 if(response.isSuccessful()){
                     final DepartmentCollectionPoint temp = response.body();
+                    // populate data
                     populateCpRadioBtns(cpService, radioGroup, temp.getCpId());
-                    currentcp.setText(new StringBuilder("Current collection point is ")
+                    currentCp.setText(new StringBuilder("Current collection point is ")
                             .append(temp.getCpName()));
                     radioGroup.setTag(temp.getCpId());
                 }
@@ -244,8 +247,9 @@ public class ChangeCollectionPoint extends Fragment implements RadioGroup.OnChec
             @Override
             public void onResponse(Call<List<CollectionPoint>> call, Response<List<CollectionPoint>> response) {
                 if(response.isSuccessful()) {
+                    // add radio buttons for collection points
                     for (CollectionPoint cP : response.body()) {
-                        addBtn(rGrp, cP, currentId);
+                        addRadioBtn(rGrp, cP, currentId);
                     }
                 }
             }
@@ -256,10 +260,11 @@ public class ChangeCollectionPoint extends Fragment implements RadioGroup.OnChec
             }
         });
     }
-
-    private void addBtn(RadioGroup rGrp, CollectionPoint cp, int currentId){
+    // adding radio button with suitable label and value
+    private void addRadioBtn(RadioGroup rGrp, CollectionPoint cp, int currentId){
         RadioButton radioButton = new RadioButton(getContext());
         radioButton.setTextSize(17f);
+        // setting different style for current collection point
         if(cp.getCpId() == currentId) {
             radioButton.setTypeface(null, Typeface.BOLD);
             radioButton.setChecked(true);

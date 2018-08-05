@@ -78,6 +78,7 @@ public class ClerkDashboard extends Fragment {
         final PieChart pieChart=(PieChart)currentView.findViewById(R.id.piechart);
         pieEntries=new ArrayList<>();
         ReportService rService = ServiceGenerator.createService(ReportService.class, token);
+        // getting data from API
         Call<List<FreqentlyItem>> call = rService.frequentlyOrderedItemList();
         call.enqueue(new Callback<List<FreqentlyItem>>() {
             @Override
@@ -178,6 +179,7 @@ public class ClerkDashboard extends Fragment {
         chart.invalidate();
     }
 
+    // set up report
     private void setLegend(PieChart chart){
         Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);

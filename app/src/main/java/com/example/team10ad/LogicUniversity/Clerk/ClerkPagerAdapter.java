@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.team10ad.LogicUniversity.Clerk.TrendAnalysis;
-import com.example.team10ad.LogicUniversity.Clerk.PurchaseOrderAnalysis;
+import com.example.team10ad.LogicUniversity.Clerk.ItemUsageAnalysis;
 
 public class ClerkPagerAdapter extends FragmentPagerAdapter {
 
@@ -22,7 +22,7 @@ public class ClerkPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new TrendAnalysis();
             case 1:
-                return new PurchaseOrderAnalysis();
+                return new ItemUsageAnalysis();
             default:
                 return null;
         }

@@ -54,6 +54,7 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
     private String mParam1;
     private String mParam2;
 
+    // declaring required variables
     String token;
     ArrayList<Integer> deptId = new ArrayList<>();
     ArrayList<Integer> catId = new ArrayList<>();
@@ -65,6 +66,7 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
 
     private OnFragmentInteractionListener mListener;
 
+    // values for chart styling
     float groupSpace = 0.18f;
     float barSpace = 0.04f;
     float barWidth = 0.30f;
@@ -98,6 +100,7 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_report1, container, false);
 
+        // specifying the spinners
         mChart = view.findViewById(R.id.barChart);
         mChart.setVisibility(View.INVISIBLE);
         final Spinner catSpin = view.findViewById(R.id.catSpin);
@@ -107,15 +110,17 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
 
         token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
+        // setting up chart with predefined methods
         setUpChart();
         mChart.getXAxis().setDrawLabels(false);
         setCatSpinner(catSpin);
         setDeptSpinners(dept1Spin, dept2Spin, dept3Spin);
-
+        // button action
         Button btnGen = view.findViewById(R.id.reportBtn);
         btnGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // getting selected data and making chart visible
                 mChart.setVisibility(View.VISIBLE);
                 int d1 = deptId.get(dept1Spin.getSelectedItemPosition());
                 int d2 = deptId.get(dept2Spin.getSelectedItemPosition());
@@ -164,7 +169,7 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
-
+    // general settings
     private void setUpChart() {
 
         mChart.setOnChartValueSelectedListener(this);
@@ -180,7 +185,7 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
 
         updateChart();
     }
-
+    // bar data binding
     private void setBarData() {
         Calendar today = Calendar.getInstance();
         int month = today.get(Calendar.MONTH);
@@ -216,7 +221,7 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
 
         mChart.setData(data);
     }
-
+    // setting chart legend
     private void setLegend(BarChart chart) {
         Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
@@ -228,7 +233,7 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
         l.setYEntrySpace(0f);
         l.setTextSize(16f);
     }
-
+    // setting up X axis and Y axis
     private void xAndYAxis(BarChart chart) {
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
@@ -245,7 +250,7 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
 
         chart.getAxisRight().setEnabled(false);
     }
-
+    // updating chart
     private void updateChart() {
         mChart.getBarData().setBarWidth(barWidth);
         mChart.animateY(1000);
@@ -258,7 +263,7 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
         mChart.groupBars(0, groupSpace, barSpace);
         mChart.invalidate();
     }
-
+    // populating categories in spinner
     private void setCatSpinner(final Spinner spin) {
         InventoryService service = ServiceGenerator.createService(InventoryService.class, token);
         Call<List<Category>> call = service.getAllCategories();
@@ -284,7 +289,7 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
             }
         });
     }
-
+    // populating departments in spinners
     private void setDeptSpinners(final Spinner spin1, final Spinner spin2, final Spinner spin3) {
         DepartmentService service = ServiceGenerator.createService(DepartmentService.class, token);
         Call<List<Department>> call = service.getAllDepartments();
@@ -313,7 +318,7 @@ public class TrendAnalysis extends Fragment implements OnChartValueSelectedListe
             }
         });
     }
-
+    // sending request to API for chart data
     private void requestData(int d1, int d2, int d3, int cat) {
         ReportService service = ServiceGenerator.createService(ReportService.class, token);
         Call<List<ItemTrend>> call = service.getItemTrend(d1, d2, d3, cat);

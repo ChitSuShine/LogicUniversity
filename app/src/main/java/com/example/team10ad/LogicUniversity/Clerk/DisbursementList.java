@@ -31,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RequisitionList extends Fragment {
+public class DisbursementList extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -45,12 +45,12 @@ public class RequisitionList extends Fragment {
     ExpandableListView disblistview;
     List<Disbursement> result = new ArrayList<Disbursement>();
 
-    public RequisitionList() {
+    public DisbursementList() {
 
     }
 
-    public static RequisitionList newInstance(String param1, String param2) {
-        RequisitionList fragment = new RequisitionList();
+    public static DisbursementList newInstance(String param1, String param2) {
+        DisbursementList fragment = new DisbursementList();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,6 +71,7 @@ public class RequisitionList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // getting data which are passed from calling fragment
         final String Cp = getArguments().getString("Cp");
         final int CpId = getArguments().getInt("CpId");
         final View view = inflater.inflate(R.layout.fragment_requisition_list, container, false);
@@ -78,11 +79,13 @@ public class RequisitionList extends Fragment {
 
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
+        // loading progress bar settings
         final ProgressBar progressBar = (SpinKitView) view.findViewById(R.id.loadingReqList);
         Wave wave = new Wave();
         progressBar.setIndeterminateDrawable(wave);
         progressBar.showContextMenu();
 
+        // getting list of all disbursements
         final DisbursementService disbService = ServiceGenerator.createService(DisbursementService.class, token);
         Call<List<Disbursement>> call = disbService.getAllDisbursements();
         call.enqueue(new Callback<List<Disbursement>>() {
@@ -90,15 +93,18 @@ public class RequisitionList extends Fragment {
             public void onResponse(Call<List<Disbursement>> call, Response<List<Disbursement>> response) {
                 if (response.isSuccessful()) {
                     progressBar.setVisibility(View.GONE);
+                    // filtering data for current collection point
                     for (Disbursement item : response.body()) {
                         if (Integer.parseInt(item.getCpID()) == CpId) {
                             result.add(item);
                         }
                     }
+                    // text for empty list
                     if(result.isEmpty()){
                         TextView txt = view.findViewById(R.id.emptyReqList);
                         txt.setText("Nothing to deliver!!");
                     }
+                    // creating hash map for expandable list view
                     HashMap<Disbursement, List<DisbursementDetail>> map = new
                             HashMap<>();
                     for (Disbursement d : result) {
@@ -110,6 +116,7 @@ public class RequisitionList extends Fragment {
                         d.getDisbursementDetails().add(0, disbD);
                         map.put(d, d.getDisbursementDetails());
                     }
+                    // expandable adapter settings
                     disblistview = (ExpandableListView) view.findViewById(R.id.disblistview);
                     ExpandableAdapter adapter = new ExpandableAdapter(getContext(),
                             result, map);

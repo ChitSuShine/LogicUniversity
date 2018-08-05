@@ -67,7 +67,7 @@ public class ApproveCollectionPoint extends Fragment {
         final View view=inflater.inflate(R.layout.fragment_clerk_approve_collection_point, container, false);
 
         CollectionPointService cpService= ServiceGenerator.createService(CollectionPointService.class,token);
-
+        // Getting pending collection point
         Call<List<DepartmentCollectionPoint>> callCP=cpService.getPendingCollectionPoints();
         callCP.enqueue(new Callback<List<DepartmentCollectionPoint>>() {
             @Override
@@ -75,7 +75,7 @@ public class ApproveCollectionPoint extends Fragment {
                 if(response.isSuccessful()){
 
                     result=response.body();
-
+                    // setting text when the result is empty
                     ClerkApproveCPAdapter CPAdapter=new ClerkApproveCPAdapter(getContext(),R.layout.row_approvecp,result);
                     approveCPList=(ListView)view.findViewById(R.id.approveCPList);
                     approveCPList.setAdapter(CPAdapter);

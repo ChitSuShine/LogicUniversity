@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.example.team10ad.LogicUniversity.Model.Disbursement;
 import com.example.team10ad.LogicUniversity.Model.DisbursementDetail;
 import com.example.team10ad.LogicUniversity.Model.Requisition;
-import com.example.team10ad.LogicUniversity.Clerk.RequisitionList;
+import com.example.team10ad.LogicUniversity.Clerk.DisbursementList;
 import com.example.team10ad.LogicUniversity.Service.DisbursementService;
 import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.team10ad.R;
@@ -194,7 +194,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
     }
 
     private void redirect(Disbursement disbursement) {
-        RequisitionList reqList = new RequisitionList();
+        DisbursementList reqList = new DisbursementList();
         Bundle b = new Bundle();
         b.putInt("CpId", Integer.parseInt(disbursement.getCpID()));
         b.putString("Cp", disbursement.getCpName());

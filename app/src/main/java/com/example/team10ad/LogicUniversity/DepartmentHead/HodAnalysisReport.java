@@ -54,7 +54,7 @@ public class HodAnalysisReport extends Fragment {
         final HodPagerAdapter adapter = new HodPagerAdapter
                 (getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
-
+        // setting action when the tabs are selected
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

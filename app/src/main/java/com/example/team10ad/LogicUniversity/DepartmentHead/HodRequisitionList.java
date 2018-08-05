@@ -63,7 +63,7 @@ public class HodRequisitionList extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_hod_requisition_list, container, false);
-
+        // getting user data
         String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
         final User user = new Gson().fromJson(userInfo, User.class);
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
@@ -75,12 +75,14 @@ public class HodRequisitionList extends Fragment {
             @Override
             public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
                 if(response.isSuccessful()){
+                    // filtering the result for current department
                     result=response.body();
                     List<Requisition> filtered = new ArrayList<Requisition>();
                     for(Requisition rq: result){
                         if(rq.getStatus().equals("0")&& Integer.parseInt(rq.getDepID())==user.getDepId())
                             filtered.add(rq);
                     }
+                    // setting up adapter for list view
                     final HodReqListAdapter adapter = new HodReqListAdapter
                             (getContext(),R.layout.row_hodreqlist,filtered);
                     listView = (ListView) view.findViewById(R.id.hodtrackinglistview);

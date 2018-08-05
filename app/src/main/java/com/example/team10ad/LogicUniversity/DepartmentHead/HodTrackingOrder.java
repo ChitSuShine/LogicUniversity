@@ -35,7 +35,7 @@ public class HodTrackingOrder extends Fragment {
 
     private String mParam1;
     private String mParam2;
-
+    // array list for the status of tracking progress bar
     private static final String[] STATE = {"ONE", "ONE", "ONE", "TWO", "THREE", "FOUR", "FOUR", "ONE"};
 
     private OnFragmentInteractionListener mListener;
@@ -85,7 +85,7 @@ public class HodTrackingOrder extends Fragment {
                     TextView tv2 = (TextView) view.findViewById(R.id.raisedbydate);
                     TextView tv3 = (TextView) view.findViewById(R.id.collectionpoint);
                     TextView tv4 = (TextView) view.findViewById(R.id.apprBy);
-
+                    // populating data in screen
                     tv1.setText(result.getRasiedByname());
                     tv2.setText(result.getReqDate());
                     tv3.setText(result.getCpName());
@@ -114,7 +114,7 @@ public class HodTrackingOrder extends Fragment {
         });
         StateProgressBar stateProgressBar = (StateProgressBar) view.findViewById(R.id.your_state_progress_bar_id);
         stateProgressBar.setStateDescriptionData(descriptionData);
-        stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.valueOf(STATE[6-3]));
+        stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.valueOf(STATE[1]));
         return  view;
     }
 

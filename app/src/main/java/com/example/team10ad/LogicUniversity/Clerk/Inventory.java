@@ -83,6 +83,7 @@ public class Inventory extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_inventory, container, false);
         InventoryDetailService inventoryService = ServiceGenerator.createService(InventoryDetailService.class, token);
+        // getting all inventory data from API
         Call<List<InventoryDetail>> call = inventoryService.getAllInventoryDetails();
         call.enqueue(new Callback<List<InventoryDetail>>() {
             @Override

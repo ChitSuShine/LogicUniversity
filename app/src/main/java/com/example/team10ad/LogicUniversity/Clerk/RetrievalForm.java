@@ -65,18 +65,20 @@ public class RetrievalForm extends Fragment {
                              Bundle savedInstanceState) {
 
         final View view= inflater.inflate(R.layout.fragment_retrieval_form, container, false);
-
+        // getting all items that are to be collected from warehouse
         DisbursementService disbService= ServiceGenerator.createService(DisbursementService.class,token);
         Call<List<StationaryRetrieval>> call=disbService.getAllStationaryRetrieval();
         call.enqueue(new Callback<List<StationaryRetrieval>>() {
             @Override
             public void onResponse(Call<List<StationaryRetrieval>> call, Response<List<StationaryRetrieval>> response) {
                 if(response.isSuccessful()){
+                    // disable button when the list is empty
                     result=response.body();
                     if(result.size() < 1) {
                         Button btn = view.findViewById(R.id.itemcollect);
                         btn.setEnabled(false);
                     }
+                    // setting up list view
                     final RetrievalAdapter retrievalAdapter=new RetrievalAdapter(getContext(),R.layout.row_retrievallist,result);
                     retrievallist=(ListView)view.findViewById(R.id.retrievallist);
                     retrievallist.setAdapter(retrievalAdapter);
@@ -99,11 +101,13 @@ public class RetrievalForm extends Fragment {
             public void onClick(View view) {
                 res.setStatus(3);
                 DisbursementService dService = ServiceGenerator.createService(DisbursementService.class,token);
+                // updating database
                 Call<List<Disbursement>> call = dService.collectAllItems(res);
                 call.enqueue(new Callback<List<Disbursement>>() {
                     @Override
                     public void onResponse(Call<List<Disbursement>> call, Response<List<Disbursement>> response) {
                         if(response.isSuccessful()){ }
+                        // redirecting to MapDeliveryPoint Fragment
                         MapDeliveryPoint cpMap=new MapDeliveryPoint();
                         FragmentManager fm=getFragmentManager();
                         fm.beginTransaction().replace(R.id.content_frame,cpMap).commit();

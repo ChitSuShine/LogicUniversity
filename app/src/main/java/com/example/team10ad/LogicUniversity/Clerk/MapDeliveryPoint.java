@@ -91,6 +91,7 @@ public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
         mapFragment = (MapView) view.findViewById(R.id.map);
         mapFragment.onCreate(savedInstanceState);
         mapFragment.onResume();
+        // getting location permission
         getLocationPermission();
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -98,6 +99,7 @@ public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // setting up sliding panel
         slidingViewCreate(view, token);
 
         return view;
@@ -184,6 +186,7 @@ public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
                 (SlidingUpPanelLayout) viewParam.findViewById(R.id.sliding_layout);
         final ListView slideView = viewParam.findViewById(R.id.sliding_cplistView);
         CollectionPointService cpServie = ServiceGenerator.createService(CollectionPointService.class, tokenParam);
+        // getting collection points from API
         Call<List<CollectionPoint>> call = cpServie.getCollectionPoints();
         call.enqueue(new Callback<List<CollectionPoint>>() {
             @Override
@@ -195,6 +198,7 @@ public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
                         arrayList.add(cp.getCpName());
                         markerAdd(cp);
                     }
+                    // populating collection points in sliding list view
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, arrayList);
                     slideView.setAdapter(adapter);
                     slideView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -220,8 +224,9 @@ public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
         slidingUpPanelLayout.setScrollableViewHelper(helper);
     }
 
+    // redirecting to disbursement list fragment
     private void collectionPointDelivery(CollectionPoint cp) {
-        RequisitionList disbListFrag = new RequisitionList();
+        DisbursementList disbListFrag = new DisbursementList();
         Bundle b = new Bundle();
         b.putInt("CpId", cp.getCpId());
         b.putString("Cp", cp.getCpName());
