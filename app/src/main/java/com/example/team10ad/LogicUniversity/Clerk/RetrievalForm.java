@@ -36,9 +36,8 @@ public class RetrievalForm extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    ListView retrievallist;
+    ListView retrievalList;
     List<StationaryRetrieval> result;
-    Disbursement res;
     String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
     public RetrievalForm() { }
@@ -80,8 +79,8 @@ public class RetrievalForm extends Fragment {
                     }
                     // setting up list view
                     final RetrievalAdapter retrievalAdapter=new RetrievalAdapter(getContext(),R.layout.row_retrievallist,result);
-                    retrievallist=(ListView)view.findViewById(R.id.retrievallist);
-                    retrievallist.setAdapter(retrievalAdapter);
+                    retrievalList =(ListView)view.findViewById(R.id.retrievallist);
+                    retrievalList.setAdapter(retrievalAdapter);
                 }
                 else{
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
@@ -99,10 +98,9 @@ public class RetrievalForm extends Fragment {
         itemcollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                res.setStatus(3);
                 DisbursementService dService = ServiceGenerator.createService(DisbursementService.class,token);
                 // updating database
-                Call<List<Disbursement>> call = dService.collectAllItems(res);
+                Call<List<Disbursement>> call = dService.collectAllItems();
                 call.enqueue(new Callback<List<Disbursement>>() {
                     @Override
                     public void onResponse(Call<List<Disbursement>> call, Response<List<Disbursement>> response) {
