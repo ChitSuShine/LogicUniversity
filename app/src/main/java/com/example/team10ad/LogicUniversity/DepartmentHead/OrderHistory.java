@@ -1,27 +1,23 @@
 package com.example.team10ad.LogicUniversity.DepartmentHead;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.LogicUniversity.Model.User;
-import com.example.team10ad.LogicUniversity.Service.RequisitionService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.OrderHistoryService;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
-import com.example.team10ad.LogicUniversity.Util.HodReqListAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
+import com.example.team10ad.LogicUniversity.Util.OrderHistoryAdapter;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
 
@@ -32,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HodRequisitionListFragment extends Fragment {
+public class OrderHistory extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -40,13 +36,15 @@ public class HodRequisitionListFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    ListView listView;
-    List<Requisition> result=new ArrayList<Requisition>();
 
-    public HodRequisitionListFragment() { }
+    List<Requisition> result;
+    ListView orderhistorylistview;
 
-    public static HodRequisitionListFragment newInstance(String param1, String param2) {
-        HodRequisitionListFragment fragment = new HodRequisitionListFragment();
+
+    public OrderHistory() { }
+
+    public static OrderHistory newInstance(String param1, String param2) {
+        OrderHistory fragment = new OrderHistory();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,39 +60,40 @@ public class HodRequisitionListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        final View view= inflater.inflate(R.layout.fragment_hod_requisition_list, container, false);
-
+        //converting json format to user model
         String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
         final User user = new Gson().fromJson(userInfo, User.class);
+
+        final View view= inflater.inflate(R.layout.fragment_hodorder_history, container, false);
+
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
-
-        RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
-        Call<List<Requisition>> call = requisitionService.getAllRequisitions();
-
+        OrderHistoryService inventoryService= ServiceGenerator.createService(OrderHistoryService.class,token);
+        Call<List<Requisition>> call=inventoryService.getAllOrderHistory();
         call.enqueue(new Callback<List<Requisition>>() {
             @Override
             public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
                 if(response.isSuccessful()){
                     result=response.body();
-                    List<Requisition> filtered = new ArrayList<Requisition>();
+                    List<Requisition> depID = new ArrayList<Requisition>();
                     for(Requisition rq: result){
-                        if(rq.getStatus().equals("0")&& Integer.parseInt(rq.getDepID())==user.getDepId())
-                            filtered.add(rq);
+                        if(Integer.parseInt(rq.getDepID())==user.getDepId())
+                            depID.add(rq);
                     }
-                    final HodReqListAdapter adapter = new HodReqListAdapter
-                            (getContext(),R.layout.row_hodreqlist,filtered);
-                    listView = (ListView) view.findViewById(R.id.hodtrackinglistview);
-                    listView.setAdapter(adapter);
-                    if(listView.getAdapter().getCount()==0){
-                       TextView emptyText = view.findViewById(android.R.id.empty);
-                       listView.setEmptyView(emptyText);
+                    final OrderHistoryAdapter adapter = new OrderHistoryAdapter(getContext(),
+                            R.layout.row_orderhistory,depID);
+                    orderhistorylistview = (ListView) view.findViewById(R.id.orderhistorylistview);
+                    orderhistorylistview.setAdapter(adapter);
+                    if(orderhistorylistview.getAdapter().getCount()==0) {
+                        TextView emptyText = view.findViewById(android.R.id.empty);
+                        orderhistorylistview.setEmptyView(emptyText);
+
                     }
                 }
-                else {
+                else{
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -102,9 +101,11 @@ public class HodRequisitionListFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Requisition>> call, Throwable t) {
                 Toast.makeText(MyApp.getInstance(), Constants.NETWORK_ERROR_MSG, Toast.LENGTH_SHORT).show();
+
             }
         });
         return view;
+
     }
 
     public void onButtonPressed(Uri uri) {

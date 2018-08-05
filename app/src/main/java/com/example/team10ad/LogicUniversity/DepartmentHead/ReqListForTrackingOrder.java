@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.RequisitionService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
@@ -101,7 +101,7 @@ public class ReqListForTrackingOrder extends Fragment {
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            HODTrackingOrder hodTrackingOrder=new HODTrackingOrder();
+                            HodTrackingOrder hodTrackingOrder=new HodTrackingOrder();
                             Bundle b = new Bundle();
                             b.putString("id", filtered.get(i).getReqID());
                             hodTrackingOrder.setArguments(b);

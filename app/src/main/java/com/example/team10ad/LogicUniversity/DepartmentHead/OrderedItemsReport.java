@@ -8,13 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.Model.FreqentlyItem;
 import com.example.team10ad.LogicUniversity.Model.FrequentItemHod;
 import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.ReportService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
@@ -39,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HODReport extends Fragment implements OnChartValueSelectedListener{
+public class OrderedItemsReport extends Fragment implements OnChartValueSelectedListener{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -62,10 +60,10 @@ public class HODReport extends Fragment implements OnChartValueSelectedListener{
 
     private OnFragmentInteractionListener mListener;
 
-    public HODReport() { }
+    public OrderedItemsReport() { }
 
-    public static HODReport newInstance(String param1, String param2) {
-        HODReport fragment = new HODReport();
+    public static OrderedItemsReport newInstance(String param1, String param2) {
+        OrderedItemsReport fragment = new OrderedItemsReport();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

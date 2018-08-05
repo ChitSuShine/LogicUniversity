@@ -17,7 +17,7 @@ public class HodPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         switch (i) {
             case 0:
-                return new HODReport();
+                return new OrderedItemsReport();
             case 1:
             default:
                 return null;

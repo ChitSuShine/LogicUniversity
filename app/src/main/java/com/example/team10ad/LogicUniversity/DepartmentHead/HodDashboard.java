@@ -9,27 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.team10ad.LogicUniversity.Model.Requisition;
-import com.example.team10ad.LogicUniversity.Model.User;
-import com.example.team10ad.LogicUniversity.Service.OrderHistoryService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
-import com.example.team10ad.LogicUniversity.Util.Constants;
-import com.example.team10ad.LogicUniversity.Util.MyApp;
-import com.example.team10ad.LogicUniversity.Util.OrderHistoryAdapter;
 import com.example.team10ad.team10ad.R;
-import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class HodDashboardFragment extends Fragment {
+public class HodDashboard extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -41,10 +27,10 @@ public class HodDashboardFragment extends Fragment {
     List<Requisition> result;
     ListView recentOrderHistory;
 
-    public HodDashboardFragment() { }
+    public HodDashboard() { }
 
-    public static HodDashboardFragment newInstance(String param1, String param2) {
-        HodDashboardFragment fragment = new HodDashboardFragment();
+    public static HodDashboard newInstance(String param1, String param2) {
+        HodDashboard fragment = new HodDashboard();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,7 +56,7 @@ public class HodDashboardFragment extends Fragment {
         appRejCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HodRequisitionListFragment hodAppRej = new HodRequisitionListFragment();
+                HodRequisitionList hodAppRej = new HodRequisitionList();
                 getFragmentManager().beginTransaction().replace(R.id.content_frame, hodAppRej).addToBackStack(null).commit();
             }
         });
@@ -80,7 +66,7 @@ public class HodDashboardFragment extends Fragment {
         delegateCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DelegateAuthorityFragment hodDelegate = new DelegateAuthorityFragment();
+                DelegateAuthority hodDelegate = new DelegateAuthority();
                 getFragmentManager().beginTransaction().replace(R.id.content_frame, hodDelegate).addToBackStack(null).commit();
             }
         });
@@ -107,7 +93,7 @@ public class HodDashboardFragment extends Fragment {
         reportCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HODReportFragment hodReport= new HODReportFragment();
+                HodAnalysisReport hodReport= new HodAnalysisReport();
                 getFragmentManager().beginTransaction().replace(R.id.content_frame, hodReport).addToBackStack(null).commit();
             }
         });

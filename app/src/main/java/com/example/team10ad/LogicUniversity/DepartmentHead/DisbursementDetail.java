@@ -13,12 +13,12 @@ import com.example.team10ad.team10ad.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HODDisbursementDetail.OnFragmentInteractionListener} interface
+ * {@link DisbursementDetail.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HODDisbursementDetail#newInstance} factory method to
+ * Use the {@link DisbursementDetail#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HODDisbursementDetail extends Fragment {
+public class DisbursementDetail extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +30,7 @@ public class HODDisbursementDetail extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public HODDisbursementDetail() {
+    public DisbursementDetail() {
         // Required empty public constructor
     }
 
@@ -40,11 +40,11 @@ public class HODDisbursementDetail extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HODDisbursementDetail.
+     * @return A new instance of fragment DisbursementDetail.
      */
     // TODO: Rename and change types and number of parameters
-    public static HODDisbursementDetail newInstance(String param1, String param2) {
-        HODDisbursementDetail fragment = new HODDisbursementDetail();
+    public static DisbursementDetail newInstance(String param1, String param2) {
+        DisbursementDetail fragment = new DisbursementDetail();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

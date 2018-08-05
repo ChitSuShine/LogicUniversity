@@ -10,10 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.team10ad.LogicUniversity.PagerAdapter;
 import com.example.team10ad.team10ad.R;
 
-public class HODReportFragment extends Fragment {
+public class HodAnalysisReport extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -22,10 +21,10 @@ public class HODReportFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public HODReportFragment() { }
+    public HodAnalysisReport() { }
 
-    public static HODReportFragment newInstance(String param1, String param2) {
-        HODReportFragment fragment = new HODReportFragment();
+    public static HodAnalysisReport newInstance(String param1, String param2) {
+        HodAnalysisReport fragment = new HodAnalysisReport();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

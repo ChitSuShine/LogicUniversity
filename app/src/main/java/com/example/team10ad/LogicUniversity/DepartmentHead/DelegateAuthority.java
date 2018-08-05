@@ -8,14 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,7 +22,7 @@ import android.widget.Toast;
 import com.example.team10ad.LogicUniversity.Model.Delegation;
 import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.DelegationService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Service.UserService;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
@@ -34,7 +32,6 @@ import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class DelegateAuthorityFragment extends Fragment {
+public class DelegateAuthority extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -62,13 +59,13 @@ public class DelegateAuthorityFragment extends Fragment {
     private int mMonth;
     private int mDay;
 
-    public DelegateAuthorityFragment() {
+    public DelegateAuthority() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static DelegateAuthorityFragment newInstance(String param1, String param2) {
-        DelegateAuthorityFragment fragment = new DelegateAuthorityFragment();
+    public static DelegateAuthority newInstance(String param1, String param2) {
+        DelegateAuthority fragment = new DelegateAuthority();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -147,7 +144,7 @@ public class DelegateAuthorityFragment extends Fragment {
                     employeeDetailView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            DelegateDetailFragment detailFragment = new DelegateDetailFragment();
+                            DelegateDetail detailFragment = new DelegateDetail();
                             User delegatedUser = resultedUsers.get(i);
                             Gson gson = new Gson();
                             String json = gson.toJson(delegatedUser);

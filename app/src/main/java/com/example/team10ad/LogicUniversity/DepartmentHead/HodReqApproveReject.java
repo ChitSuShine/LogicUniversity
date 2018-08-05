@@ -3,13 +3,10 @@ package com.example.team10ad.LogicUniversity.DepartmentHead;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.NetworkOnMainThreadException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.style.TtsSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,20 +23,13 @@ import com.example.team10ad.LogicUniversity.Model.RequisitionDetail;
 import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.NotiService;
 import com.example.team10ad.LogicUniversity.Service.RequisitionService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
-import com.example.team10ad.LogicUniversity.Util.HodReqListAdapter;
 import com.example.team10ad.LogicUniversity.Util.HodTrackingAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
-import com.google.gson.InstanceCreator;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import de.mrapp.android.dialog.MaterialDialog;
@@ -47,9 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.team10ad.LogicUniversity.Util.Constants.REJECT_GSON;
-
-public class HodReqApproveRejectFragment extends Fragment {
+public class HodReqApproveReject extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -64,10 +52,10 @@ public class HodReqApproveRejectFragment extends Fragment {
     final User user = new Gson().fromJson(json, User.class);
     final int deptId = user.getDepId();
 
-    public HodReqApproveRejectFragment() { }
+    public HodReqApproveReject() { }
 
-    public static HodReqApproveRejectFragment newInstance(String param1, String param2) {
-        HodReqApproveRejectFragment fragment = new HodReqApproveRejectFragment();
+    public static HodReqApproveReject newInstance(String param1, String param2) {
+        HodReqApproveReject fragment = new HodReqApproveReject();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -144,10 +132,10 @@ public class HodReqApproveRejectFragment extends Fragment {
                             public void onResponse(Call<Requisition> call, Response<Requisition> response) {
                                 if (response.isSuccessful()) {
                                     result=response.body();
-                                    HodRequisitionListFragment hodRequisitionListFragment = new HodRequisitionListFragment();
+                                    HodRequisitionList hodRequisitionList = new HodRequisitionList();
                                     FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                    ft.detach(HodReqApproveRejectFragment.this);
-                                    ft.add(R.id.content_frame, hodRequisitionListFragment).commit();
+                                    ft.detach(HodReqApproveReject.this);
+                                    ft.add(R.id.content_frame, hodRequisitionList).commit();
                                    //createNoti(input, response.body(),6);
                                 }
                                 else {
@@ -254,10 +242,10 @@ public class HodReqApproveRejectFragment extends Fragment {
             @Override
             public void onResponse(Call<Noti> call, Response<Noti> response) {
                 if(response.isSuccessful()){
-                    HodRequisitionListFragment hodRequisitionListFragment = new HodRequisitionListFragment();
+                    HodRequisitionList hodRequisitionList = new HodRequisitionList();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.detach(HodReqApproveRejectFragment.this);
-                    ft.add(R.id.content_frame, hodRequisitionListFragment).commit();
+                    ft.detach(HodReqApproveReject.this);
+                    ft.add(R.id.content_frame, hodRequisitionList).commit();
                 }
                 else{
                     Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();

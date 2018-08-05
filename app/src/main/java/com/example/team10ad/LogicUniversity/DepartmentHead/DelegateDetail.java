@@ -18,20 +18,19 @@ import android.widget.Toast;
 import com.example.team10ad.LogicUniversity.Model.Delegation;
 import com.example.team10ad.LogicUniversity.Model.User;
 import com.example.team10ad.LogicUniversity.Service.DelegationService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.google.gson.Gson;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DelegateDetailFragment extends Fragment {
+public class DelegateDetail extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -51,13 +50,13 @@ public class DelegateDetailFragment extends Fragment {
     private int emMonth = c.get(Calendar.MONTH);
     private int emDay = c.get(Calendar.DAY_OF_MONTH);
 
-    public DelegateDetailFragment() {
+    public DelegateDetail() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static DelegateDetailFragment newInstance(String param1, String param2) {
-        DelegateDetailFragment fragment = new DelegateDetailFragment();
+    public static DelegateDetail newInstance(String param1, String param2) {
+        DelegateDetail fragment = new DelegateDetail();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -135,7 +134,7 @@ public class DelegateDetailFragment extends Fragment {
                         @Override
                         public void onResponse(Call<Delegation> call, Response<Delegation> response) {
                             if (response.isSuccessful()) {
-                                DelegateAuthorityFragment authorityFragment = new DelegateAuthorityFragment();
+                                DelegateAuthority authorityFragment = new DelegateAuthority();
                                 getFragmentManager().beginTransaction().replace(R.id.content_frame, authorityFragment).commit();
                             } else {
                                 Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();

@@ -14,16 +14,13 @@ import android.widget.Toast;
 import com.example.team10ad.LogicUniversity.Model.Requisition;
 import com.example.team10ad.LogicUniversity.Model.RequisitionDetail;
 import com.example.team10ad.LogicUniversity.Service.RequisitionService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.HodTrackingAdapter;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
 import com.example.team10ad.team10ad.R;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,7 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class HODTrackingOrder extends Fragment {
+public class HodTrackingOrder extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -47,10 +44,10 @@ public class HODTrackingOrder extends Fragment {
 
     String[] descriptionData = {"Req Pending", "Prepare", "Ready-to-collect", "Complete"};
 
-    public HODTrackingOrder() { }
+    public HodTrackingOrder() { }
 
-    public static HODTrackingOrder newInstance(String param1, String param2) {
-        HODTrackingOrder fragment = new HODTrackingOrder();
+    public static HodTrackingOrder newInstance(String param1, String param2) {
+        HodTrackingOrder fragment = new HodTrackingOrder();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

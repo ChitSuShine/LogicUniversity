@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.team10ad.LogicUniversity.Model.Delegation;
 import com.example.team10ad.LogicUniversity.Model.User;
-import com.example.team10ad.LogicUniversity.Service.DelegationService;
-import com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
+import com.example.team10ad.LogicUniversity.Service.ServiceGenerator.ServiceGenerator;
 import com.example.team10ad.LogicUniversity.Service.UserService;
 import com.example.team10ad.LogicUniversity.Util.Constants;
 import com.example.team10ad.LogicUniversity.Util.MyApp;
@@ -33,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AssignDepRepFragment extends Fragment {
+public class AssignDepRep extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -44,11 +41,11 @@ public class AssignDepRepFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
 
-    public AssignDepRepFragment() {
+    public AssignDepRep() {
     }
 
-    public static AssignDepRepFragment newInstance(String param1, String param2) {
-        AssignDepRepFragment fragment = new AssignDepRepFragment();
+    public static AssignDepRep newInstance(String param1, String param2) {
+        AssignDepRep fragment = new AssignDepRep();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
