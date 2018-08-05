@@ -25,17 +25,6 @@ public class RequisitionDetail {
     @SerializedName("UOM")
     private String UOM;
 
-
-
-    public RequisitionDetail(){
-        reqid = "";
-        itemid = "";
-        qty = "";
-        itemname = "";
-        CategoryName = "";
-        UOM = "";
-    }
-
     public String getReqid() {
         return reqid;
     }
@@ -60,8 +49,7 @@ public class RequisitionDetail {
         this.qty = qty;
     }
 
-    public String getStock() { return Stock;
-    }
+    public String getStock() { return Stock; }
 
     public void setStock(String stock) {
         Stock = stock;
@@ -90,5 +78,4 @@ public class RequisitionDetail {
     public void setUOM(String UOM) {
         this.UOM = UOM;
     }
-
 }

@@ -28,17 +28,6 @@ public class Inventory {
     @SerializedName("UOM")
     private String UOM;
 
-    public Inventory(){
-        Invid = "";
-        Itemid = "";
-        ItemDescription = "";
-        Stock = "";
-        ReorderLevel = "";
-        ReorderQty = "";
-        CategoryName = "";
-        UOM = "";
-    }
-
     public String getInvid() {
         return Invid;
     }
