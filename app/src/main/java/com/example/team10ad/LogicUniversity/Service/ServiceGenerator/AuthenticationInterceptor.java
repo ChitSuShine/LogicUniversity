@@ -1,4 +1,4 @@
-package com.example.team10ad.LogicUniversity.Service;
+package com.example.team10ad.LogicUniversity.Service.ServiceGenerator;
 
 import com.example.team10ad.LogicUniversity.Util.Constants;
 
