@@ -75,11 +75,12 @@ public class HodReqApproveReject extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // getting requisition Id value passed from the calling fragment
         Bundle b = getArguments();
         String id = b.getString("id");
 
         final View view= inflater.inflate(R.layout.fragment_hod_req_approve_reject, container, false);
-
+        // sending request to API for details
         final RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
         Call<Requisition> call = requisitionService.getReqById(id);
         call.enqueue(new Callback<Requisition>() {
@@ -91,7 +92,7 @@ public class HodReqApproveReject extends Fragment {
                     TextView tv2 = (TextView) view.findViewById(R.id.hodraisedate);
                     tv1.setText(result.getRasiedByname());
                     tv2.setText(result.getReqDate());
-
+                    // populating data inside list view
                     List<RequisitionDetail> details = result.getRequisitionDetails();
                     final HodTrackingAdapter adapter = new HodTrackingAdapter(getContext(),R.layout.row_hodtracking,details);
                     reqDetaillistview = (ListView) view.findViewById(R.id.hodreqlistdetaillist);
@@ -111,6 +112,7 @@ public class HodReqApproveReject extends Fragment {
         appovebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                // dialog box for remark
                 MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
                 dialogBuilder.setTitle(R.string.remark_title);
                 final EditText input = new EditText(getContext());
@@ -162,6 +164,7 @@ public class HodReqApproveReject extends Fragment {
         rejectreq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                // dialog box for remark
                 MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
                 dialogBuilder.setTitle(R.string.remark_title);
                 final EditText input = new EditText(getContext());

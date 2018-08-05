@@ -36,7 +36,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+// Author: Htet Wai Yan
 public class OrderedItemsReport extends Fragment implements OnChartValueSelectedListener{
 
     private static final String ARG_PARAM1 = "param1";
@@ -86,17 +86,19 @@ public class OrderedItemsReport extends Fragment implements OnChartValueSelected
         barData = new BarData();
         xVals = new ArrayList<>();
         final View view= inflater.inflate(R.layout.fragment_hodreport, container, false);
+        // getting token from shared preference
         final String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         ReportService service = ServiceGenerator.createService(ReportService.class, token);
         String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
         User user = new Gson().fromJson(userInfo, User.class);
-
+        // getting analysis data from API
         Call<List<FrequentItemHod>> call = service.getFrequentItemListHod(user.getDepId());
         call.enqueue(new Callback<List<FrequentItemHod>>() {
             @Override
             public void onResponse(Call<List<FrequentItemHod>> call, Response<List<FrequentItemHod>> response) {
                 if(response.isSuccessful()){
                     result = response.body();
+                    // setting data sets for bar chart
                     int i = 0;
                     for(FrequentItemHod item: result){
                         barEntries = new ArrayList<>();

@@ -69,7 +69,7 @@ public class OrderHistory extends Fragment {
         final User user = new Gson().fromJson(userInfo, User.class);
 
         final View view= inflater.inflate(R.layout.fragment_hodorder_history, container, false);
-
+        // getting all order history by current department
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         OrderHistoryService inventoryService= ServiceGenerator.createService(OrderHistoryService.class,token);
         Call<List<Requisition>> call=inventoryService.getAllOrderHistory();
@@ -78,6 +78,7 @@ public class OrderHistory extends Fragment {
             public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
                 if(response.isSuccessful()){
                     result=response.body();
+                    // filtering result by department Id number
                     List<Requisition> depID = new ArrayList<Requisition>();
                     for(Requisition rq: result){
                         if(Integer.parseInt(rq.getDepID())==user.getDepId())
@@ -85,6 +86,7 @@ public class OrderHistory extends Fragment {
                     }
                     final OrderHistoryAdapter adapter = new OrderHistoryAdapter(getContext(),
                             R.layout.row_orderhistory,depID);
+                    // populating data in list view
                     orderhistorylistview = (ListView) view.findViewById(R.id.orderhistorylistview);
                     orderhistorylistview.setAdapter(adapter);
                     if(orderhistorylistview.getAdapter().getCount()==0) {

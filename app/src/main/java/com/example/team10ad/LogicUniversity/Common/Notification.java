@@ -48,8 +48,6 @@ public class Notification extends Fragment {
     ListView notiList;
     List<Noti> result;
 
-
-
     public Notification() { }
 
     public static Notification newInstance(String param1, String param2) {
@@ -74,11 +72,11 @@ public class Notification extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view= inflater.inflate(R.layout.fragment_notification, container, false);
-
+        // getting user profile from shared preference
         String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
         final User user = new Gson().fromJson(userInfo, User.class);
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
-
+        // getting unread notification by department number filtered by role
         final NotiService notiService= ServiceGenerator.createService(NotiService.class,token);
         Call<List<Noti>> callnoti=notiService.getNotiByCondition(false,user.getDepId(),user.getRole());
         callnoti.enqueue(new Callback<List<Noti>>() {
@@ -89,10 +87,12 @@ public class Notification extends Fragment {
                     final NotiAdapter notiadapter = new NotiAdapter(getContext(),R.layout.row_allnoti,result);
                     notiList = (ListView) view.findViewById(R.id.notiList);
                     notiList.setAdapter(notiadapter);
+                    // setting text to inform users that the list is empty
                     if(notiList.getAdapter().getCount()==0){
                         TextView emptyText = view.findViewById(android.R.id.empty);
                         notiList.setEmptyView(emptyText);
                     }
+                    // setting action when clicking on items
                     notiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -103,6 +103,7 @@ public class Notification extends Fragment {
                                 @Override
                                 public void onResponse(Call<Noti> call, Response<Noti> response) {
                                     if(response.isSuccessful()){
+                                        // redirecting different screens
                                         switch (notiType){
                                             case 0:
                                                 break;

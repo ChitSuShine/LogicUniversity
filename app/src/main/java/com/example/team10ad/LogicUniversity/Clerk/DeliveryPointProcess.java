@@ -51,8 +51,8 @@ public class DeliveryPointProcess extends Fragment {
         final View view= inflater.inflate(R.layout.fragment_delivery_point_process, container, false);
         TextView tv = view.findViewById(R.id.testfragment);
         // getting department Id number from shared preference
-        String deptid = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
-        tv.setText(String.valueOf(getArguments().getInt("CpId")) + deptid);
+        String deptId = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
+        tv.setText(String.valueOf(getArguments().getInt("CpId")) + deptId);
         return view;
     }
 

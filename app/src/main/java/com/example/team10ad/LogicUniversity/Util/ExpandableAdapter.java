@@ -32,26 +32,26 @@ import retrofit2.Response;
 
 public class ExpandableAdapter extends BaseExpandableListAdapter {
 
-    private Context _context;
-    private List<Disbursement> _listDataHeader; // header titles
+    private Context context;
+    private List<Disbursement> listDisbursement;
     // child data in format of header title, child title
-    private HashMap<Disbursement, List<DisbursementDetail>> _listDataChild;
+    private HashMap<Disbursement, List<DisbursementDetail>> listDisbItems;
 
     public ExpandableAdapter(Context context, List<Disbursement> listDataHeader,
                                  HashMap<Disbursement, List<DisbursementDetail>> listChildData) {
-        this._context = context;
-        this._listDataHeader = listDataHeader;
-        this._listDataChild = listChildData;
+        this.context = context;
+        this.listDisbursement = listDataHeader;
+        this.listDisbItems = listChildData;
     }
 
-    public List<Disbursement> get_listDataHeader() {
-        return _listDataHeader;
+    public List<Disbursement> getListDisbursement() {
+        return listDisbursement;
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosititon) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-                .get(childPosititon);
+    public Object getChild(int groupPosition, int childPosition) {
+        return this.listDisbItems.get(this.listDisbursement.get(groupPosition))
+                .get(childPosition);
     }
 
     @Override
@@ -66,42 +66,42 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         final DisbursementDetail childText = (DisbursementDetail) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
+            LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.dis_list_item, null);
             LinearLayout lo = convertView.findViewById(R.id.childList);
         }
 
-        TextView disbdeteail1 = (TextView) convertView
+        TextView disbDetail1 = (TextView) convertView
                 .findViewById(R.id.disbdetail1);
-        TextView disbdeteail2 = (TextView) convertView
+        TextView disbDetail2 = (TextView) convertView
                 .findViewById(R.id.disbdetail2);
-        TextView disbdeteail3 = (TextView) convertView
+        TextView disbDetail3 = (TextView) convertView
                 .findViewById(R.id.disbdetail3);
-        TextView disbdeteail4 = (TextView) convertView
+        TextView disbDetail4 = (TextView) convertView
                 .findViewById(R.id.disbdetail4);
 
-        disbdeteail1.setText(childText.getItemname());
-        disbdeteail2.setText(childText.getCategoryName());
-        disbdeteail3.setText(childText.getRequestQty());
-        disbdeteail4.setText(childText.getApprovedQty());
+        disbDetail1.setText(childText.getItemname());
+        disbDetail2.setText(childText.getCategoryName());
+        disbDetail3.setText(childText.getRequestQty());
+        disbDetail4.setText(childText.getApprovedQty());
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition))
+        return this.listDisbItems.get(this.listDisbursement.get(groupPosition))
                 .size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return this._listDataHeader.get(groupPosition);
+        return this.listDisbursement.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return this._listDataHeader.size();
+        return this.listDisbursement.size();
     }
 
     @Override
@@ -114,7 +114,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
                              View convertView, ViewGroup parent) {
         final Disbursement headerTitle = (Disbursement) getGroup(groupPosition);
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
+            LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.dis_list_group, null);
         }
@@ -132,7 +132,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder deliverDiag = new AlertDialog.Builder(_context)
+                AlertDialog.Builder deliverDiag = new AlertDialog.Builder(context)
                         .setTitle("Finish Delivering Item(s)?")
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
@@ -151,7 +151,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         });
         disb1.setText(headerTitle.getDepName());
         disb2.setText(headerTitle.getReqDate());
-        disb3.setText(Constants.STATUS[headerTitle.getStatus()]);
+        disb3.setText("Requisition ID : " + headerTitle.getReqID());
 
         return convertView;
     }
@@ -179,14 +179,14 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
             @Override
             public void onResponse(Call<Requisition> call, Response<Requisition> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(_context, "Delivered!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Delivered!", Toast.LENGTH_SHORT).show();
                     redirect(disb);
                 }
             }
 
             @Override
             public void onFailure(Call<Requisition> call, Throwable t) {
-                Toast.makeText(_context,
+                Toast.makeText(context,
                         "CONNECTION ERROR!",
                         Toast.LENGTH_SHORT).show();
             }
@@ -199,7 +199,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         b.putInt("CpId", Integer.parseInt(disbursement.getCpID()));
         b.putString("Cp", disbursement.getCpName());
         reqList.setArguments(b);
-        FragmentTransaction ft = ((FragmentActivity) _context)
+        FragmentTransaction ft = ((FragmentActivity) context)
                 .getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, reqList).commit();
     }

@@ -42,7 +42,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+// Author: Wint Yadanar Htet, Htet Wai Yan
 public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -104,7 +104,7 @@ public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
 
         return view;
     }
-
+    // getting location permission
     private void getLocationPermission() {
         String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) ==
@@ -141,7 +141,7 @@ public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
 
         LatLng pos = new LatLng(1.296879, 103.776332);
         moveCameraTo(pos, 15);
-
+        // setting action when the marker is clicked
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker mark) {
@@ -161,7 +161,7 @@ public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
             }
         });
     }
-
+    // adding marker into map according to collection point data
     private void markerAdd(CollectionPoint cp) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
@@ -170,7 +170,7 @@ public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
         Marker m = mMap.addMarker(markerOptions);
         m.setTag(cp);
     }
-
+    // moving map camera location and setting zoom
     private void moveCameraTo(LatLng location, int zoom) {
         CameraPosition cp = new CameraPosition.Builder().target(location).zoom(zoom).build();
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));
@@ -180,7 +180,7 @@ public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
 
         void onFragmentInteraction(Uri uri);
     }
-
+    // setting sliding panel
     private void slidingViewCreate(View viewParam, String tokenParam) {
         final SlidingUpPanelLayout slidingUpPanelLayout =
                 (SlidingUpPanelLayout) viewParam.findViewById(R.id.sliding_layout);

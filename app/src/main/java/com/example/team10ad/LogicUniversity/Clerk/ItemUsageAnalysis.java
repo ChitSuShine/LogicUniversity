@@ -45,7 +45,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+// Author: Htet Wai Yan
 public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedListener {
 
     private static final String ARG_PARAM1 = "param1";
@@ -55,7 +55,7 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    // declaring required variables
     String token;
     ArrayList<Integer> supId = new ArrayList<>();
     ArrayList<Integer> itemId = new ArrayList<>();
@@ -64,7 +64,7 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
     ArrayList<BarEntry> barValues1;
     ArrayList<BarEntry> barValues2;
     ArrayList<BarEntry> barValues3;
-
+    // values for chart styling
     float groupSpace = 0.18f;
     float barSpace = 0.04f;
     float barWidth = 0.30f;
@@ -100,6 +100,7 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_report2, container, false);
 
+        // specifying the spinners
         mChart = view.findViewById(R.id.barChartItemUsage);
         mChart.setVisibility(View.INVISIBLE);
         final Spinner itemSpin = view.findViewById(R.id.itemSpin);
@@ -108,16 +109,17 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
         final Spinner sup3Spin = view.findViewById(R.id.sup3);
 
         token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
-
+        // setting up chart with predefined methods
         setUpChart();
         mChart.getXAxis().setDrawLabels(false);
         setItemSpinner(itemSpin);
         setSupSpinners(sup1Spin, sup2Spin, sup3Spin);
-
+        // button action
         Button btnGen = view.findViewById(R.id.reportBtnSup);
         btnGen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // getting selected data and making chart visible
                 mChart.setVisibility(View.VISIBLE);
                 int s1 = supId.get(sup1Spin.getSelectedItemPosition());
                 int s2 = supId.get(sup2Spin.getSelectedItemPosition());
@@ -164,9 +166,9 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
     public void onNothingSelected() { }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    // general settings
     private void setUpChart() {
 
         mChart.setOnChartValueSelectedListener(this);
@@ -182,7 +184,7 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
 
         updateChart();
     }
-
+    // bar data binding
     private void setBarData() {
         Calendar today = Calendar.getInstance();
         int month = today.get(Calendar.MONTH);
@@ -218,7 +220,7 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
 
         mChart.setData(data);
     }
-
+    // setting chart legend
     private void setLegend(BarChart chart) {
         Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
@@ -230,7 +232,7 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
         l.setYEntrySpace(0f);
         l.setTextSize(16f);
     }
-
+    // setting up X axis and Y axis
     private void xAndYAxis(BarChart chart) {
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
@@ -247,7 +249,7 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
 
         chart.getAxisRight().setEnabled(false);
     }
-
+    // updating chart
     private void updateChart() {
         mChart.getBarData().setBarWidth(barWidth);
         mChart.animateY(1000);
@@ -260,7 +262,7 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
         mChart.groupBars(0, groupSpace, barSpace);
         mChart.invalidate();
     }
-
+    // populating items in spinner
     private void setItemSpinner(final Spinner spin) {
         InventoryService service = ServiceGenerator.createService(InventoryService.class, token);
         Call<List<Item>> call = service.getAllItems();
@@ -286,7 +288,7 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
             }
         });
     }
-
+    // populating suppliers in spinners
     private void setSupSpinners(final Spinner spin1, final Spinner spin2, final Spinner spin3) {
         InventoryService service = ServiceGenerator.createService(InventoryService.class, token);
         Call<List<Supplier>> call = service.getAllSuppliers();
@@ -315,7 +317,7 @@ public class ItemUsageAnalysis extends Fragment implements OnChartValueSelectedL
             }
         });
     }
-
+    // sending request to API for chart data
     private void requestData(int s1, int s2, int s3, int item) {
         ReportService service = ServiceGenerator.createService(ReportService.class, token);
         Call<List<ItemUsageClerk>> call = service.getItemUsage(s1, s2, s3, item);

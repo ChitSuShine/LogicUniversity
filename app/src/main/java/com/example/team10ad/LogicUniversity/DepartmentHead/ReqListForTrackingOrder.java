@@ -31,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+// Author: Wint Yadanar Htet
 public class ReqListForTrackingOrder extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -71,10 +71,10 @@ public class ReqListForTrackingOrder extends Fragment {
                              Bundle savedInstanceState) {
 
         final View view= inflater.inflate(R.layout.fragment_req_list_for_tracking_order, container, false);
-
+        // getting user data
         String userInfo = MyApp.getPreferenceManager().getString(Constants.USER_GSON);
         final User user = new Gson().fromJson(userInfo, User.class);
-
+        // getting token and sending request to API
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
         Call<List<Requisition>> call = requisitionService.getAllRequisitions();
@@ -83,16 +83,17 @@ public class ReqListForTrackingOrder extends Fragment {
             public void onResponse(Call<List<Requisition>> call, Response<List<Requisition>> response) {
                 if (response.isSuccessful()) {
                     result = response.body();
-
+                    // filtering result for current department
                     final List<Requisition> filtered = new ArrayList<Requisition>();
                     for(Requisition rq: result){
                         if(Integer.parseInt(rq.getDepID())==user.getDepId())
                             filtered.add(rq);
                     }
-
+                    // populating data in list view
                     final MyAdapter adapter = new MyAdapter(getContext(),R.layout.row,filtered);
                     listView = (ListView) view.findViewById(R.id.replistview);
                     listView.setAdapter(adapter);
+                    // checking if the list is empty and showing message to inform that the list is empty
                     if(listView.getAdapter().getCount()==0){
                         TextView emptyText = view.findViewById(android.R.id.empty);
                         listView.setEmptyView(emptyText);
@@ -101,6 +102,7 @@ public class ReqListForTrackingOrder extends Fragment {
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            // passing selected requisition Id number to details showing fragment
                             HodTrackingOrder hodTrackingOrder=new HodTrackingOrder();
                             Bundle b = new Bundle();
                             b.putString("id", filtered.get(i).getReqID());

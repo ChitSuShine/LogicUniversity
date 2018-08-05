@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+// Author: Wint Yadanar Htet
 public class HodTrackingOrder extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -67,10 +67,11 @@ public class HodTrackingOrder extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // getting requisition Id value passed from the calling fragment
         Bundle b = this.getArguments();
         String id = b.getString("id");
         final View view= inflater.inflate(R.layout.fragment_hodtracking_order, container, false);
-
+        // getting token and requesting data from API
         String token = Constants.BEARER + MyApp.getInstance().getPreferenceManager().getString(Constants.KEY_ACCESS_TOKEN);
         RequisitionService requisitionService = ServiceGenerator.createService(RequisitionService.class, token);
         Call<Requisition> call = requisitionService.getReqById(id);
@@ -96,7 +97,7 @@ public class HodTrackingOrder extends Fragment {
                     stateProgressBar.setStateDescriptionData(descriptionData);
                     stateProgressBar.setCurrentStateNumber(StateProgressBar
                             .StateNumber.valueOf(STATE[Integer.parseInt(result.getStatus())]));
-
+                    // attaching data inside list view
                     List<RequisitionDetail> details = result.getRequisitionDetails();
                     final HodTrackingAdapter adapter = new HodTrackingAdapter(getContext(),R.layout.row_hodtracking,details);
                     reqDetaillistview = (ListView) view.findViewById(R.id.hodtrackinglistview);
