@@ -138,7 +138,6 @@ public class RetrievalForm extends Fragment {
         mListener = null;
     }
 
-
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
