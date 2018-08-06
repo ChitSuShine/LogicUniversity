@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.team10ad.team10ad.R;
 
-
+//Author: Wint Yadanar Htet,Khaing Myat Kyaw soe
 public class DisbursementDetail extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
