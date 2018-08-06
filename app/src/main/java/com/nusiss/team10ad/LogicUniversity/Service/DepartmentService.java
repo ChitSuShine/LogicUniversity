@@ -9,9 +9,11 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface DepartmentService {
+    // getting all department
     @GET("departments")
     Call<List<Department>> getAllDepartments();
 
+    // getting department details by department Id
     @GET("department/{id}")
     Call<Department> getDepartmentById(@Path("id") int id);
 }
