@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.team10ad.LogicUniversity.Common.Notification">
+    tools:context="com.nusiss.team10ad.LogicUniversity.Common.Notification">
 
     <LinearLayout
         android:layout_width="match_parent"

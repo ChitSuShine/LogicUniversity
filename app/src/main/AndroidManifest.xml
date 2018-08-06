@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.team10ad.team10ad">
+    package="com.nusiss.team10ad.team10ad">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.example.team10ad.LogicUniversity.Util.MyApp"
+        android:name="com.nusiss.team10ad.LogicUniversity.Util.MyApp"
         android:allowBackup="true"
         android:icon="@drawable/lussis"
         android:label="@string/app_name"
@@ -25,14 +25,14 @@
             android:value="AIzaSyCfl152Y4rKnXC3v8Tat2JhgKdkNb8Kwi8" />
 
         <activity
-            android:name="com.example.team10ad.LogicUniversity.Common.LoginActivity"
+            android:name="com.nusiss.team10ad.LogicUniversity.Common.LoginActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.example.team10ad.LogicUniversity.Common.HomeActivity"
+            android:name="com.nusiss.team10ad.LogicUniversity.Common.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="com.example.team10ad.LogicUniversity.Util.SplashScreen"
+            android:name="com.nusiss.team10ad.LogicUniversity.Util.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
