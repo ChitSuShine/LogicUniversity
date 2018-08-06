@@ -47,35 +47,36 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
         this.resource = resource;
         this.items = items;
     }
+
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         final View v = inflater.inflate(resource, null);
 
-        TextView CPdeptname=(TextView)v.findViewById(R.id.CPdeptname);
-        TextView CPname=(TextView)v.findViewById(R.id.CPname);
-        TextView CPlocation=(TextView)v.findViewById(R.id.CPlocation);
+        TextView CpDeptName = (TextView) v.findViewById(R.id.CPdeptname);
+        TextView CpName = (TextView) v.findViewById(R.id.CPname);
+        TextView CpLocation = (TextView) v.findViewById(R.id.CPlocation);
 
-        DepartmentCollectionPoint deptCP=items.get(position);
+        DepartmentCollectionPoint deptCP = items.get(position);
 
-        CPdeptname.setText(deptCP.getDeptName());
-        CPname.setText(deptCP.getCpName());
-        CPlocation.setText(deptCP.getCpLocation());
+        CpDeptName.setText(deptCP.getDeptName());
+        CpName.setText(deptCP.getCpName());
+        CpLocation.setText(deptCP.getCpLocation());
 
         Button app_btn = new Button(getContext());
         app_btn.setText("Approve");
-        app_btn.setTextColor(getContext().getResources().getColor( R.color.background));
-        app_btn.setBackground(getContext().getResources().getDrawable( R.drawable.my_button_cancel));
+        app_btn.setTextColor(getContext().getResources().getColor(R.color.background));
+        app_btn.setBackground(getContext().getResources().getDrawable(R.drawable.my_button_cancel));
 
         Button cancel_btn = new Button(getContext());
         cancel_btn.setText("Reject");
-        cancel_btn.setTextColor(getContext().getResources().getColor( R.color.background));
-        cancel_btn.setBackground(getContext().getResources().getDrawable( R.drawable.my_button_cancel));
+        cancel_btn.setTextColor(getContext().getResources().getColor(R.color.background));
+        cancel_btn.setBackground(getContext().getResources().getDrawable(R.drawable.my_button_cancel));
 
         app_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
                 MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(getContext());
                 dialogBuilder.setTitle(R.string.approve_title);
@@ -85,9 +86,9 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         FragmentTransaction ft =
-                                ((FragmentActivity)getContext())
-                                .getSupportFragmentManager()
-                                .beginTransaction();
+                                ((FragmentActivity) getContext())
+                                        .getSupportFragmentManager()
+                                        .beginTransaction();
                         ft.replace(R.id.content_frame, new ApproveCollectionPoint())
                                 .commit();
                     }
@@ -98,17 +99,18 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
                 dialog.setButtonTextColor(Color.BLACK);
                 dialog.show();
 
-                dcp= getItem(position);
+                dcp = getItem(position);
                 CollectionPointService cpService = ServiceGenerator.createService(CollectionPointService.class, token);
                 Call<DepartmentCollectionPoint> call = cpService.approveCollectionPoint(dcp);
                 call.enqueue(new Callback<DepartmentCollectionPoint>() {
                     @Override
                     public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
-                        if(response.isSuccessful()){ }
-                        else {
+                        if (response.isSuccessful()) {
+                        } else {
                             Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     @Override
                     public void onFailure(Call<DepartmentCollectionPoint> call, Throwable t) {
                         Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
@@ -124,11 +126,11 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
                 dialogBuilder.setTitle(R.string.reject_title);
                 dialogBuilder.setMessage(R.string.reject_message);
                 dialogBuilder.setIcon(R.drawable.ic_reject);
-                dialogBuilder.setPositiveButton(android.R.string.ok,  new DialogInterface.OnClickListener() {
+                dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         FragmentTransaction ft =
-                                ((FragmentActivity)getContext())
+                                ((FragmentActivity) getContext())
                                         .getSupportFragmentManager()
                                         .beginTransaction();
                         ft.replace(R.id.content_frame, new ApproveCollectionPoint())
@@ -141,18 +143,19 @@ public class ClerkApproveCPAdapter extends ArrayAdapter<DepartmentCollectionPoin
                 dialog.setButtonTextColor(Color.BLACK);
                 dialog.show();
 
-                dcp= getItem(position);
+                dcp = getItem(position);
 
                 CollectionPointService cpService = ServiceGenerator.createService(CollectionPointService.class, token);
                 Call<DepartmentCollectionPoint> call = cpService.rejectCollectionPoint(dcp);
                 call.enqueue(new Callback<DepartmentCollectionPoint>() {
                     @Override
                     public void onResponse(Call<DepartmentCollectionPoint> call, Response<DepartmentCollectionPoint> response) {
-                        if(response.isSuccessful()){ }
-                        else {
+                        if (response.isSuccessful()) {
+                        } else {
                             Toast.makeText(MyApp.getInstance(), Constants.REQ_NO_SUCCESS, Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     @Override
                     public void onFailure(Call<DepartmentCollectionPoint> call, Throwable t) {
                         Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();

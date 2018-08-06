@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface OrderHistoryService {
+    // getting completed requisitions
     @GET("requisition/status/6")
     Call<List<Requisition>> getAllOrderHistory();
 }

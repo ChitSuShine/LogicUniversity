@@ -12,21 +12,19 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface RequisitionService {
+    // getting all requisitions
     @GET("requisition")
     Call<List<Requisition>> getAllRequisitions();
 
+    // getting requisition details by requisition Id number
     @GET("requisition/reqid/{id}")
     Call<Requisition> getReqById(@Path("id") String id);
 
-    @GET("requisition/reqid/{id}")
-    Call<RequisitionDetail> getReqdetailById(@Path("id") String id);
-
+    // updating specific requisition
     @POST("requisition/update")
     Call<Requisition> updateRequisition(@Body Requisition requisition);
 
+    // changing the status of specific requisition to completed
     @POST("requisition/status/completed")
     Call<Requisition> changeRequisitionStatus(@Body Requisition requisition);
-
-    @GET("requisition/updatetopreparing")
-    Call<Requisition> updateReqtoPreparing (@Body Requisition requisition);
 }
