@@ -13,6 +13,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface DisbursementService {
+    // updating
     @GET("requisition/updatetopreparing")
     Call<List<Disbursement>> collectAllItems();
 
