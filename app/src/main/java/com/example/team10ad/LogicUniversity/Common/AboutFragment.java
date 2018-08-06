@@ -13,21 +13,17 @@ import com.example.team10ad.team10ad.R;
 // Author: Chit Su Shine
 
 public class AboutFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public AboutFragment() {
-        // Required empty public constructor
-    }
+    public AboutFragment() { }
 
-    // TODO: Rename and change types and number of parameters
     public static AboutFragment newInstance(String param1, String param2) {
         AboutFragment fragment = new AboutFragment();
         Bundle args = new Bundle();
@@ -53,7 +49,6 @@ public class AboutFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_about, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -72,7 +67,6 @@ public class AboutFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

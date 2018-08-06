@@ -180,6 +180,8 @@ public class MapDeliveryPoint extends Fragment implements OnMapReadyCallback {
 
         void onFragmentInteraction(Uri uri);
     }
+
+
     // setting sliding panel
     private void slidingViewCreate(View viewParam, String tokenParam) {
         final SlidingUpPanelLayout slidingUpPanelLayout =
